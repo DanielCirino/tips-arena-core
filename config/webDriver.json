@@ -1,0 +1,25 @@
+{
+  "local_windows": {
+    "path_to_phantomjs": "D:\\Documentos\\DEV\\tips-arena-app\\web-drivers\\phantomjs\\bin\\phantomjs",
+    "path_to_firefox": "D:\\Documentos\\DEV\\tips-arena-app\\web-drivers\\firefox\\geckodriver.exe",
+    "path_to_chrome": "/Users/macbook_pro/Documents/DEV/web_drivers/chromedriver"
+  },
+  "local_mac": {
+    "path_to_phantomjs": "/Users/macbook_pro/Documents/DEV/web_drivers/phantomjs-2.1.1-macosx/bin/phantomjs",
+    "path_to_firefox": "/Users/dev-rocks/Documents/dev-rocks/web_drivers/geckodriver",
+    "path_to_chrome": "/Users/macbook_pro/Documents/DEV/web_drivers/chromedriver"
+  },
+  "server_01": {
+    "path_to_phantomjs": "/usr/local/share/webdrivers/phantomjs",
+    "path_to_firefox": "/usr/local/share/webdrivers/geckodriver",
+    "path_to_chrome": "/usr/local/share/webdrivers/chromedriver"
+  },
+  "headers": {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safa$"
+  }
+}
+
+PATH_TO_WEBDRIVER =
+PATH_TO_BINARY_FIREFOX =
+
+P

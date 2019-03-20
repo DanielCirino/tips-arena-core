@@ -1,0 +1,7 @@
+pymongo
+beautifulsoup4
+bs4
+requests
+selenium
+urllib3
+pytz
