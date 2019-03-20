@@ -1,7 +1,9 @@
+#!/usr/local/bin/python3
+# -*- coding: utf-8 -*-
+
 import unittest
 from datetime import datetime
 import time
-
 from core.PartidaCore import PartidaCore
 from core.ScrapWorkCore import ScrapWorkCore
 from extratores.MotorExtracao import MotorExtracao
@@ -27,12 +29,14 @@ class ScraperTest(unittest.TestCase):
         self.assertTrue(h1 == h1_teste)
 
         h3 = (HashString().encode("/futebol/africa-do-sul/primeira-liga/"))
-        h3_teste = (HashString().encode("/futebol/africa-do-sul/primeira-liga"))
+        h3_teste = (HashString().encode(
+            "/futebol/africa-do-sul/primeira-liga"))
 
         self.assertTrue(h3 != h3_teste)
 
         h2 = (HashString().encode("/futebol/africa-do-sul/primeira-liga/"))
-        h2_teste = (HashString().encode("/futebol/africa-do-sul/primeira-liga/"))
+        h2_teste = (HashString().encode(
+            "/futebol/africa-do-sul/primeira-liga/"))
 
         self.assertTrue(h2 == h2_teste)
 
@@ -50,25 +54,29 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrair_dados_competicao(self):
         scraper = ScraperCompeticao()
-        compet = scraper.getDadosCompeticao("/futebol/africa-do-sul/primeira-liga/")
+        compet = scraper.getDadosCompeticao(
+            "/futebol/africa-do-sul/primeira-liga/")
         print(compet)
         self.assertTrue(compet != None)
 
     def teste_extrair_lista_edicoes_competicao(self):
         scraper = ScraperEdicaoCompeticao()
-        lista = scraper.getListaEdicoesCompeticao("/futebol/africa-do-sul/primeira-liga/")
+        lista = scraper.getListaEdicoesCompeticao(
+            "/futebol/africa-do-sul/primeira-liga/")
         print(lista)
         self.assertTrue(len(lista) > 0)
 
     def teste_extrair_dados_edicao_competicao(self):
         scraper = ScraperEdicaoCompeticao()
-        edicao = scraper.getDadosEdicaoCompeticao("/futebol/africa-do-sul/primeira-liga-2012-2013/")
+        edicao = scraper.getDadosEdicaoCompeticao(
+            "/futebol/africa-do-sul/primeira-liga-2012-2013/")
         print(edicao)
         self.assertTrue(edicao != None)
 
     def teste_extrair_lista_equipes_edicao_competicao(self):
         scraper = ScraperEquipe()
-        lista = scraper.getListaEquipesEdicaoCompeticao("/futebol/africa-do-sul/primeira-liga/")
+        lista = scraper.getListaEquipesEdicaoCompeticao(
+            "/futebol/africa-do-sul/primeira-liga/")
         print(lista)
         self.assertTrue(len(lista) > 0)
 
@@ -80,14 +88,16 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrair_dados_partida(self):
         scraper = ScraperPartida()
-        partida = scraper.getDadosPartida("/jogo/vLUVP2zt/")  # 0QqMMPUm ou jNK3xpne
+        partida = scraper.getDadosPartida(
+            "/jogo/vLUVP2zt/")  # 0QqMMPUm ou jNK3xpne
         print(partida)
         scraper.finalizarWebDriver()
         self.assertTrue(partida != None)
 
     def teste_extrair_lista_partidas_edicao_competicao(self):
         scraper = ScraperPartida()
-        lista = scraper.getListaPartidasEdicaoCompeticao("/futebol/africa-do-sul/primeira-liga/")
+        lista = scraper.getListaPartidasEdicaoCompeticao(
+            "/futebol/africa-do-sul/primeira-liga/")
         print(lista)
         scraper.finalizarWebDriver()
         self.assertTrue(len(lista) > 0)
@@ -106,7 +116,8 @@ class ScraperTest(unittest.TestCase):
     def teste_extrator_lista_competicoes_pais(self):
         objectId = HashString().encode("/futebol/brasil/")
         doc = Collection("scrap_work").get_documento_por_id(objectId)
-        motor = MotorExtracao(MotorExtracao.Acao.SCRAPING_COMPETICOES, 0, 1, [])
+        motor = MotorExtracao(
+            MotorExtracao.Acao.SCRAPING_COMPETICOES, 0, 1, [])
         scrapPais = ScrapWork(doc)
         resultado = motor.scrapListaCompeticoesPais(scrapPais)
         print(resultado)
@@ -114,14 +125,16 @@ class ScraperTest(unittest.TestCase):
     def teste_extrator_lista_edicoes_competicoes(self):
         objectId = HashString().encode("/futebol/brasil/campeonato-paulista/")
         doc = Collection("scrap_work").get_documento_por_id(objectId)
-        motor = MotorExtracao(MotorExtracao.Acao.SCRAPING_EDICOES_COMPETICAO, 0, 1, [])
+        motor = MotorExtracao(
+            MotorExtracao.Acao.SCRAPING_EDICOES_COMPETICAO, 0, 1, [])
         scrapCompeticao = ScrapWork(doc)
         resultado = motor.scrapListaEdicoesCompeticoes(scrapCompeticao)
         print(resultado)
 
     def teste_extrator_edicao_mais_recente_competicao(self):
         extrator = ScraperEdicaoCompeticao()
-        edicao = extrator.getEdicaoMaisRecenteCompeticao("/futebol/brasil/campeonato-paulista/")
+        edicao = extrator.getEdicaoMaisRecenteCompeticao(
+            "/futebol/brasil/campeonato-paulista/")
         print(edicao)
 
     def teste_extrator_lista_equipes_edicao_competicao(self):
@@ -154,7 +167,8 @@ class ScraperTest(unittest.TestCase):
         objectId = HashString().encode("/futebol/africa-do-sul/copa-sul-africana-2016-2017/")
         scrap = ScrapWorkCore().getScrapWorkById(objectId)
 
-        motor = MotorExtracao(MotorExtracao.Acao.SALVAR_EDICAO_COMPETICAO, 0, 1, [])
+        motor = MotorExtracao(
+            MotorExtracao.Acao.SALVAR_EDICAO_COMPETICAO, 0, 1, [])
 
         ret = motor.salvarEdicaoCompeticao(scrap)
 
@@ -191,12 +205,14 @@ class ScraperTest(unittest.TestCase):
 
     def teste_conversao_data(self):
         date = datetime.strptime("2019-02-02 12:15", "%Y-%m-%d %H:%M")
-        timezone_off_set = DateTimeHandler().local_time_offset(time.mktime(date.timetuple()))
+        timezone_off_set = DateTimeHandler().local_time_offset(
+            time.mktime(date.timetuple()))
         self.assertTrue(timezone_off_set == -3)
 
     def teste_get_partidas_dia(self):
         partidaCore = PartidaCore()
-        data_inicio = datetime.strftime(datetime.today(), "%Y-%m-%d") + " 00:00:00"
+        data_inicio = datetime.strftime(
+            datetime.today(), "%Y-%m-%d") + " 00:00:00"
         data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
         data_fim = datetime.now()
 
@@ -205,7 +221,8 @@ class ScraperTest(unittest.TestCase):
         filtrosPartida["dataHoraInicio"] = data_inicio
         filtrosPartida["dataHoraFim"] = data_fim
         filtrosPartida["status"].append(Partida.Status.AGENDADO.name)
-        filtrosPartida["status"].append(Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
+        filtrosPartida["status"].append(
+            Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
         filtrosPartida["status"].append(Partida.Status.EM_ANDAMENTO.name)
         filtrosPartida["status"].append(Partida.Status.PRIMEIRO_TEMPO.name)
         filtrosPartida["status"].append(Partida.Status.INTERVALO.name)

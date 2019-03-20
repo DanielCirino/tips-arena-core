@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 from enum import Enum
@@ -19,7 +20,7 @@ class ScraperPartida(Scraper):
             Scraper.__init__(self)
             self.utils = UtilBll()
             self.CASAS_DECIMAIS = 3
-        except Exception as  e:
+        except Exception as e:
             print(e.args[0])
 
     def get_lista_ids_partida(self):
@@ -28,14 +29,17 @@ class ScraperPartida(Scraper):
             CSS_LOADING = "#preload"
             CSS_LINHAS_PARTIDA = "tr[id^=g_1_]"
 
-            linkListarMais = self.webDriver.find_element_by_css_selector(CSS_LINK_LISTAR_MAIS)
+            linkListarMais = self.webDriver.find_element_by_css_selector(
+                CSS_LINK_LISTAR_MAIS)
 
             while linkListarMais.is_displayed():
                 linkListarMais.click()
                 self.aguardarCarregamentoPagina(CSS_LOADING)
-                linkListarMais = self.webDriver.find_element_by_css_selector(CSS_LINK_LISTAR_MAIS)
+                linkListarMais = self.webDriver.find_element_by_css_selector(
+                    CSS_LINK_LISTAR_MAIS)
 
-            linhasHtml = self.webDriver.find_elements_by_css_selector(CSS_LINHAS_PARTIDA)
+            linhasHtml = self.webDriver.find_elements_by_css_selector(
+                CSS_LINHAS_PARTIDA)
             listaIdPartida = []
 
             for item in linhasHtml:
@@ -63,7 +67,8 @@ class ScraperPartida(Scraper):
 
             listaPartidasFinalizadas = self.get_lista_ids_partida()
 
-            linkPartidasAgendadas = self.webDriver.find_element_by_css_selector(CSS_LINK_PARTIDAS_AGENDADAS)
+            linkPartidasAgendadas = self.webDriver.find_element_by_css_selector(
+                CSS_LINK_PARTIDAS_AGENDADAS)
             linkPartidasAgendadas.click()
             self.aguardarCarregamentoPagina(CSS_LOADING)
 
@@ -95,7 +100,8 @@ class ScraperPartida(Scraper):
             while cont_dia < 0:
                 cont_dia += 1
                 self.aguardarCarregamentoPagina(CSS_LOADING)
-                dia_anterior = self.webDriver.find_element_by_css_selector(CSS_LINK_YESTERDAY)
+                dia_anterior = self.webDriver.find_element_by_css_selector(
+                    CSS_LINK_YESTERDAY)
                 dia_anterior.click()
                 self.aguardarCarregamentoPagina(CSS_LOADING)
 
@@ -104,18 +110,21 @@ class ScraperPartida(Scraper):
 
                 self.aguardarCarregamentoPagina(CSS_LOADING)
 
-                links_competicao_oculta = self.webDriver.find_elements_by_css_selector(CSS_LINK_EXPAND_LEAGUE)
+                links_competicao_oculta = self.webDriver.find_elements_by_css_selector(
+                    CSS_LINK_EXPAND_LEAGUE)
 
                 for link in links_competicao_oculta:
                     link.click()
 
-                partidas = self.webDriver.find_elements_by_css_selector(CSS_LINHA_PARTIDA)
+                partidas = self.webDriver.find_elements_by_css_selector(
+                    CSS_LINHA_PARTIDA)
 
                 for partida in partidas:
                     id = partida.get_attribute("id").split("_")[2]
                     listaPartidas.append("/jogo/" + id + "/")
 
-                proximo_dia = self.webDriver.find_element_by_css_selector(CSS_LINK_TOMORROW)
+                proximo_dia = self.webDriver.find_element_by_css_selector(
+                    CSS_LINK_TOMORROW)
                 proximo_dia.click()
                 self.aguardarCarregamentoPagina(CSS_LOADING)
 
@@ -152,44 +161,55 @@ class ScraperPartida(Scraper):
 
             competicao = {"url": ""}
 
-            cabecalhoPartida = self.webDriver.find_element_by_css_selector(CSS_CABECALHO_PARTIDA)
-            dadosMandante = self.webDriver.find_element_by_css_selector(CSS_DADOS_MANDANTE)
-            dadosVisitante = self.webDriver.find_element_by_css_selector(CSS_DADOS_VISITANTE)
-            placarPartida = self.webDriver.find_elements_by_css_selector(CSS_PLACAR_PARTIDA)
+            cabecalhoPartida = self.webDriver.find_element_by_css_selector(
+                CSS_CABECALHO_PARTIDA)
+            dadosMandante = self.webDriver.find_element_by_css_selector(
+                CSS_DADOS_MANDANTE)
+            dadosVisitante = self.webDriver.find_element_by_css_selector(
+                CSS_DADOS_VISITANTE)
+            placarPartida = self.webDriver.find_elements_by_css_selector(
+                CSS_PLACAR_PARTIDA)
 
-            dataPartida = self.webDriver.find_element_by_css_selector(CSS_DATA_PARTIDA).text
-            partida["dataHora"] = datetime.strptime(dataPartida, "%d.%m.%Y %H:%M")
+            dataPartida = self.webDriver.find_element_by_css_selector(
+                CSS_DATA_PARTIDA).text
+            partida["dataHora"] = datetime.strptime(
+                dataPartida, "%d.%m.%Y %H:%M")
             partida["timezoneOffset"] = DateTimeHandler().local_time_offset(
                 time.mktime(partida["dataHora"].timetuple()))
 
-            statusPartida = self.webDriver.find_element_by_css_selector(CSS_STATUS_PARTIDA).text.split("-")
-            partida["status"] = self.normalizarDescricaoStatus(statusPartida[0])
+            statusPartida = self.webDriver.find_element_by_css_selector(
+                CSS_STATUS_PARTIDA).text.split("-")
+            partida["status"] = self.normalizarDescricaoStatus(
+                statusPartida[0])
 
             if len(statusPartida) > 1:
                 partida["minutos"] = statusPartida[1]
             else:
                 partida["minutos"] = ""
 
-            informacoesPartida = self.webDriver.find_elements_by_css_selector(CSS_INFO_PARTIDA)
+            informacoesPartida = self.webDriver.find_elements_by_css_selector(
+                CSS_INFO_PARTIDA)
 
             if len(informacoesPartida) == 1:
                 partida["info"] = informacoesPartida[0].text
 
             faseCompeticao = cabecalhoPartida.text.split("-")
             partida["faseCompeticao"] = "-".join(faseCompeticao[1:])
-            partida["faseCompeticao"] = self.utils.limparString(partida["faseCompeticao"])
+            partida["faseCompeticao"] = self.utils.limparString(
+                partida["faseCompeticao"])
 
-            competicao["nome"] = cabecalhoPartida.text.split(":")[1].split(" - ")[0]
+            competicao["nome"] = cabecalhoPartida.text.split(":")[
+                1].split(" - ")[0]
 
             urlCompeticao = self.getUrlFromOnClick(
                 cabecalhoPartida.find_element_by_css_selector("span a").get_attribute("onclick"))
 
             urlEquipeMandante = dadosMandante.get_attribute("onclick").split("(")[1].split(")")[
-                                    0].replace(
+                0].replace(
                 "'", "") + "/"
 
             urlEquipeVisitante = dadosVisitante.get_attribute("onclick").split("(")[1].split(")")[
-                                     0].replace(
+                0].replace(
                 "'",
                 "") + "/"
 
@@ -200,15 +220,23 @@ class ScraperPartida(Scraper):
             equipeMandante = ScraperEquipe().getDadosEquipe(urlEquipeMandante)
             equipeVisitante = ScraperEquipe().getDadosEquipe(urlEquipeVisitante)
 
-            placarMandantePrimeiroTempo = self.webDriver.find_elements_by_css_selector(".p1_home")
-            placarMandanteSegundoTempo = self.webDriver.find_elements_by_css_selector(".p2_home")
-            placarMandanteProrrogacao = self.webDriver.find_elements_by_css_selector(".p3_home")
-            placarMandantePenalties = self.webDriver.find_elements_by_css_selector(".p3_home")
+            placarMandantePrimeiroTempo = self.webDriver.find_elements_by_css_selector(
+                ".p1_home")
+            placarMandanteSegundoTempo = self.webDriver.find_elements_by_css_selector(
+                ".p2_home")
+            placarMandanteProrrogacao = self.webDriver.find_elements_by_css_selector(
+                ".p3_home")
+            placarMandantePenalties = self.webDriver.find_elements_by_css_selector(
+                ".p3_home")
 
-            placarVisitantePrimeiroTempo = self.webDriver.find_elements_by_css_selector(".p1_away")
-            placarVisitanteSegundoTempo = self.webDriver.find_elements_by_css_selector(".p2_away")
-            placarVisitanteProrrogacao = self.webDriver.find_elements_by_css_selector(".p3_away")
-            placarVisitantePenalties = self.webDriver.find_elements_by_css_selector(".p3_away")
+            placarVisitantePrimeiroTempo = self.webDriver.find_elements_by_css_selector(
+                ".p1_away")
+            placarVisitanteSegundoTempo = self.webDriver.find_elements_by_css_selector(
+                ".p2_away")
+            placarVisitanteProrrogacao = self.webDriver.find_elements_by_css_selector(
+                ".p3_away")
+            placarVisitantePenalties = self.webDriver.find_elements_by_css_selector(
+                ".p3_away")
 
             if len(placarPartida) == 0:
                 placarPartida = ["", ""]
@@ -259,13 +287,19 @@ class ScraperPartida(Scraper):
                 placarVisitantePenalties = ""
 
             partida["placarFinal"] = ":".join(placarPartida)
-            partida["placarPrimeiroTempo"] = placarMandantePrimeiroTempo + ":" + placarVisitantePrimeiroTempo
-            partida["placarSegundoTempo"] = placarMandanteSegundoTempo + ":" + placarVisitanteSegundoTempo
-            partida["placarProrrogacao"] = placarMandanteProrrogacao + ":" + placar_visitante_prorrogacao
-            partida["placarPenalties"] = placarMandantePenalties + ":" + placarVisitantePenalties
+            partida["placarPrimeiroTempo"] = placarMandantePrimeiroTempo + \
+                ":" + placarVisitantePrimeiroTempo
+            partida["placarSegundoTempo"] = placarMandanteSegundoTempo + \
+                ":" + placarVisitanteSegundoTempo
+            partida["placarProrrogacao"] = placarMandanteProrrogacao + \
+                ":" + placar_visitante_prorrogacao
+            partida["placarPenalties"] = placarMandantePenalties + \
+                ":" + placarVisitantePenalties
 
-            partida["idEquipeMandante"] = HashString().encode(equipeMandante["url"])
-            partida["idEquipeVisitante"] = HashString().encode(equipeVisitante["url"])
+            partida["idEquipeMandante"] = HashString().encode(
+                equipeMandante["url"])
+            partida["idEquipeVisitante"] = HashString().encode(
+                equipeVisitante["url"])
 
             partida["competicao"] = competicao
             partida["equipeMandante"] = equipeMandante
@@ -276,9 +310,11 @@ class ScraperPartida(Scraper):
                                self.utils.limparString(equipeVisitante["nome"])
                                ]
 
-            linksInformacoesDisponiveis = self.webDriver.find_elements_by_css_selector("a[id^=a-match-]")
+            linksInformacoesDisponiveis = self.webDriver.find_elements_by_css_selector(
+                "a[id^=a-match-]")
 
-            informacoesDiponiveis = self.checkInformacoesDisponiveis(linksInformacoesDisponiveis)
+            informacoesDiponiveis = self.checkInformacoesDisponiveis(
+                linksInformacoesDisponiveis)
 
             partida["timelineDisponivel"] = informacoesDiponiveis["timeline"]
             partida["estatisticasDisponiveis"] = informacoesDiponiveis["statistics"]
@@ -292,9 +328,11 @@ class ScraperPartida(Scraper):
 
             if partida["timelineDisponivel"] and extrairTimeline:
 
-                html_timeline = self.webDriver.find_elements_by_css_selector("#summary-content>div.detailMS")
+                html_timeline = self.webDriver.find_elements_by_css_selector(
+                    "#summary-content>div.detailMS")
                 if len(html_timeline) > 0:
-                    partida["timeline"] = self.get_timeline_partida(html_timeline[0].get_attribute('innerHTML'))
+                    partida["timeline"] = self.get_timeline_partida(
+                        html_timeline[0].get_attribute('innerHTML'))
 
             if partida["estatisticasDisponiveis"] and extrairStats:
                 partida["estatisticas"] = self.get_estatisticas_partida()
@@ -346,7 +384,8 @@ class ScraperPartida(Scraper):
             mercadosDisponiveis = self.getMercadosApostaDisponiveis()
 
             for mercado in mercadosDisponiveis:
-                link_mercado = self.webDriver.find_element_by_css_selector("#{}>span>a".format(mercado["id_link"]))
+                link_mercado = self.webDriver.find_element_by_css_selector(
+                    "#{}>span>a".format(mercado["id_link"]))
                 link_mercado.click()
                 odds = self.getOddsPorMercado(mercado)
 
@@ -382,12 +421,14 @@ class ScraperPartida(Scraper):
             CSS_LINK_ODDS = "#a-match-odds-comparison"
             CSS_LISTA_ODDS = "#tab-match-odds-comparison>#odds-comparison-content>.odds-comparison-bookmark >ul.ifmenu>li"
 
-            linkOdds = self.webDriver.find_element_by_css_selector(CSS_LINK_ODDS)
+            linkOdds = self.webDriver.find_element_by_css_selector(
+                CSS_LINK_ODDS)
             linkOdds.click()
 
             self.aguardarCarregamentoPagina("#odds-comparison-preload")
 
-            listaOdds = self.webDriver.find_elements_by_css_selector(CSS_LISTA_ODDS)
+            listaOdds = self.webDriver.find_elements_by_css_selector(
+                CSS_LISTA_ODDS)
             listaBookmakers = []
 
             for odd in listaOdds:
@@ -440,47 +481,55 @@ class ScraperPartida(Scraper):
             listaOdds = []
 
             if mercado["tipo"] == self.TipoMercado.RESULTADO:
-                tabelaOdds = self.webDriver.find_elements_by_css_selector(CSS_TABELA_ODDS_RESULTADO)
+                tabelaOdds = self.webDriver.find_elements_by_css_selector(
+                    CSS_TABELA_ODDS_RESULTADO)
                 listaOdds = self.get_odds_resultado(tabelaOdds)
 
             if mercado["tipo"] == self.TipoMercado.UNDER_OVER:
-                tabelaOdds = self.webDriver.find_elements_by_css_selector(CSS_TABELA_ODDS_UNDER_OVER)
+                tabelaOdds = self.webDriver.find_elements_by_css_selector(
+                    CSS_TABELA_ODDS_UNDER_OVER)
 
                 for tabela in tabelaOdds:
                     qtd_gols = tabela.get_attribute("id").split("_")[-1]
 
                     if ".5" in qtd_gols:
-                        odds = self.get_odds_under_over(tabela.find_elements_by_css_selector("tbody>tr"), qtd_gols)
+                        odds = self.get_odds_under_over(
+                            tabela.find_elements_by_css_selector("tbody>tr"), qtd_gols)
                         listaOdds.append(odds)
 
             if mercado["tipo"] == self.TipoMercado.DNB:
-                tabelaOdds = self.webDriver.find_elements_by_css_selector(CSS_TABELA_ODDS_DNB)
+                tabelaOdds = self.webDriver.find_elements_by_css_selector(
+                    CSS_TABELA_ODDS_DNB)
                 listaOdds = self.get_odds_draw_no_bet(tabelaOdds)
 
             if mercado["tipo"] == self.TipoMercado.BTTS:
-                tabelaOdds = self.webDriver.find_elements_by_css_selector(CSS_TABELA_ODDS_BTTS)
+                tabelaOdds = self.webDriver.find_elements_by_css_selector(
+                    CSS_TABELA_ODDS_BTTS)
                 listaOdds = self.get_odds_btts(tabelaOdds)
 
             if mercado["tipo"] == self.TipoMercado.PLACAR:
-                tabelaOdds = self.webDriver.find_elements_by_css_selector(CSS_TABELA_ODDS_PLACAR)
+                tabelaOdds = self.webDriver.find_elements_by_css_selector(
+                    CSS_TABELA_ODDS_PLACAR)
 
                 for tabela in tabelaOdds:
-                    odds = self.get_odds_placar_exato(tabela.find_elements_by_css_selector("tbody>tr"))
+                    odds = self.get_odds_placar_exato(
+                        tabela.find_elements_by_css_selector("tbody>tr"))
                     listaOdds.append(odds)
 
             if mercado["tipo"] == self.TipoMercado.ODD_EVEN:
-                tabelaOdds = self.webDriver.find_elements_by_css_selector(CSS_TABELA_ODDS_ODD_EVEN)
+                tabelaOdds = self.webDriver.find_elements_by_css_selector(
+                    CSS_TABELA_ODDS_ODD_EVEN)
                 listaOdds = self.get_odds_odd_even(tabelaOdds)
 
             if mercado["tipo"] == self.TipoMercado.DUPLA_CHANCE:
-                tabelaOdds = self.webDriver.find_elements_by_css_selector(CSS_TABELA_ODDS_DUPLA_CHANCE)
+                tabelaOdds = self.webDriver.find_elements_by_css_selector(
+                    CSS_TABELA_ODDS_DUPLA_CHANCE)
                 listaOdds = self.get_odds_dupla_chance(tabelaOdds)
 
             return listaOdds
 
         except Exception as e:
             print(e.args[0])
-
 
     def get_odds_resultado(self, bookmakers):
 
@@ -534,7 +583,6 @@ class ScraperPartida(Scraper):
                 "visitante": round(soma_odds_visitante / total_odds, self.CASAS_DECIMAIS)
             }
 
-
         except Exception as e:
             print(e.args[0])
             return {}
@@ -575,7 +623,8 @@ class ScraperPartida(Scraper):
 
             for linha in tabela_odds:
                 campos = linha.find_elements_by_css_selector("td>span")
-                placar = linha.find_element_by_css_selector("td.correct_score").text
+                placar = linha.find_element_by_css_selector(
+                    "td.correct_score").text
 
                 valor_odd = campos[0].text.replace("-", "0")
                 soma_odds += float(valor_odd)
@@ -672,7 +721,6 @@ class ScraperPartida(Scraper):
                 "contraEmpate": round(soma_odds_contra_empate / total_odds, self.CASAS_DECIMAIS)
             }
 
-
         except Exception as e:
             print(e.args[0])
             return {}
@@ -707,7 +755,8 @@ class ScraperPartida(Scraper):
 
                     evento_partida["tipo"] = \
                         html.select(".icon-box span")[0].attrs["class"][1]
-                    evento_partida["minutos"] = html.select(".time-box,.time-box-wide")[0].getText()
+                    evento_partida["minutos"] = html.select(
+                        ".time-box,.time-box-wide")[0].getText()
 
                     participante_01 = {"nome": "", "url": ""}
                     participante_02 = {"nome": "", "url": ""}
@@ -716,13 +765,15 @@ class ScraperPartida(Scraper):
                         ".participant-name a,.substitution-in-name a,.substitution-out-name a")
 
                     if len(html_participantes) >= 1:
-                        participante_01["nome"] = self.utils.limparString(html_participantes[0].getText())
+                        participante_01["nome"] = self.utils.limparString(
+                            html_participantes[0].getText())
 
                         participante_01["url"] = self.getUrlFromOnClick(
                             html_participantes[0].attrs["onclick"])
 
                     if len(html_participantes) == 2:
-                        participante_02["nome"] = self.utils.limparString(html_participantes[1].getText())
+                        participante_02["nome"] = self.utils.limparString(
+                            html_participantes[1].getText())
 
                         participante_02["url"] = self.getUrlFromOnClick(
                             html_participantes[1].attrs["onclick"])
@@ -730,7 +781,8 @@ class ScraperPartida(Scraper):
                     evento_partida["participante_01"] = participante_01
                     evento_partida["participante_02"] = participante_02
 
-                    evento_partida["tipo"] = self.normalizarDescricaoEvento(evento_partida["tipo"])
+                    evento_partida["tipo"] = self.normalizarDescricaoEvento(
+                        evento_partida["tipo"])
 
                     lista_eventos.append(evento_partida)
                     contador_evento += 1
@@ -743,22 +795,29 @@ class ScraperPartida(Scraper):
 
     def get_estatisticas_partida(self):
         try:
-            link_stats = self.webDriver.find_element_by_css_selector("#a-match-statistics")
+            link_stats = self.webDriver.find_element_by_css_selector(
+                "#a-match-statistics")
             link_stats.click()
 
             self.aguardarCarregamentoPagina("#statistics-preload")
 
             estatisticas_partida = []
-            html_stats = self.webDriver.find_elements_by_css_selector("#tab-statistics-0-statistic>.statRow")
+            html_stats = self.webDriver.find_elements_by_css_selector(
+                "#tab-statistics-0-statistic>.statRow")
 
             for html in html_stats:
-                estatistica = {"desc": "", "valor_mandante": "", "valor_visitante": ""}
+                estatistica = {"desc": "",
+                               "valor_mandante": "", "valor_visitante": ""}
 
-                campos_estatisca = html.find_elements_by_css_selector(".statTextGroup>.statText")
+                campos_estatisca = html.find_elements_by_css_selector(
+                    ".statTextGroup>.statText")
 
-                estatistica["desc"] = self.utils.limparString(campos_estatisca[1].text)
-                estatistica["valor_mandante"] = self.utils.limparString(campos_estatisca[0].text)
-                estatistica["valor_visitante"] = self.utils.limparString(campos_estatisca[2].text)
+                estatistica["desc"] = self.utils.limparString(
+                    campos_estatisca[1].text)
+                estatistica["valor_mandante"] = self.utils.limparString(
+                    campos_estatisca[0].text)
+                estatistica["valor_visitante"] = self.utils.limparString(
+                    campos_estatisca[2].text)
 
                 estatisticas_partida.append(estatistica)
 

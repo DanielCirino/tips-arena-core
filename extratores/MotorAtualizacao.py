@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 import threading
@@ -31,8 +32,10 @@ class MotorAtualizacao(threading.Thread):
             self.listaProcessamento = listaProcessamento
             self.totalRegistros = len(listaProcessamento)
 
-            self.rangeInicio = idThread * round(len(self.listaProcessamento) / self.totalThreads)
-            self.rangeFim = ((idThread + 1) * round(len(self.listaProcessamento) / self.totalThreads)) - 1
+            self.rangeInicio = idThread * \
+                round(len(self.listaProcessamento) / self.totalThreads)
+            self.rangeFim = (
+                (idThread + 1) * round(len(self.listaProcessamento) / self.totalThreads)) - 1
 
             if self.rangeFim + 1 > len(self.listaProcessamento):
                 self.rangeFim = len(self.listaProcessamento) - 1
@@ -155,7 +158,8 @@ class MotorAtualizacao(threading.Thread):
             scrapWorkCore = ScrapWorkCore()
             horaInicio = datetime.now()
             partidas = ScraperPartida().getListaPartidasEdicaoCompeticao(scrapEdicao.url)
-            totalPartidas = len(partidas["agendadas"]) + len(partidas["finalizadas"])
+            totalPartidas = len(partidas["agendadas"]) + \
+                len(partidas["finalizadas"])
 
             scrapEdicao.target = totalPartidas
             scrapEdicao.status = ScrapWork.Status.PROCESSANDO.name
@@ -258,7 +262,8 @@ class MotorAtualizacao(threading.Thread):
             ret = partidaCore.salvarPartida(partidaAtualizada)
 
             if ret:
-                partidaCore.analisarAlteracoesPartida(partida, partidaAtualizada)
+                partidaCore.analisarAlteracoesPartida(
+                    partida, partidaAtualizada)
 
             return ret
         except Exception as e:
@@ -276,7 +281,8 @@ class MotorAtualizacao(threading.Thread):
                     partidaJaCadastrada = True
                     break
 
-            if partidaJaCadastrada: return True
+            if partidaJaCadastrada:
+                return True
 
             motorExtracao = MotorExtracao()
             hashString = HashString()
@@ -353,7 +359,6 @@ class MotorAtualizacao(threading.Thread):
 
             self.extrator.finalizarWebDriver()
 
-
         elif self.acao == self.Acao.ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS:
             self.extrator = ScraperPartida()
 
@@ -372,10 +377,12 @@ class MotorAtualizacao(threading.Thread):
             self.extrator = ScraperPartida()
             partidaCore = PartidaCore()
 
-            data_inicio = datetime.strftime(datetime.now() - timedelta(days=3), "%Y-%m-%d") + " 00:00:00"
+            data_inicio = datetime.strftime(
+                datetime.now() - timedelta(days=3), "%Y-%m-%d") + " 00:00:00"
             data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
 
-            data_fim = datetime.strftime(datetime.now() + timedelta(days=3), "%Y-%m-%d") + " 23:59:59"
+            data_fim = datetime.strftime(
+                datetime.now() + timedelta(days=3), "%Y-%m-%d") + " 23:59:59"
             data_fim = datetime.strptime(data_fim, "%Y-%m-%d %H:%M:%S")
 
             filtrosPartida = partidaCore.getOpcoesFiltro()

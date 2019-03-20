@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 from enum import Enum
@@ -57,8 +58,6 @@ class Partida(object):
 
         for key in documento:
             setattr(self, key, documento[key])
-
-
 
     class Status(Enum):
         AGENDADO = 1

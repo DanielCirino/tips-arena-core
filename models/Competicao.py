@@ -1,7 +1,9 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
+
 class Competicao(object):
-    def __init__(self, documento:dict={}):
+    def __init__(self, documento: dict = {}):
         self._id = ""
         self.nome = ""
         self.pais = ""
@@ -12,5 +14,3 @@ class Competicao(object):
 
         for key in documento:
             setattr(self, key, documento[key])
-
-

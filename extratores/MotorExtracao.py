@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 import threading
@@ -36,8 +37,10 @@ class MotorExtracao(threading.Thread):
         self.lista_processamento = lista_processamento
         self.total_registros = len(lista_processamento)
 
-        self.range_inicio = id_thread * round(len(self.lista_processamento) / self.total_threads)
-        self.range_fim = ((id_thread + 1) * round(len(self.lista_processamento) / self.total_threads)) - 1
+        self.range_inicio = id_thread * \
+            round(len(self.lista_processamento) / self.total_threads)
+        self.range_fim = (
+            (id_thread + 1) * round(len(self.lista_processamento) / self.total_threads)) - 1
 
         if self.range_fim + 1 > len(self.lista_processamento):
             self.range_fim = len(self.lista_processamento) - 1
@@ -85,7 +88,8 @@ class MotorExtracao(threading.Thread):
             contadorErro = 0
 
             for item in listaUrls:
-                ret = self.salvarScrap(item["url"], item["seq"], tipo, status, idPai)
+                ret = self.salvarScrap(
+                    item["url"], item["seq"], tipo, status, idPai)
                 if ret:
                     contadorSucesso += 1
                 else:
@@ -236,8 +240,10 @@ class MotorExtracao(threading.Thread):
         try:
 
             horaInicio = datetime.now()
-            partidas = self.extrator.getListaPartidasEdicaoCompeticao(scrapEdicao.url)
-            totalPartidas = len(partidas["agendadas"]) + len(partidas["finalizadas"])
+            partidas = self.extrator.getListaPartidasEdicaoCompeticao(
+                scrapEdicao.url)
+            totalPartidas = len(partidas["agendadas"]) + \
+                len(partidas["finalizadas"])
 
             scrapEdicao.target = totalPartidas
             scrapEdicao.status = ScrapWork.Status.PROCESSANDO.name
@@ -404,7 +410,8 @@ class MotorExtracao(threading.Thread):
 
             for i in range(self.range_inicio, self.range_fim + 1):
                 url = self.lista_processamento[i]
-                ret = self.salvarScrap(url, ScrapWork.Tipo.PAIS.name, ScrapWork.Status.SCRAPING_COMPETICOES.name)
+                ret = self.salvarScrap(
+                    url, ScrapWork.Tipo.PAIS.name, ScrapWork.Status.SCRAPING_COMPETICOES.name)
 
                 if ret:
                     self.total_processado += 1

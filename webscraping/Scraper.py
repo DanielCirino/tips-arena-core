@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 import json
@@ -34,7 +35,7 @@ class Scraper:
         try:
             if self.webDriver is not None:
                 self.webDriver.delete_all_cookies()
-                self.webDriver.execute_script( "localStorage.clear();")
+                self.webDriver.execute_script("localStorage.clear();")
                 self.webDriver.quit()
                 return True
         except Exception as e:
@@ -57,19 +58,22 @@ class Scraper:
                 #     desired_capabilities=DesiredCapabilities.FIREFOX)
 
         except Exception as e:
-            print("Erro ao iniciar webdriver - " + e.args[0] + " - " + self.pathToDriver)
+            print("Erro ao iniciar webdriver - " +
+                  e.args[0] + " - " + self.pathToDriver)
             print(e.args[0])
 
     def aguardarCarregamentoPagina(self, cssSelector):
         try:
-            carregando = self.webDriver.find_element_by_css_selector(cssSelector)
+            carregando = self.webDriver.find_element_by_css_selector(
+                cssSelector)
             tempoEspera = 0.0
 
             while carregando.is_displayed():
                 time.sleep(0.5)
                 tempoEspera += 0.5
 
-                carregando = self.webDriver.find_element_by_css_selector(cssSelector)
+                carregando = self.webDriver.find_element_by_css_selector(
+                    cssSelector)
 
                 if tempoEspera >= 10:
                     # print("[Erro][Esperou mais de 10 segundos, time out...]")
@@ -108,12 +112,14 @@ class Scraper:
             linksCabecalho = []
 
             for item in cabecalhoCompeticao:
-                linksCabecalho.append({"text": item.text, "href": item.attrs["href"]})
+                linksCabecalho.append(
+                    {"text": item.text, "href": item.attrs["href"]})
 
             textoCabecalho = html.select(CSS_TEXTO_CABECALHO)
 
             if len(textoCabecalho) > 0:
-                linksCabecalho.append({"text": textoCabecalho[0].text, "href": "#"})
+                linksCabecalho.append(
+                    {"text": textoCabecalho[0].text, "href": "#"})
 
             return linksCabecalho
         except Exception as e:

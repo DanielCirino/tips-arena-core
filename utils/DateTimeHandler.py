@@ -1,8 +1,10 @@
+#!/usr/local/bin/python3
+# -*- coding: utf-8 -*-
+
 import time
 
 
 class DateTimeHandler:
-
 
     def local_time_offset(self, t=None):
         offset = 0
@@ -14,6 +16,5 @@ class DateTimeHandler:
             offset = time.altzone
         else:
             offset = time.timezone
-
 
         return int(offset / 60 / 60)

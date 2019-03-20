@@ -1,3 +1,6 @@
+#!/usr/local/bin/python3
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 
 from utils.HashString import HashString

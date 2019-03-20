@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
@@ -59,7 +60,8 @@ class ScrapWorkCore:
             else:
                 filter["status"] = {"$in": filter["status"]}
 
-        docs = self.collection.listar_documentos(filter, [("prioridadeExtracao", 1)], limit, skip)
+        docs = self.collection.listar_documentos(
+            filter, [("prioridadeExtracao", 1)], limit, skip)
 
         for doc in docs:
             listaScraps.append(ScrapWork(doc))
@@ -78,4 +80,3 @@ class ScrapWorkCore:
         except Exception as e:
             print(e.args)
             return False
-

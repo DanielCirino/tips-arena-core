@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 from webscraping.Scraper import Scraper
@@ -34,7 +35,8 @@ class ScraperCompeticao(Scraper):
                               "nome": linksCabecalho[1]["text"]}
 
             anoEdicao = linksCabecalho[3]["text"]
-            urlCompeticao = linksCabecalho[2]["href"][:-1] + "-" + anoEdicao.replace("/", "-") + "/"
+            urlCompeticao = linksCabecalho[2]["href"][:-
+                                                      1] + "-" + anoEdicao.replace("/", "-") + "/"
 
             nomeCompeticao = UtilBll().limparString(linksCabecalho[2]["text"])
             logoCompeticao = documentoHtml.select(".tournament-logo")
@@ -61,7 +63,8 @@ class ScraperCompeticao(Scraper):
         try:
             CSS_LINHAS_EDICAO = "#tournament-page-archiv table tbody tr"
             listaEdicoes = []
-            documentoHtml = self.getHtmlFromUrl(self.URL_BASE + urlCompeticao + "arquivo/")
+            documentoHtml = self.getHtmlFromUrl(
+                self.URL_BASE + urlCompeticao + "arquivo/")
 
             linksCompeticao = documentoHtml.select(CSS_LINHAS_EDICAO)
 
@@ -75,9 +78,11 @@ class ScraperCompeticao(Scraper):
                 equipeVencedora = {"nome": "", "url": ""}
 
                 if len(links) > 1:
-                    equipeVencedora = {"nome": links[1].text, "url": links[1]["href"]}
+                    equipeVencedora = {
+                        "nome": links[1].text, "url": links[1]["href"]}
 
-                listaEdicoes.append({"url": urlEdicao, "equipeVencedora": equipeVencedora, "seq": sequencia})
+                listaEdicoes.append(
+                    {"url": urlEdicao, "equipeVencedora": equipeVencedora, "seq": sequencia})
                 sequencia += 1
 
             return listaEdicoes

@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 from webscraping.Scraper import Scraper
@@ -9,7 +10,8 @@ class ScraperEdicaoCompeticao(Scraper):
         try:
             CSS_LISTA_EDICOES = "#tournament-page-archiv table tbody tr"
             listaEdicoes = []
-            documentoHtml = self.getHtmlFromUrl(self.URL_BASE + urlCompeticao + "arquivo/")
+            documentoHtml = self.getHtmlFromUrl(
+                self.URL_BASE + urlCompeticao + "arquivo/")
 
             linksCompeticao = documentoHtml.select(CSS_LISTA_EDICOES)
 
@@ -23,9 +25,11 @@ class ScraperEdicaoCompeticao(Scraper):
                 equipeVencedora = {"nome": "", "url": ""}
 
                 if len(links) > 1:
-                    equipeVencedora = {"nome": links[1].text, "url": links[1]["href"]}
+                    equipeVencedora = {
+                        "nome": links[1].text, "url": links[1]["href"]}
 
-                listaEdicoes.append({"url": urlEdicao, "equipeVencedora": equipeVencedora, "seq": sequencia})
+                listaEdicoes.append(
+                    {"url": urlEdicao, "equipeVencedora": equipeVencedora, "seq": sequencia})
                 sequencia += 1
 
             return listaEdicoes
@@ -42,8 +46,6 @@ class ScraperEdicaoCompeticao(Scraper):
             print(e.args)
             return None
 
-
-
     def getDadosEdicaoCompeticao(self, urlEdicao):
         try:
             documentoHtml = self.getHtmlFromUrl(self.URL_BASE + urlEdicao)
@@ -51,7 +53,8 @@ class ScraperEdicaoCompeticao(Scraper):
             linksCabecalho = self.getDadosCabecalho(documentoHtml)
 
             anoEdicao = linksCabecalho[3]["text"]
-            urlEdicao = linksCabecalho[2]["href"][:-1] + "-" + anoEdicao.replace("/", "-") + "/"
+            urlEdicao = linksCabecalho[2]["href"][:-1] + \
+                "-" + anoEdicao.replace("/", "-") + "/"
 
             competicao = {
                 "nome": linksCabecalho[2]["text"],

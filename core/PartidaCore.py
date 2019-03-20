@@ -1,7 +1,8 @@
+#!/usr/local/bin/python3
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
-
 from bson import json_util
-
 from utils.HashString import HashString
 from repository.Collection import Collection
 from models.Partida import Partida

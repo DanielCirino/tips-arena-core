@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 from webscraping.Scraper import Scraper
@@ -9,13 +10,15 @@ class ScraperEquipe(Scraper):
     def getListaEquipesEdicaoCompeticao(self, urlEdicao):
         try:
             CSS_LINKS_EQUIPE = "td.tp>a"
-            documentoHtml = self.getHtmlFromUrl(self.URL_BASE + urlEdicao + "equipes/")
+            documentoHtml = self.getHtmlFromUrl(
+                self.URL_BASE + urlEdicao + "equipes/")
             linksEquipe = documentoHtml.select(CSS_LINKS_EQUIPE)
 
             listaEquipes = []
 
             for link in linksEquipe:
-                listaEquipes.append({"nome": link.text, "url": link["href"] + "/", "seq": 0})
+                listaEquipes.append(
+                    {"nome": link.text, "url": link["href"] + "/", "seq": 0})
 
             return listaEquipes
         except Exception as e:
@@ -29,7 +32,7 @@ class ScraperEquipe(Scraper):
             linksCabecalho = self.getDadosCabecalho(documentoHtml)
 
             paisEquipe = {"nome": linksCabecalho[1]["text"],
-                           "url": linksCabecalho[1]["href"]}
+                          "url": linksCabecalho[1]["href"]}
 
             nomeEquipe = linksCabecalho[2]["text"]
 

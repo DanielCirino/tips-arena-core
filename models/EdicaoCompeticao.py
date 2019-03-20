@@ -1,9 +1,11 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 from enum import Enum
 
+
 class EdicaoCompeticao:
-    def __init__(self, documento:dict={}):
+    def __init__(self, documento: dict = {}):
         self._id = ""
         self.idCompeticao = ""
         self.ano = ""

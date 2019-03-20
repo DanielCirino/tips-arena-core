@@ -1,7 +1,9 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
+
 class Equipe:
-    def __init__(self, documento:dict={}):
+    def __init__(self, documento: dict = {}):
         self._id = ""
         self.nome = ""
         self.pais = ""

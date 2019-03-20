@@ -1,6 +1,10 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
-import hashlib,binascii
+
+import hashlib
+import binascii
 from bson.objectid import ObjectId
+
 
 class HashString():
 

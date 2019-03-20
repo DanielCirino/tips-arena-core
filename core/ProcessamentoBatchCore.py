@@ -1,9 +1,9 @@
+#!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
 from repository.Collection import Collection
 from models.ProcessamentoBatch import ProcessamentoBatch
-
 
 class ProcessamentoBatchCore:
     def __init__(self):
