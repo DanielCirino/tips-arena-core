@@ -1,13 +1,19 @@
 #!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
 
+import os
 import pymongo
-from bson.objectid import ObjectId
 
 
 class MongoClient(object):
     def __init__(self):
-        self.mongo_client = pymongo.MongoClient("mongodb://localhost:27017/")
+        databaseUri = os.environ.get("TA_MONGO_CONNECTION")
+
+        if databaseUri is None:
+            print("Variável de ambiente TA_MONGO_CONNECTION precisa ser criada.")
+            exit(0)
+
+        self.mongo_client = pymongo.MongoClient(databaseUri)
         self.database = self.mongo_client["tips_arena"]
 
     def get_collection(self, name):

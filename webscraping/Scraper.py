@@ -3,31 +3,23 @@
 
 import json
 import time
-from selenium import webdriver
-
+import os
 import requests
 from bs4 import BeautifulSoup
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
 
 class Scraper:
     def __init__(self):
-
         try:
             self.URL_BASE = "https://www.resultados.com"
             self.webDriver = None
+            self.pathToDriver = os.environ.get("TA_PATH_TO_WEBDRIVER")
 
-            self.configName = "local_mac"
-            self.driverName = "firefox"
-
-            arquivoConfiguracao = open("config/webDriver.json", "r")
-            self.__config = json.loads(arquivoConfiguracao.read())
-            arquivoConfiguracao.close()
-
-            self.pathToDriver = self.__config[self.configName]["path_to_" + self.driverName]
-
-            # self.driverHeaders = self.__config["headers"]
+            if self.pathToDriver is None:
+                print("Variável de ambiente TA_PATH_TO_WEBDRIVER precisa ser criada.")
+                exit(0)
         except Exception as e:
             print(e.args[0])
 
@@ -55,7 +47,7 @@ class Scraper:
                                                    firefox_options=options)
                 # self.webDriver = webdriver.Remote(
                 #     command_executor='http://127.0.0.1:4444/wd/hub',
-                #     desired_capabilities=DesiredCapabilities.FIREFOX)
+                #     desired_capabilities=caps)
 
         except Exception as e:
             print("Erro ao iniciar webdriver - " +

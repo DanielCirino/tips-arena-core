@@ -7,7 +7,7 @@
   "local_mac": {
     "path_to_phantomjs": "/Users/macbook_pro/Documents/DEV/web_drivers/phantomjs-2.1.1-macosx/bin/phantomjs",
     "path_to_firefox": "/Users/dev-rocks/Documents/dev-rocks/web_drivers/geckodriver",
-    "path_to_chrome": "/Users/macbook_pro/Documents/DEV/web_drivers/chromedriver"
+    "path_to_chrome": "/Users/dev-rocks/Documents/dev-rocks/web_drivers/chromedriver"
   },
   "server_01": {
     "path_to_phantomjs": "/usr/local/share/webdrivers/phantomjs",
@@ -18,3 +18,4 @@
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safa$"
   }
 }
+
