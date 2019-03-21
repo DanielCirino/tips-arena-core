@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+
 # -*- coding: utf-8 -*-
 
 import unittest
@@ -195,7 +195,7 @@ class ScraperTest(unittest.TestCase):
         self.assertTrue(ret)
 
     def teste_motor_extracao_factory(self):
-        factory = MotorFactory(2, 3, 3)
+        factory = MotorFactory(2, 1, 5)
         factory.getItensProcessamentoMotorExtracao()
 
         lista = factory.itens_processamento

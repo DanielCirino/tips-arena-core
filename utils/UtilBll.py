@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+
 # -*- coding: utf-8 -*-
 
 from math import factorial, pow, e
