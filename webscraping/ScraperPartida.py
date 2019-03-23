@@ -95,7 +95,7 @@ class ScraperPartida(Scraper):
             self.webDriver.get(self.URL_BASE)
 
             listaPartidas = []
-            cont_dia = -1
+            cont_dia = -3
 
             while cont_dia < 0:
                 cont_dia += 1
@@ -105,7 +105,7 @@ class ScraperPartida(Scraper):
                 dia_anterior.click()
                 self.aguardarCarregamentoPagina(CSS_LOADING)
 
-            while cont_dia < 2:
+            while cont_dia < 6:
                 cont_dia += 1
 
                 self.aguardarCarregamentoPagina(CSS_LOADING)
