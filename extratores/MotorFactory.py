@@ -1,9 +1,11 @@
 
 # -*- coding: utf-8 -*-
-
+import sys
+import traceback
 import time
 from enum import Enum
 from datetime import datetime, timedelta
+
 
 from core.PartidaCore import PartidaCore
 from core.ProcessamentoBatchCore import ProcessamentoBatchCore
@@ -48,7 +50,7 @@ class MotorFactory:
                 self.exibir_opcoes_motor()
 
         except Exception as e:
-            print(e.args)
+            print(traceback.format_exception(None,e, e.__traceback__,file=sys.stderr,flush=True))
             print("Erro processamento.[Motor:{}][Acao:{}]".format(self.tipo_motor, self.codigo_acao_motor))
 
     def iniciar_processamento(self):
