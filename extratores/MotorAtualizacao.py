@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 import threading
@@ -33,9 +32,9 @@ class MotorAtualizacao(threading.Thread):
             self.totalRegistros = len(listaProcessamento)
 
             self.rangeInicio = idThread * \
-                round(len(self.listaProcessamento) / self.totalThreads)
+                               round(len(self.listaProcessamento) / self.totalThreads)
             self.rangeFim = (
-                (idThread + 1) * round(len(self.listaProcessamento) / self.totalThreads)) - 1
+                                    (idThread + 1) * round(len(self.listaProcessamento) / self.totalThreads)) - 1
 
             if self.rangeFim + 1 > len(self.listaProcessamento):
                 self.rangeFim = len(self.listaProcessamento) - 1
@@ -159,7 +158,7 @@ class MotorAtualizacao(threading.Thread):
             horaInicio = datetime.now()
             partidas = ScraperPartida().getListaPartidasEdicaoCompeticao(scrapEdicao.url)
             totalPartidas = len(partidas["agendadas"]) + \
-                len(partidas["finalizadas"])
+                            len(partidas["finalizadas"])
 
             scrapEdicao.target = totalPartidas
             scrapEdicao.status = ScrapWork.Status.PROCESSANDO.name
@@ -392,9 +391,9 @@ class MotorAtualizacao(threading.Thread):
 
             partidasCadastradas = partidaCore.listPartidas(filtrosPartida)
 
-            contadorExecucao = 0
+            indexLista = 0
             for urlPartida in self.listaProcessamento:
-                executar = contadorExecucao % self.totalThreads == self.idThread
+                executar = indexLista % self.totalThreads == self.idThread
                 if executar:
                     # urlPartida = self.listaProcessamento[contadorExecucao]
                     ret = self.validarPartidaDoDia(urlPartida, partidasCadastradas)
@@ -407,7 +406,7 @@ class MotorAtualizacao(threading.Thread):
                     else:
                         self.totalErros += 1
 
-
+                indexLista += 1
 
             # for i in range(self.rangeInicio, self.rangeFim + 1):
             #     urlPartida = self.listaProcessamento[i]
