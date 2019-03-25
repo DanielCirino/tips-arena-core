@@ -392,18 +392,35 @@ class MotorAtualizacao(threading.Thread):
 
             partidasCadastradas = partidaCore.listPartidas(filtrosPartida)
 
-            for i in range(self.rangeInicio, self.rangeFim + 1):
-                urlPartida = self.listaProcessamento[i]
+            contadorExecucao = 0
+            for urlPartida in self.listaProcessamento:
+                executar = contadorExecucao % self.totalThreads == self.idThread
+                if executar:
+                    # urlPartida = self.listaProcessamento[contadorExecucao]
+                    ret = self.validarPartidaDoDia(urlPartida, partidasCadastradas)
+                    if ret:
+                        try:
+                            partidasCadastradas.remove(urlPartida)
+                        except:
+                            pass
+                        self.totalSucesso += 1
+                    else:
+                        self.totalErros += 1
 
-                ret = self.validarPartidaDoDia(urlPartida, partidasCadastradas)
-                if ret:
-                    try:
-                        partidasCadastradas.remove(urlPartida)
-                    except:
-                        pass
-                    self.totalSucesso += 1
-                else:
-                    self.totalErros += 1
+
+
+            # for i in range(self.rangeInicio, self.rangeFim + 1):
+            #     urlPartida = self.listaProcessamento[i]
+            #
+            #     ret = self.validarPartidaDoDia(urlPartida, partidasCadastradas)
+            #     if ret:
+            #         try:
+            #             partidasCadastradas.remove(urlPartida)
+            #         except:
+            #             pass
+            #         self.totalSucesso += 1
+            #     else:
+            #         self.totalErros += 1
 
             self.extrator.finalizarWebDriver()
             self.processamentoFinalizado = True

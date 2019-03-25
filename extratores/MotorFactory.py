@@ -52,44 +52,42 @@ class MotorFactory:
             print("Erro processamento.[Motor:{}][Acao:{}]".format(self.tipo_motor, self.codigo_acao_motor))
 
     def iniciar_processamento(self):
-
-        if self.tipo_motor == self.tipo_motor.MOTOR_EXTRACAO:
-            motor = MotorExtracao
-            self.getItensProcessamentoMotorExtracao()
-        elif self.tipo_motor == self.tipo_motor.MOTOR_ATUALIZACAO:
-            motor = MotorAtualizacao
-            self.getItensProcessamentoMotorAtualizacao()
-        else:
-            print("Motor inválido...")
-            return
-
-        self.total_itens_processamento = len(self.itens_processamento)
-
-        processamentoBatch = self.salvar_processamento_batch()
-
-        if processamentoBatch is not None:
-            self.id_processamento_batch = processamentoBatch.inserted_id
-            self.lista_threads = []
-
-            for id_thread in range(0, self.qtd_threads):
-                thread = motor(self.acao_motor, id_thread, self.qtd_threads,
-                               self.itens_processamento)
-                thread.start()
-                self.lista_threads.insert(id_thread, thread)
-
-            self.acompanhar_processamento()
-
-    def salvar_processamento_batch(self):
         try:
+            itens_processamento = []
+            if self.tipo_motor == self.tipo_motor.MOTOR_EXTRACAO:
+                motor = MotorExtracao
+                self.getItensProcessamentoMotorExtracao()
+            elif self.tipo_motor == self.tipo_motor.MOTOR_ATUALIZACAO:
+                motor = MotorAtualizacao
+                itens_processamento = self.getItensProcessamentoMotorAtualizacao()
+            else:
+                print("Motor inválido...")
+                return
+
+            total_itens_processamento = len(itens_processamento)
+
+            print("Lista de processamento possui {}".format(total_itens_processamento))
+
             processamento = ProcessamentoBatch()
             processamento.tipo = self.acao_motor.name
             processamento.status = ProcessamentoBatch.Status.NAO_INICIADO.name
-            processamento.totalRegistros = self.total_itens_processamento
+            processamento.totalRegistros = total_itens_processamento
 
-            return ProcessamentoBatchCore().salvarProcessamentoBatch(processamento)
+            processamentoBatch = ProcessamentoBatchCore().salvarProcessamentoBatch(processamento)
+
+            if processamentoBatch is not None:
+                self.id_processamento_batch = processamentoBatch.inserted_id
+                self.lista_threads = []
+
+                for id_thread in range(0, self.qtd_threads):
+                    thread = motor(self.acao_motor, id_thread, self.qtd_threads,
+                                   itens_processamento)
+                    thread.start()
+                    self.lista_threads.insert(id_thread, thread)
+
+                self.atualizar_processamento()
         except Exception as e:
-            print(e.args[0])
-            return False
+            print(traceback.format_exception(None, e, e.__traceback__))
 
     def atualizar_processamento_batch(self, quantidade_sucesso, quantidade_erro, status, data_hora_fim=None):
         try:
@@ -107,8 +105,7 @@ class MotorFactory:
             print(e.args[0])
             return None
 
-    def acompanhar_processamento(self):
-
+    def atualizar_processamento(self):
         try:
             while not self.verificar_fim_processamento():
                 time.sleep(10)
@@ -189,49 +186,61 @@ class MotorFactory:
         self.acao_motor = MotorAtualizacao.Acao(self.codigo_acao_motor)
         if self.acao_motor == MotorAtualizacao.Acao.ATUALIZAR_PARTIDAS:
 
-            partidaCore = PartidaCore()
-            data_inicio = datetime.strftime(datetime.today(), "%Y-%m-%d") + " 00:00:00"
-            data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
-            data_fim = datetime.now()
+            try:
+                partidaCore = PartidaCore()
+                data_inicio = datetime.strftime(datetime.today(), "%Y-%m-%d") + " 00:00:00"
+                data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
+                data_fim = datetime.now()
 
-            filtrosPartida = partidaCore.getOpcoesFiltro()
+                filtrosPartida = partidaCore.getOpcoesFiltro()
 
-            filtrosPartida["dataHoraInicio"] = data_inicio
-            filtrosPartida["dataHoraFim"] = data_fim
-            filtrosPartida["status"].append(Partida.Status.AGENDADO.name)
-            filtrosPartida["status"].append(Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
-            filtrosPartida["status"].append(Partida.Status.EM_ANDAMENTO.name)
-            filtrosPartida["status"].append(Partida.Status.PRIMEIRO_TEMPO.name)
-            filtrosPartida["status"].append(Partida.Status.INTERVALO.name)
-            filtrosPartida["status"].append(Partida.Status.SEGUNDO_TEMPO.name)
+                filtrosPartida["dataHoraInicio"] = data_inicio
+                filtrosPartida["dataHoraFim"] = data_fim
+                filtrosPartida["status"].append(Partida.Status.AGENDADO.name)
+                filtrosPartida["status"].append(Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
+                filtrosPartida["status"].append(Partida.Status.EM_ANDAMENTO.name)
+                filtrosPartida["status"].append(Partida.Status.PRIMEIRO_TEMPO.name)
+                filtrosPartida["status"].append(Partida.Status.INTERVALO.name)
+                filtrosPartida["status"].append(Partida.Status.SEGUNDO_TEMPO.name)
 
-            self.itens_processamento = partidaCore.listPartidas(filtrosPartida)
+                return partidaCore.listPartidas(filtrosPartida)
+            except Exception as e:
+                print(e.args[0])
+                return []
 
         elif self.acao_motor == MotorAtualizacao.Acao.ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS:
-            partidaCore = PartidaCore()
-            data_inicio = datetime.strftime(datetime.today() - timedelta(days=365 * 10), "%Y-%m-%d") + " 00:00:00"
-            data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
-            data_fim = datetime.now()
 
-            filtrosPartida = partidaCore.getOpcoesFiltro()
+            try:
+                partidaCore = PartidaCore()
+                data_inicio = datetime.strftime(datetime.today() - timedelta(days=365 * 10), "%Y-%m-%d") + " 00:00:00"
+                data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
+                data_fim = datetime.now()
 
-            # filtrosPartida["dataHoraInicio"] = data_inicio
-            filtrosPartida["dataHoraFim"] = data_fim
-            filtrosPartida["status"].append(Partida.Status.AGENDADO.name)
-            filtrosPartida["status"].append(Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
-            filtrosPartida["status"].append(Partida.Status.EM_ANDAMENTO.name)
-            filtrosPartida["status"].append(Partida.Status.PRIMEIRO_TEMPO.name)
-            filtrosPartida["status"].append(Partida.Status.INTERVALO.name)
-            filtrosPartida["status"].append(Partida.Status.SEGUNDO_TEMPO.name)
+                filtrosPartida = partidaCore.getOpcoesFiltro()
 
-            self.itens_processamento = partidaCore.listPartidas(filtrosPartida)
+                # filtrosPartida["dataHoraInicio"] = data_inicio
+                filtrosPartida["dataHoraFim"] = data_fim
+                filtrosPartida["status"].append(Partida.Status.AGENDADO.name)
+                filtrosPartida["status"].append(Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
+                filtrosPartida["status"].append(Partida.Status.EM_ANDAMENTO.name)
+                filtrosPartida["status"].append(Partida.Status.PRIMEIRO_TEMPO.name)
+                filtrosPartida["status"].append(Partida.Status.INTERVALO.name)
+                filtrosPartida["status"].append(Partida.Status.SEGUNDO_TEMPO.name)
+
+                return partidaCore.listPartidas(filtrosPartida)
+            except Exception as e:
+                print(e.args[0])
+                return []
 
         elif self.acao_motor == MotorAtualizacao.Acao.VALIDAR_PARTIDAS_DO_DIA:
-            self.extrator = ScraperPartida()
-            self.itens_processamento = self.extrator.getListaPartidasDia()
-
-            self.extrator.finalizarWebDriver()
-
+            try:
+                extrator = ScraperPartida()
+                itens_processamento = extrator.getListaPartidasDia()
+                extrator.finalizarWebDriver()
+                return itens_processamento
+            except Exception as e:
+                print(e.args[0])
+                return []
         else:
             print("Ação de motor inválida")
 
