@@ -1,11 +1,9 @@
-
 # -*- coding: utf-8 -*-
 import sys
 import traceback
 import time
 from enum import Enum
 from datetime import datetime, timedelta
-
 
 from core.PartidaCore import PartidaCore
 from core.ProcessamentoBatchCore import ProcessamentoBatchCore
@@ -50,7 +48,7 @@ class MotorFactory:
                 self.exibir_opcoes_motor()
 
         except Exception as e:
-            print(traceback.format_exception(None,e, e.__traceback__,file=sys.stderr,flush=True))
+            print(traceback.format_exception(None, e, e.__traceback__, file=sys.stderr, flush=True))
             print("Erro processamento.[Motor:{}][Acao:{}]".format(self.tipo_motor, self.codigo_acao_motor))
 
     def iniciar_processamento(self):
@@ -99,7 +97,6 @@ class MotorFactory:
             processamento_batch = processamentoCore.getProcessamentoBatchById(self.id_processamento_batch)
 
             if processamento_batch._id != "":
-
                 processamento_batch.totalSucesso = quantidade_sucesso
                 processamento_batch.totalErro = quantidade_erro
                 processamento_batch.status = status
@@ -119,14 +116,11 @@ class MotorFactory:
                 self.atualizar_processamento_batch(quantidades_processadas[0], quantidades_processadas[1],
                                                    ProcessamentoBatch.Status.EM_PROCESSAMENTO.name)
 
-
-
             quantidades_processadas = self.get_quantidade_processada()
             self.atualizar_processamento_batch(quantidades_processadas[0], quantidades_processadas[1],
-                                               ProcessamentoBatch.Status.FINALIZADO.name,datetime.now())
+                                               ProcessamentoBatch.Status.FINALIZADO.name, datetime.now())
         except Exception as e:
             print(e.args)
-
 
     def verificar_fim_processamento(self) -> bool:
         finalizado = True
@@ -144,7 +138,6 @@ class MotorFactory:
             qtd_erro += thread.totalErros
 
         return [qtd_sucesso, qtd_erro]
-
 
     def getItensProcessamentoMotorExtracao(self):
         self.acao_motor = MotorExtracao.Acao(self.codigo_acao_motor)
