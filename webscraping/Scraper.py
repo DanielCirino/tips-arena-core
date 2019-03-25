@@ -53,7 +53,7 @@ class Scraper:
 
         except Exception as e:
             print("Erro ao iniciar webdriver - " +
-                  e.args[0] + " - " + self.pathToDriver)
+                  e.args[0] + " - " + os.environ.get("TA_PATH_TO_WEBDRIVER"))
             print(traceback.format_exception(None, e, e.__traceback__))
 
     def aguardarCarregamentoPagina(self, cssSelector):
