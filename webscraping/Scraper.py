@@ -4,6 +4,8 @@
 import json
 import time
 import os
+import traceback
+
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -21,7 +23,7 @@ class Scraper:
                 print("Variável de ambiente TA_PATH_TO_WEBDRIVER precisa ser criada.")
                 exit(0)
         except Exception as e:
-            print(e.args[0])
+            print(traceback.format_exception(None, e, e.__traceback__))
 
     def finalizarWebDriver(self):
         try:
@@ -31,7 +33,7 @@ class Scraper:
                 self.webDriver.quit()
                 return True
         except Exception as e:
-            print(str(e))
+            print(traceback.format_exception(None, e, e.__traceback__))
             return False
 
     def setupWebDriver(self):
@@ -52,7 +54,7 @@ class Scraper:
         except Exception as e:
             print("Erro ao iniciar webdriver - " +
                   e.args[0] + " - " + self.pathToDriver)
-            print(e.args[0])
+            print(traceback.format_exception(None, e, e.__traceback__))
 
     def aguardarCarregamentoPagina(self, cssSelector):
         try:
@@ -74,7 +76,7 @@ class Scraper:
             # print("Demorou:" + tempo_espera)
 
         except Exception as e:
-            print(str(e))
+            print(traceback.format_exception(None, e, e.__traceback__))
             return None
 
     def getHtmlFromUrl(self, url):
@@ -92,7 +94,7 @@ class Scraper:
             dados_html = BeautifulSoup(string, "html.parser")
             return dados_html
         except Exception as e:
-            print(e.args)
+            print(traceback.format_exception(None, e, e.__traceback__))
             return None
 
     def getDadosCabecalho(self, html):
@@ -115,7 +117,7 @@ class Scraper:
 
             return linksCabecalho
         except Exception as e:
-            print(e.args)
+            print(traceback.format_exception(None, e, e.__traceback__))
             return None
 
     def getUrlFromOnClick(self, onclick):

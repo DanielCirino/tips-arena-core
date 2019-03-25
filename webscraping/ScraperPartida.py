@@ -131,8 +131,8 @@ class ScraperPartida(Scraper):
             return listaPartidas
 
         except Exception as e:
-            print(e.args[0])
-            
+            print(traceback.format_exception(None, e, e.__traceback__))
+
             if self.webDriver:
                 self.webDriver.save_screenshot("error_screenshot.png")
 
