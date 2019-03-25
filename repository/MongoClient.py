@@ -10,7 +10,7 @@ class MongoClient(object):
         databaseUri = os.environ.get("TA_MONGO_CONNECTION")
 
         if databaseUri is None:
-            print("Variável de ambiente TA_MONGO_CONNECTION precisa ser criada.")
+            print("Variavel de ambiente TA_MONGO_CONNECTION precisa ser criada.")
             exit(0)
 
         self.mongo_client = pymongo.MongoClient(databaseUri)
