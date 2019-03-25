@@ -48,7 +48,7 @@ class MotorFactory:
                 self.exibir_opcoes_motor()
 
         except Exception as e:
-            print(traceback.format_exception(None, e, e.__traceback__, flush=True))
+            print(traceback.format_exception(None, e, e.__traceback__))
             print("Erro processamento.[Motor:{}][Acao:{}]".format(self.tipo_motor, self.codigo_acao_motor))
 
     def iniciar_processamento(self):
