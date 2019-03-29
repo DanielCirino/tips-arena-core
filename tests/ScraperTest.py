@@ -89,7 +89,7 @@ class ScraperTest(unittest.TestCase):
     def teste_extrair_dados_partida(self):
         scraper = ScraperPartida()
         partida = scraper.getDadosPartida(
-            "/jogo/vLUVP2zt/")  # 0QqMMPUm ou jNK3xpne
+            "/jogo/vyuYAwl2/")  # 0QqMMPUm ou jNK3xpne
         print(partida)
         scraper.finalizarWebDriver()
         self.assertTrue(partida != None)
@@ -195,7 +195,7 @@ class ScraperTest(unittest.TestCase):
         self.assertTrue(ret)
 
     def teste_motor_extracao_factory(self):
-        factory = MotorFactory(2, 3, 1)
+        factory = MotorFactory(2, 3, 3)
         factory.getItensProcessamentoMotorExtracao()
 
         lista = factory.itens_processamento

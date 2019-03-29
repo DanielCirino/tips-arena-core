@@ -29,7 +29,7 @@ class Partida(object):
         self.estatisticas = ""
 
         self.oddsDisponiveis = False
-        self.odds = []
+        self.odds = {}
 
         self.lineupsDisponivel = False
         self.lineups = []

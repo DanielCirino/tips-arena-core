@@ -108,7 +108,7 @@ class MotorFactory:
     def atualizar_processamento(self):
         try:
             while not self.verificar_fim_processamento():
-                time.sleep(10)
+                time.sleep(300)
                 quantidades_processadas = self.get_quantidade_processada()
                 self.atualizar_processamento_batch(quantidades_processadas[0], quantidades_processadas[1],
                                                    ProcessamentoBatch.Status.EM_PROCESSAMENTO.name)

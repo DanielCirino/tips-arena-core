@@ -314,7 +314,7 @@ class ScraperPartida(Scraper):
             linksInformacoesDisponiveis = self.webDriver.find_elements_by_css_selector(
                 "a[id^=a-match-]")
 
-            informacoesDiponiveis = self.checkInformacoesDisponiveis(
+            informacoesDiponiveis = self.verificarInformacoesDisponiveis(
                 linksInformacoesDisponiveis)
 
             partida["timelineDisponivel"] = informacoesDiponiveis["timeline"]
@@ -347,7 +347,7 @@ class ScraperPartida(Scraper):
             print(str(e))
             return partida
 
-    def checkInformacoesDisponiveis(self, htmlLinks):
+    def verificarInformacoesDisponiveis(self, htmlLinks):
         try:
             infos = {
                 "timeline": False,
