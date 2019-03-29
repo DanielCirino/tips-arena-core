@@ -16,11 +16,11 @@ class MongoClient(object):
         self.mongo_client = pymongo.MongoClient(databaseUri)
         self.database = self.mongo_client["tips_arena"]
 
-    def get_collection(self, name):
+    def getCollection(self, name):
         return self.database[name]
 
-    def list_collections(self):
+    def listCollections(self):
         return self.database.list_collection_names()
 
-    def desconectar(self):
+    def disconnect(self):
         self.mongo_client.close()

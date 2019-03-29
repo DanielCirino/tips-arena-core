@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 import traceback
 from enum import Enum
@@ -23,7 +22,7 @@ class ScraperPartida(Scraper):
         except Exception as e:
             print(e.args[0])
 
-    def get_lista_ids_partida(self):
+    def obterListaIdsPartida(self):
         try:
             CSS_LINK_LISTAR_MAIS = ".link-more-games tbody tr td a "
             CSS_LOADING = "#preload"
@@ -65,14 +64,14 @@ class ScraperPartida(Scraper):
             self.webDriver.get(urlPartidas)
             self.aguardarCarregamentoPagina(CSS_LOADING)
 
-            listaPartidasFinalizadas = self.get_lista_ids_partida()
+            listaPartidasFinalizadas = self.obterListaIdsPartida()
 
             linkPartidasAgendadas = self.webDriver.find_element_by_css_selector(
                 CSS_LINK_PARTIDAS_AGENDADAS)
             linkPartidasAgendadas.click()
             self.aguardarCarregamentoPagina(CSS_LOADING)
 
-            listaPartidasAgendadas = self.get_lista_ids_partida()
+            listaPartidasAgendadas = self.obterListaIdsPartida()
 
             return {"agendadas": listaPartidasFinalizadas,
                     "finalizadas": listaPartidasAgendadas}
@@ -206,11 +205,11 @@ class ScraperPartida(Scraper):
                 cabecalhoPartida.find_element_by_css_selector("span a").get_attribute("onclick"))
 
             urlEquipeMandante = dadosMandante.get_attribute("onclick").split("(")[1].split(")")[
-                0].replace(
+                                    0].replace(
                 "'", "") + "/"
 
             urlEquipeVisitante = dadosVisitante.get_attribute("onclick").split("(")[1].split(")")[
-                0].replace(
+                                     0].replace(
                 "'",
                 "") + "/"
 
@@ -289,13 +288,13 @@ class ScraperPartida(Scraper):
 
             partida["placarFinal"] = ":".join(placarPartida)
             partida["placarPrimeiroTempo"] = placarMandantePrimeiroTempo + \
-                ":" + placarVisitantePrimeiroTempo
+                                             ":" + placarVisitantePrimeiroTempo
             partida["placarSegundoTempo"] = placarMandanteSegundoTempo + \
-                ":" + placarVisitanteSegundoTempo
+                                            ":" + placarVisitanteSegundoTempo
             partida["placarProrrogacao"] = placarMandanteProrrogacao + \
-                ":" + placar_visitante_prorrogacao
+                                           ":" + placar_visitante_prorrogacao
             partida["placarPenalties"] = placarMandantePenalties + \
-                ":" + placarVisitantePenalties
+                                         ":" + placarVisitantePenalties
 
             partida["idEquipeMandante"] = HashString().encode(
                 equipeMandante["url"])
@@ -332,11 +331,11 @@ class ScraperPartida(Scraper):
                 html_timeline = self.webDriver.find_elements_by_css_selector(
                     "#summary-content>div.detailMS")
                 if len(html_timeline) > 0:
-                    partida["timeline"] = self.get_timeline_partida(
+                    partida["timeline"] = self.getTimelinePartida(
                         html_timeline[0].get_attribute('innerHTML'))
 
             if partida["estatisticasDisponiveis"] and extrairStats:
-                partida["estatisticas"] = self.get_estatisticas_partida()
+                partida["estatisticas"] = self.getEstatisticasPartida()
 
             if partida["oddsDisponiveis"] and extrairOdds:
                 partida["odds"] = self.getOddsPartida()
@@ -484,7 +483,7 @@ class ScraperPartida(Scraper):
             if mercado["tipo"] == self.TipoMercado.RESULTADO:
                 tabelaOdds = self.webDriver.find_elements_by_css_selector(
                     CSS_TABELA_ODDS_RESULTADO)
-                listaOdds = self.get_odds_resultado(tabelaOdds)
+                listaOdds = self.getOddsResultado(tabelaOdds)
 
             if mercado["tipo"] == self.TipoMercado.UNDER_OVER:
                 tabelaOdds = self.webDriver.find_elements_by_css_selector(
@@ -494,251 +493,286 @@ class ScraperPartida(Scraper):
                     qtd_gols = tabela.get_attribute("id").split("_")[-1]
 
                     if ".5" in qtd_gols:
-                        odds = self.get_odds_under_over(
+                        odds = self.getOddsUnderOver(
                             tabela.find_elements_by_css_selector("tbody>tr"), qtd_gols)
                         listaOdds.append(odds)
 
             if mercado["tipo"] == self.TipoMercado.DNB:
                 tabelaOdds = self.webDriver.find_elements_by_css_selector(
                     CSS_TABELA_ODDS_DNB)
-                listaOdds = self.get_odds_draw_no_bet(tabelaOdds)
+                listaOdds = self.getOddsDrawNoBet(tabelaOdds)
 
             if mercado["tipo"] == self.TipoMercado.BTTS:
                 tabelaOdds = self.webDriver.find_elements_by_css_selector(
                     CSS_TABELA_ODDS_BTTS)
-                listaOdds = self.get_odds_btts(tabelaOdds)
+                listaOdds = self.getOddsBtts(tabelaOdds)
 
             if mercado["tipo"] == self.TipoMercado.PLACAR:
                 tabelaOdds = self.webDriver.find_elements_by_css_selector(
                     CSS_TABELA_ODDS_PLACAR)
 
                 for tabela in tabelaOdds:
-                    odds = self.get_odds_placar_exato(
+                    odds = self.getOddsPlacarExato(
                         tabela.find_elements_by_css_selector("tbody>tr"))
                     listaOdds.append(odds)
 
             if mercado["tipo"] == self.TipoMercado.ODD_EVEN:
                 tabelaOdds = self.webDriver.find_elements_by_css_selector(
                     CSS_TABELA_ODDS_ODD_EVEN)
-                listaOdds = self.get_odds_odd_even(tabelaOdds)
+                listaOdds = self.getOddsImparPar(tabelaOdds)
 
             if mercado["tipo"] == self.TipoMercado.DUPLA_CHANCE:
                 tabelaOdds = self.webDriver.find_elements_by_css_selector(
                     CSS_TABELA_ODDS_DUPLA_CHANCE)
-                listaOdds = self.get_odds_dupla_chance(tabelaOdds)
+                listaOdds = self.getOddsDuplaChance(tabelaOdds)
 
             return listaOdds
 
         except Exception as e:
             print(e.args[0])
 
-    def get_odds_resultado(self, bookmakers):
+    def getOddsResultado(self, bookmakers):
 
-        total_odds = len(bookmakers)
+        quantidadeOdds = len(bookmakers)
+        redutorQuantidadeMandante = 0
+        redutorQuantidadeEmpate = 0
+        redutorQuantidadeVisitante = 0
 
-        soma_odds_mandante = 0
-        soma_odds_empate = 0
-        soma_odds_visitante = 0
+        valorOddsMandante = 0
+        valorOddsEmpate = 0
+        valorOddsVisitante = 0
 
         try:
             for linha in bookmakers:
                 campos = linha.find_elements_by_css_selector("td>span")
 
-                valor_odd_mandante = campos[0].text.replace("-", "0")
-                valor_odd_empate = campos[1].text.replace("-", "0")
-                valor_odd_visitante = campos[2].text.replace("-", "0")
+                oddMandante = campos[0].text.replace("-", "0")
+                oddEmpate = campos[1].text.replace("-", "0")
+                oddVisitante = campos[2].text.replace("-", "0")
 
-                soma_odds_mandante += float(valor_odd_mandante)
-                soma_odds_empate += float(valor_odd_empate)
-                soma_odds_visitante += float(valor_odd_visitante)
+                if oddMandante == "0": redutorQuantidadeMandante += 1
+                if oddEmpate == "0": redutorQuantidadeEmpate += 1
+                if oddVisitante == "0": redutorQuantidadeVisitante += 1
 
-            return {
-                "mandante": round(soma_odds_mandante / total_odds, self.CASAS_DECIMAIS),
-                "empate": round(soma_odds_empate / total_odds, self.CASAS_DECIMAIS),
-                "visitante": round(soma_odds_visitante / total_odds, self.CASAS_DECIMAIS)
-            }
-
-        except Exception as e:
-            print(e.args[0])
-            return []
-
-    def get_odds_draw_no_bet(self, tabela_odds):
-        total_odds = len(tabela_odds)
-
-        soma_odds_mandante = 0
-        soma_odds_visitante = 0
-
-        try:
-
-            for linha in tabela_odds:
-                campos = linha.find_elements_by_css_selector("td>span")
-
-                valor_odd_mandante = campos[0].text.replace("-", "0")
-                valor_odd_visitante = campos[1].text.replace("-", "0")
-
-                soma_odds_mandante += float(valor_odd_mandante)
-                soma_odds_visitante += float(valor_odd_visitante)
+                valorOddsMandante += float(oddMandante)
+                valorOddsEmpate += float(oddEmpate)
+                valorOddsVisitante += float(oddVisitante)
 
             return {
-                "mandante": round(soma_odds_mandante / total_odds, self.CASAS_DECIMAIS),
-                "visitante": round(soma_odds_visitante / total_odds, self.CASAS_DECIMAIS)
+                "mandante": round(valorOddsMandante / (quantidadeOdds - redutorQuantidadeMandante), self.CASAS_DECIMAIS),
+                "empate": round(valorOddsEmpate / (quantidadeOdds - redutorQuantidadeEmpate), self.CASAS_DECIMAIS),
+                "visitante": round(valorOddsVisitante / (quantidadeOdds - redutorQuantidadeVisitante),
+                                   self.CASAS_DECIMAIS)
             }
 
         except Exception as e:
             print(e.args[0])
             return {}
 
-    def get_odds_under_over(self, tabela_odds, qtd_gols):
+    def getOddsDrawNoBet(self, tabelaOdds):
+        quantidadeOdds = len(tabelaOdds)
+        redutorQuantidadeMandante = 0
+        redutorQuantidadeVisitante = 0
 
-        total_odds = len(tabela_odds)
-
-        soma_odds_over = 0
-        soma_odds_under = 0
+        valorOddsMandante = 0
+        valorOddsVisitante = 0
 
         try:
-            for linha in tabela_odds:
+
+            for linha in tabelaOdds:
                 campos = linha.find_elements_by_css_selector("td>span")
 
-                valor_odd_over = campos[0].text.replace("-", "0")
-                valor_odd_under = campos[1].text.replace("-", "0")
+                oddMandante = campos[0].text.replace("-", "0")
+                oddVisitante = campos[1].text.replace("-", "0")
 
-                soma_odds_over += float(valor_odd_over)
-                soma_odds_under += float(valor_odd_under)
+                if oddMandante == "0": redutorQuantidadeMandante += 1
+                if oddVisitante == "0": redutorQuantidadeVisitante += 1
+
+                valorOddsMandante += float(oddMandante)
+                valorOddsVisitante += float(oddVisitante)
 
             return {
-                "totalGols": qtd_gols,
-                "under": round(soma_odds_under / total_odds, self.CASAS_DECIMAIS),
-                "over": round(soma_odds_over / total_odds, self.CASAS_DECIMAIS)
+                "mandante": round(valorOddsMandante / (quantidadeOdds - redutorQuantidadeMandante), self.CASAS_DECIMAIS),
+                "visitante": round(valorOddsVisitante / (quantidadeOdds - redutorQuantidadeVisitante),
+                                   self.CASAS_DECIMAIS)
             }
 
         except Exception as e:
             print(e.args[0])
             return {}
 
-    def get_odds_placar_exato(self, tabela_odds):
+    def getOddsUnderOver(self, tabelaOdds, quantidadeGols):
+        quantidadeOdds = len(tabelaOdds)
+        redutorQuantidadeUnder = 0
+        redutorQuantidadeOver = 0
 
-        total_odds = len(tabela_odds)
-        soma_odds = 0
+        valorOddsOver = 0
+        valorOddsUnder = 0
 
         try:
+            for linha in tabelaOdds:
+                campos = linha.find_elements_by_css_selector("td>span")
 
-            for linha in tabela_odds:
+                oddOver = campos[0].text.replace("-", "0")
+                oddUnder = campos[1].text.replace("-", "0")
+
+                if oddOver == "0": redutorQuantidadeUnder += 1
+                if oddUnder == "0": redutorQuantidadeOver += 1
+
+                valorOddsOver += float(oddOver)
+                valorOddsUnder += float(oddUnder)
+
+            return {
+                "totalGols": quantidadeGols,
+                "under": round(valorOddsUnder / (quantidadeOdds - redutorQuantidadeUnder), self.CASAS_DECIMAIS),
+                "over": round(valorOddsOver / (quantidadeOdds - redutorQuantidadeOver), self.CASAS_DECIMAIS)
+            }
+
+        except Exception as e:
+            print(e.args[0])
+            return {}
+
+    def getOddsPlacarExato(self, tabelaOdds):
+        quantidadeOdds = len(tabelaOdds)
+        redutorQuantidadeOdds = 0
+
+        valorOddsPlacar = 0
+
+        try:
+            for linha in tabelaOdds:
                 campos = linha.find_elements_by_css_selector("td>span")
                 placar = linha.find_element_by_css_selector(
                     "td.correct_score").text
 
-                valor_odd = campos[0].text.replace("-", "0")
-                soma_odds += float(valor_odd)
+                oddPlacar = campos[0].text.replace("-", "0")
+                if oddPlacar == "0": redutorQuantidadeOdds += 1
+
+                valorOddsPlacar += float(oddPlacar)
 
             placar = placar.split(":")
 
             return {
                 "placarMandante": placar[0],
                 "placarVisitante": placar[1],
-                "valor": round(soma_odds / total_odds, self.CASAS_DECIMAIS)
+                "valor": round(valorOddsPlacar / (quantidadeOdds - redutorQuantidadeOdds), self.CASAS_DECIMAIS)
             }
-
-            return lista_Bookmakers
         except Exception as e:
             print(e.args[0])
             return {}
 
-    def get_odds_btts(self, tabela_odds):
+    def getOddsBtts(self, tabelaOdds):
+        quantidadeOdds = len(tabelaOdds)
+        redutorQuantidadeBtts = 0
+        redutorQuantidadeNoBtts = 0
 
-        total_odds = len(tabela_odds)
-
-        soma_odds_btts = 0
-        soma_odds_no_btts = 0
+        valorOddsBtts = 0
+        valorOddsNoBtts = 0
 
         try:
 
-            for linha in tabela_odds:
+            for linha in tabelaOdds:
                 campos = linha.find_elements_by_css_selector("td>span")
 
-                valor_odd_btts = campos[0].text.replace("-", "0")
-                valor_odd_no_btts = campos[1].text.replace("-", "0")
+                oddBtts = campos[0].text.replace("-", "0")
+                oddNoBtts = campos[1].text.replace("-", "0")
 
-                soma_odds_btts += float(valor_odd_btts)
-                soma_odds_no_btts += float(valor_odd_no_btts)
+                if oddBtts == "0": redutorQuantidadeBtts += 1
+                if oddNoBtts == "0": redutorQuantidadeNoBtts += 1
+
+                valorOddsBtts += float(oddBtts)
+                valorOddsNoBtts += float(oddNoBtts)
 
             return {
-                "yes": round(soma_odds_btts / total_odds, self.CASAS_DECIMAIS),
-                "no": round(soma_odds_no_btts / total_odds, self.CASAS_DECIMAIS)
+                "yes": round(valorOddsBtts / (quantidadeOdds - redutorQuantidadeBtts), self.CASAS_DECIMAIS),
+                "no": round(valorOddsNoBtts / (quantidadeOdds - redutorQuantidadeNoBtts), self.CASAS_DECIMAIS)
             }
 
         except Exception as e:
             print(e.args[0])
             return {}
 
-    def get_odds_odd_even(self, tabela_odds):
+    def getOddsImparPar(self, tabelaOdds):
+        quantidadeOdds = len(tabelaOdds)
+        redutorQuantidadeImpar = 0
+        redutorQuantidadePar = 0
 
-        total_odds = len(tabela_odds)
-
-        soma_odds_odd = 0
-        soma_odds_even = 0
+        valorOddImpar = 0
+        valorOddPar = 0
 
         try:
-            for linha in tabela_odds:
+            for linha in tabelaOdds:
                 campos = linha.find_elements_by_css_selector("td>span")
 
-                valor_odd = campos[0].text.replace("-", "0")
-                valor_odd_even = campos[1].text.replace("-", "0")
+                oddImpar = campos[0].text.replace("-", "0")
+                oddPar = campos[1].text.replace("-", "0")
 
-                soma_odds_odd += float(valor_odd)
-                soma_odds_even += float(valor_odd_even)
+                if oddImpar == "0": redutorQuantidadeImpar += 1
+                if oddPar == "0": redutorQuantidadePar += 1
+
+                valorOddImpar += float(oddImpar)
+                valorOddPar += float(oddPar)
 
             return {
-                "odd": round(soma_odds_odd / total_odds, self.CASAS_DECIMAIS),
-                "even": round(soma_odds_even / total_odds, self.CASAS_DECIMAIS)
+                "odd": round(valorOddImpar / (quantidadeOdds - redutorQuantidadeImpar), self.CASAS_DECIMAIS),
+                "even": round(valorOddPar / (quantidadeOdds - redutorQuantidadePar), self.CASAS_DECIMAIS)
             }
 
         except Exception as e:
             print(e.args[0])
             return {}
 
-    def get_odds_dupla_chance(self, bookmakers):
+    def getOddsDuplaChance(self, tabelaOdds):
+        total_odds = len(tabelaOdds)
+        redutorQuantidadeContraMandante = 0
+        redutorQuantidadeContraEmpate = 0
+        redutorQuantidadeContraVisitante = 0
 
-        total_odds = len(bookmakers)
-
-        soma_odds_contra_mandante = 0
-        soma_odds_contra_empate = 0
-        soma_odds_contra_visitante = 0
+        valorOddContraMandante = 0
+        valorOddContraEmpate = 0
+        valorOddContraVisitante = 0
 
         try:
-            for linha in bookmakers:
+            for linha in tabelaOdds:
                 campos = linha.find_elements_by_css_selector("td>span")
 
-                valor_odd_contra_visitante = campos[0].text.replace("-", "0")
-                valor_odd_contra_empate = campos[1].text.replace("-", "0")
-                valor_odd_contra_mandante = campos[2].text.replace("-", "0")
+                oddContraVisitante = campos[0].text.replace("-", "0")
+                oddContraEmpate = campos[1].text.replace("-", "0")
+                oddContraMandante = campos[2].text.replace("-", "0")
 
-                soma_odds_contra_mandante += float(valor_odd_contra_mandante)
-                soma_odds_contra_empate += float(valor_odd_contra_empate)
-                soma_odds_contra_visitante += float(valor_odd_contra_visitante)
+                if oddContraMandante == "0": redutorQuantidadeContraMandante += 1
+                if oddContraEmpate == "0": redutorQuantidadeContraEmpate += 1
+                if oddContraVisitante == "0": redutorQuantidadeContraVisitante += 1
+
+                valorOddContraMandante += float(oddContraMandante)
+                valorOddContraEmpate += float(oddContraEmpate)
+                valorOddContraVisitante += float(oddContraVisitante)
 
             return {
-                "contraVisitante": round(soma_odds_contra_visitante / total_odds, self.CASAS_DECIMAIS),
-                "contraMandante": round(soma_odds_contra_mandante / total_odds, self.CASAS_DECIMAIS),
-                "contraEmpate": round(soma_odds_contra_empate / total_odds, self.CASAS_DECIMAIS)
+                "contraVisitante": round(valorOddContraVisitante / (total_odds - redutorQuantidadeContraVisitante),
+                                         self.CASAS_DECIMAIS),
+                "contraMandante": round(valorOddContraMandante / (total_odds - redutorQuantidadeContraEmpate),
+                                        self.CASAS_DECIMAIS),
+                "contraEmpate": round(valorOddContraEmpate / (total_odds - redutorQuantidadeContraEmpate),
+                                      self.CASAS_DECIMAIS)
             }
 
         except Exception as e:
             print(e.args[0])
             return {}
 
-    def get_timeline_partida(self, html_eventos):
-        lista_eventos = []
+    def getTimelinePartida(self, htmlEventos):
+        listaEventos = []
 
-        dados_html = self.converterStringParaHtml(html_eventos)
+        dadosHtml = self.converterStringParaHtml(htmlEventos)
 
         try:
 
-            html_eventos = dados_html.select(".detailMS__incidentRow")
+            htmlEventos = dadosHtml.select(".detailMS__incidentRow")
 
-            contador_evento = 1
+            contadorEventos = 1
 
-            for html in html_eventos:
-                evento_partida = {"seq": contador_evento,
+            for html in htmlEventos:
+                eventoPartida = {"seq": contadorEventos,
                                   "tipo": "",
                                   "equipe": "",
                                   "minutos": "",
@@ -746,63 +780,63 @@ class ScraperPartida(Scraper):
                                   "participante_02": ""
                                   }
 
-                html_class_css = html.attrs["class"][1]
+                classeCss = html.attrs["class"][1]
 
-                if html_class_css != "--empty":
-                    if html_class_css == "incidentRow--away":
-                        evento_partida["equipe"] = "V"
-                    elif html_class_css == "incidentRow--home":
-                        evento_partida["equipe"] = "M"
+                if classeCss != "--empty":
+                    if classeCss == "incidentRow--away":
+                        eventoPartida["equipe"] = "V"
+                    elif classeCss == "incidentRow--home":
+                        eventoPartida["equipe"] = "M"
 
-                    evento_partida["tipo"] = \
+                    eventoPartida["tipo"] = \
                         html.select(".icon-box span")[0].attrs["class"][1]
-                    evento_partida["minutos"] = html.select(
+                    eventoPartida["minutos"] = html.select(
                         ".time-box,.time-box-wide")[0].getText()
 
-                    participante_01 = {"nome": "", "url": ""}
-                    participante_02 = {"nome": "", "url": ""}
+                    participanteUm = {"nome": "", "url": ""}
+                    participanteDois = {"nome": "", "url": ""}
 
-                    html_participantes = html.select(
+                    htmlParticipantes = html.select(
                         ".participant-name a,.substitution-in-name a,.substitution-out-name a")
 
-                    if len(html_participantes) >= 1:
-                        participante_01["nome"] = self.utils.limparString(
-                            html_participantes[0].getText())
+                    if len(htmlParticipantes) >= 1:
+                        participanteUm["nome"] = self.utils.limparString(
+                            htmlParticipantes[0].getText())
 
-                        participante_01["url"] = self.getUrlFromOnClick(
-                            html_participantes[0].attrs["onclick"])
+                        participanteUm["url"] = self.getUrlFromOnClick(
+                            htmlParticipantes[0].attrs["onclick"])
 
-                    if len(html_participantes) == 2:
-                        participante_02["nome"] = self.utils.limparString(
-                            html_participantes[1].getText())
+                    if len(htmlParticipantes) == 2:
+                        participanteDois["nome"] = self.utils.limparString(
+                            htmlParticipantes[1].getText())
 
-                        participante_02["url"] = self.getUrlFromOnClick(
-                            html_participantes[1].attrs["onclick"])
+                        participanteDois["url"] = self.getUrlFromOnClick(
+                            htmlParticipantes[1].attrs["onclick"])
 
-                    evento_partida["participante_01"] = participante_01
-                    evento_partida["participante_02"] = participante_02
+                    eventoPartida["participante_01"] = participanteUm
+                    eventoPartida["participante_02"] = participanteDois
 
-                    evento_partida["tipo"] = self.normalizarDescricaoEvento(
-                        evento_partida["tipo"])
+                    eventoPartida["tipo"] = self.normalizarDescricaoEvento(
+                        eventoPartida["tipo"])
 
-                    lista_eventos.append(evento_partida)
-                    contador_evento += 1
+                    listaEventos.append(eventoPartida)
+                    contadorEventos += 1
 
-            return lista_eventos
+            return listaEventos
 
         except Exception as e:
             print(e.args)
-            return "Erro ao ler timeline"
+            return listaEventos
 
-    def get_estatisticas_partida(self):
+    def getEstatisticasPartida(self):
         try:
-            link_stats = self.webDriver.find_element_by_css_selector(
+            linkEstatisticas = self.webDriver.find_element_by_css_selector(
                 "#a-match-statistics")
-            link_stats.click()
+            linkEstatisticas.click()
 
             self.aguardarCarregamentoPagina("#statistics-preload")
 
-            estatisticas_partida = []
+            estatisticasPartida = []
             html_stats = self.webDriver.find_elements_by_css_selector(
                 "#tab-statistics-0-statistic>.statRow")
 
@@ -810,23 +844,23 @@ class ScraperPartida(Scraper):
                 estatistica = {"desc": "",
                                "valor_mandante": "", "valor_visitante": ""}
 
-                campos_estatisca = html.find_elements_by_css_selector(
+                camposEstatistica = html.find_elements_by_css_selector(
                     ".statTextGroup>.statText")
 
                 estatistica["desc"] = self.utils.limparString(
-                    campos_estatisca[1].text)
+                    camposEstatistica[1].text)
                 estatistica["valor_mandante"] = self.utils.limparString(
-                    campos_estatisca[0].text)
+                    camposEstatistica[0].text)
                 estatistica["valor_visitante"] = self.utils.limparString(
-                    campos_estatisca[2].text)
+                    camposEstatistica[2].text)
 
-                estatisticas_partida.append(estatistica)
+                estatisticasPartida.append(estatistica)
 
-            return estatisticas_partida
+            return estatisticasPartida
 
         except Exception as e:
             print(e.args)
-            return "Erro ao ler estatísticas"
+            return estatisticasPartida
 
     def normalizarDescricaoStatus(self, status: str):
 

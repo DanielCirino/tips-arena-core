@@ -8,7 +8,7 @@ from utils.DateTimeHandler import DateTimeHandler
 class Collection(object):
     def __init__(self, nome):
         self.client = MongoClient()
-        self.collection = self.client.get_collection(nome)
+        self.collection = self.client.getCollection(nome)
 
     def inserir_documento(self, documento):
         try:
@@ -19,7 +19,7 @@ class Collection(object):
         except Exception as e:
             return None
         finally:
-            self.client.desconectar()
+            self.client.disconnect()
 
     def atualizar_documento(self, documento):
         try:
@@ -32,7 +32,7 @@ class Collection(object):
             print(e.args)
             return None
         finally:
-            self.client.desconectar()
+            self.client.disconnect()
 
     def deletar_documento(self, id):
         query_delete = {"_id": id}
@@ -41,7 +41,7 @@ class Collection(object):
         except Exception as e:
             return None
         finally:
-            self.client.desconectar()
+            self.client.disconnect()
 
     def listar_documentos(self, query={}, sort=[], limit=0, skip=0):
         try:
@@ -62,7 +62,7 @@ class Collection(object):
             return []
 
         finally:
-            self.client.desconectar()
+            self.client.disconnect()
 
     def get_documento_por_id(self, id):
         try:
