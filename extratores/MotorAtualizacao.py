@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import threading
+from threading import Thread
 import time
 from datetime import datetime, timedelta
 from enum import Enum
@@ -18,42 +18,16 @@ from webscraping.ScraperCompeticao import ScraperCompeticao
 from webscraping.ScraperEquipe import ScraperEquipe
 from webscraping.ScraperPais import ScraperPais
 from webscraping.ScraperPartida import ScraperPartida
+from extratores.Motor import Motor
 
 
-class MotorAtualizacao(threading.Thread):
-    def __init__(self, acao, idThread, totalThreads, listaProcessamento):
+class MotorAtualizacao(Motor):
+    def __init__(self, acaoMotor, idThread, totalThreads, listaProcessamento):
 
         try:
-            self.acao = acao
-            self.idThread = idThread
-            self.totalThreads = totalThreads
+            super(MotorAtualizacao, self).__init__(acaoMotor, idThread, totalThreads, listaProcessamento)
+            Thread.__init__(self)
 
-            self.listaProcessamento = listaProcessamento
-            self.totalRegistros = len(listaProcessamento)
-
-            self.rangeInicio = idThread * \
-                               round(len(self.listaProcessamento) / self.totalThreads)
-            self.rangeFim = (
-                                    (idThread + 1) * round(len(self.listaProcessamento) / self.totalThreads)) - 1
-
-            if self.rangeFim + 1 > len(self.listaProcessamento):
-                self.rangeFim = len(self.listaProcessamento) - 1
-
-            if idThread + 1 == totalThreads:
-                if self.rangeFim + 1 < len(self.listaProcessamento):
-                    self.rangeFim = len(self.listaProcessamento) - 1
-
-            # print("[{}a{}][{}]".format(self.range_inicio, self.range_fim, self.id_thread))
-
-            self.totalSucesso = 0
-            self.totalErros = 0
-            self.horaInicio = time.strftime("%Y-%m-%d %H:%M:%S")
-            self.horaFim = None
-            self.processamentoFinalizado = False
-
-            self.extrator = None
-
-            threading.Thread.__init__(self)
         except Exception as e:
             print(e.args[0])
 
@@ -269,82 +243,31 @@ class MotorAtualizacao(threading.Thread):
             print(e.args)
             return False
 
-    def validarPartidaDoDia(self, urlPartida, partidasCadastradas):
-        try:
-
-            partidaCore = PartidaCore()
-            partidaJaCadastrada = False
-
-            for partida in partidasCadastradas:
-                if partida.url == urlPartida:
-                    partidaJaCadastrada = True
-                    break
-
-            if partidaJaCadastrada:
-                return True
-
-            motorExtracao = MotorExtracao()
-            hashString = HashString()
-
-            dadosPartida = self.extrator.getDadosPartida(urlPartida)
-
-            urlPais = dadosPartida["competicao"]["pais"]["url"]
-            idPais = hashString.encode(urlPais)
-
-            urlCompeticao = dadosPartida["competicao"]["url"]
-            # idCompeticao = hashString.encode(urlCompeticao)
-            #
-            # edicaoMaisRecenteCompeticao = ScraperEdicaoCompeticao().get_edicao_mais_recente_competicao(
-            #     urlCompeticao)
-            # edicaoMaisRecenteCompeticao["competicao"] = dadosPartida["edicaoCompeticao"]["competicao"]
-            #
-            # urlEdicaoCompeticao = edicaoMaisRecenteCompeticao["url"]
-            idCompeticao = hashString.encode(urlCompeticao)
-
-            dadosPartida["idCompeticao"] = idCompeticao
-            # dadosPartida["edicaoCompeticao"] = edicaoMaisRecenteCompeticao
-
-            motorExtracao.salvarScrap(urlPais, 1, ScrapWork.Tipo.PAIS.name,
-                                      ScrapWork.Status.SCRAPING_COMPETICOES.name)
-
-            motorExtracao.salvarScrap(urlCompeticao, 1, ScrapWork.Tipo.COMPETICAO.name,
-                                      ScrapWork.Status.SCRAPING_EDICOES_COMPETICAO.name, idPais)
-
-            # motorExtracao.salvarScrap(urlEdicaoCompeticao, 1, ScrapWork.Tipo.EDICAO_COMPETICAO.name,
-            #                           ScrapWork.Status.SCRAPING_EQUIPES.name, idCompeticao)
-
-            motorExtracao.salvarScrap(dadosPartida["equipeMandante"]["url"], 1, ScrapWork.Tipo.EQUIPE.name,
-                                      ScrapWork.Status.AGUARDANDO_SCRAPING.name, idCompeticao)
-
-            motorExtracao.salvarScrap(dadosPartida["equipeVisitante"]["url"], 1, ScrapWork.Tipo.EQUIPE.name,
-                                      ScrapWork.Status.AGUARDANDO_SCRAPING.name, idCompeticao)
-
-            motorExtracao.salvarScrap(dadosPartida["url"], 1, ScrapWork.Tipo.PARTIDA.name,
-                                      ScrapWork.Status.OK.name, idCompeticao)
-
-            novaPartida = Partida(dadosPartida)
-            ret = partidaCore.salvarPartida(novaPartida)
-
-            if ret:
-                return ret
-            else:
-                return False
-
-        except Exception as e:
-            print(e.args)
-            return False
 
     def exibirAcoesMotor(self):
         for acao in self.Acao:
             print("{} ==> {}".format(acao.value, acao.name))
 
-    def run(self):
-        # atualizar partidas do dia
-        # atualizar partidas antigas não finalizadas
-        # validar partidas do dia
-        # atualizar ediçoes competicao
+    def atualizarPartidas(self):
+        try:
+            if self.extrator is None:
+                self.extrator = ScraperPartida()
 
-        if self.acao == self.Acao.ATUALIZAR_PARTIDAS:
+            for i in range(self.rangeInicio, self.rangeFim + 1):
+                partida = self.listaProcessamento[i]
+                ret = self.atualizarPartida(partida)
+
+                if ret:
+                    self.totalSucesso += 1
+                else:
+                    self.totalErros += 1
+
+            self.extrator.finalizarWebDriver()
+        except Exception as e:
+            print(e.args[0])
+
+    def atualizarPartidasAntigasNaoFinalizadas(self):
+        try:
             self.extrator = ScraperPartida()
 
             for i in range(self.rangeInicio, self.rangeFim + 1):
@@ -357,73 +280,24 @@ class MotorAtualizacao(threading.Thread):
                     self.totalErros += 1
 
             self.extrator.finalizarWebDriver()
+        except Exception as e:
+            print(e.args[0])
+
+    def atualizarApostas(self):
+        try:
+            print("Nao implementado...")
+        except Exception as e:
+            print(e.args[0])
+
+    def run(self):
+        if self.acao == self.Acao.ATUALIZAR_PARTIDAS:
+            self.atualizarPartidas()
 
         elif self.acao == self.Acao.ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS:
-            self.extrator = ScraperPartida()
+            self.atualizarPartidasAntigasNaoFinalizadas()
 
-            for i in range(self.rangeInicio, self.rangeFim + 1):
-                partida = self.listaProcessamento[i]
-                ret = self.atualizarPartida(partida)
-
-                if ret:
-                    self.totalSucesso += 1
-                else:
-                    self.totalErros += 1
-
-            self.extrator.finalizarWebDriver()
-
-        elif self.acao == self.Acao.VALIDAR_PARTIDAS_DO_DIA:
-            self.extrator = ScraperPartida()
-            partidaCore = PartidaCore()
-
-            data_inicio = datetime.strftime(
-                datetime.now() - timedelta(days=3), "%Y-%m-%d") + " 00:00:00"
-            data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
-
-            data_fim = datetime.strftime(
-                datetime.now() + timedelta(days=3), "%Y-%m-%d") + " 23:59:59"
-            data_fim = datetime.strptime(data_fim, "%Y-%m-%d %H:%M:%S")
-
-            filtrosPartida = partidaCore.getOpcoesFiltro()
-
-            filtrosPartida["dataHoraInicio"] = data_inicio
-            filtrosPartida["dataHoraFim"] = data_fim
-
-            partidasCadastradas = partidaCore.listPartidas(filtrosPartida)
-
-            indexLista = 0
-            for urlPartida in self.listaProcessamento:
-                executar = indexLista % self.totalThreads == self.idThread
-                if executar:
-                    # urlPartida = self.listaProcessamento[contadorExecucao]
-                    ret = self.validarPartidaDoDia(urlPartida, partidasCadastradas)
-                    if ret:
-                        try:
-                            partidasCadastradas.remove(urlPartida)
-                        except:
-                            pass
-                        self.totalSucesso += 1
-                    else:
-                        self.totalErros += 1
-
-                indexLista += 1
-
-            # for i in range(self.rangeInicio, self.rangeFim + 1):
-            #     urlPartida = self.listaProcessamento[i]
-            #
-            #     ret = self.validarPartidaDoDia(urlPartida, partidasCadastradas)
-            #     if ret:
-            #         try:
-            #             partidasCadastradas.remove(urlPartida)
-            #         except:
-            #             pass
-            #         self.totalSucesso += 1
-            #     else:
-            #         self.totalErros += 1
-
-            self.extrator.finalizarWebDriver()
-            self.processamentoFinalizado = True
-
+        elif self.acaoMotor == self.Acao.ATUALIZAR_APOSTAS:
+            self.atualizarApostas()
         else:
             print("ACAO INVALIDA")
 

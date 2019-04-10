@@ -107,34 +107,34 @@ class MotorFactory:
 
     def verificarProcessamento(self):
         try:
-            while not self.processamentoFinalizado():
+            while not self.verificarFimDoProcessamento():
                 time.sleep(300)
-                quantidades_processadas = self.getQuantidadeProcessada()
-                self.salvarProcessamentoBatch(quantidades_processadas[0], quantidades_processadas[1],
+                quantidadesProcessadas = self.getQuantidadeProcessada()
+                self.salvarProcessamentoBatch(quantidadesProcessadas[0], quantidadesProcessadas[1],
                                               ProcessamentoBatch.Status.EM_PROCESSAMENTO.name)
 
-            quantidades_processadas = self.getQuantidadeProcessada()
-            self.salvarProcessamentoBatch(quantidades_processadas[0], quantidades_processadas[1],
+            quantidadesProcessadas = self.getQuantidadeProcessada()
+            self.salvarProcessamentoBatch(quantidadesProcessadas[0], quantidadesProcessadas[1],
                                           ProcessamentoBatch.Status.FINALIZADO.name, datetime.now())
         except Exception as e:
             print(e.args)
 
-    def processamentoFinalizado(self) -> bool:
+    def verificarFimDoProcessamento(self) -> bool:
         finalizado = True
         for thread in self.listaThreads:
-            finalizado = finalizado and thread.processamentoFinalizado
+            finalizado = finalizado and thread.isAlive()
 
         return finalizado
 
     def getQuantidadeProcessada(self):
-        qtd_sucesso = 0
-        qtd_erro = 0
+        quantidadeSucesso = 0
+        quantidadeErro = 0
 
         for thread in self.listaThreads:
-            qtd_sucesso += thread.totalSucesso
-            qtd_erro += thread.totalErros
+            quantidadeSucesso += thread.totalSucesso
+            quantidadeErro += thread.totalErros
 
-        return [qtd_sucesso, qtd_erro]
+        return [quantidadeSucesso, quantidadeErro]
 
     def getItensProcessamentoMotorExtracao(self):
         self.acaoMotor = MotorExtracao.Acao(self.codigoAcaoMotor)

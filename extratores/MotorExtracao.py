@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import threading
+from threading import Thread
 import time
 from datetime import datetime, timedelta
 from enum import Enum
@@ -17,27 +17,14 @@ from webscraping.ScraperCompeticao import ScraperCompeticao
 from webscraping.ScraperEquipe import ScraperEquipe
 from webscraping.ScraperPais import ScraperPais
 from webscraping.ScraperPartida import ScraperPartida
+from extratores.Motor import Motor
 
 
-class MotorExtracao(threading.Thread):
-    def __init__(self, acao=-1, idThread=-1, totalThreads=-1, listaProcessamento=[]):
+class MotorExtracao(Motor):
+    def __init__(self, acaoMotor=-1, idThread=-1, totalThreads=-1, listaProcessamento=[]):
 
-        self.acao = acao
-        self.idThread = idThread
-        self.totalThreads = totalThreads
-
-        self.listaProcessamento = listaProcessamento
-        self.totalItens = len(listaProcessamento)
-
-        self.totalSucesso = 0
-        self.totalErros = 0
-        self.horaInicio = time.strftime("%Y-%m-%d %H:%M:%S")
-        self.horaFim = None
-        self.processamentoFinalizado = False
-
-        self.extrator = None
-
-        threading.Thread.__init__(self)
+        super(MotorExtracao, self).__init__(acaoMotor, idThread, totalThreads, listaProcessamento)
+        Thread.__init__(self)
 
     def salvarScrap(self, url, prioridade: int, tipo: str, status: str, idPai=0):
         try:
@@ -91,7 +78,7 @@ class MotorExtracao(threading.Thread):
             return {
                 "horaInicio": horaInicio,
                 "horaFim": horaFim,
-                "acaoMotor": self.acao,
+                "acaoMotor": self.acaoMotor,
                 "totalItens": len(paises),
                 "resultado": resultado,
                 "idThread": self.idThread,
@@ -124,7 +111,7 @@ class MotorExtracao(threading.Thread):
             return {
                 "horaInicio": horaInicio,
                 "horaFim": horaFim,
-                "acaoMotor": self.acao,
+                "acaoMotor": self.acaoMotor,
                 "totalItens": len(competicoes),
                 "resultado": resultado,
                 "idThread": self.idThread,
@@ -161,7 +148,7 @@ class MotorExtracao(threading.Thread):
             return {
                 "horaInicio": horaInicio,
                 "horaFim": horaFim,
-                "acaoMotor": self.acao,
+                "acaoMotor": self.acaoMotor,
                 "totalItens": len(equipes),
                 "resultado": ret,
                 "idThread": self.idThread,
@@ -200,7 +187,7 @@ class MotorExtracao(threading.Thread):
             return {
                 "horaInicio": horaInicio,
                 "horaFim": horaFim,
-                "acaoMotor": self.acao,
+                "acaoMotor": self.acaoMotor,
                 "totalItens": totalPartidas,
                 "resultado": ret,
                 "idThread": self.idThread,
@@ -352,46 +339,52 @@ class MotorExtracao(threading.Thread):
             return False
 
     def extrairPartidasDia(self):
-        if self.extrator is None:
-            self.extrator = ScraperPartida()
+        try:
+            if self.extrator is None:
+                self.extrator = ScraperPartida()
 
-        partidaCore = PartidaCore()
+            partidaCore = PartidaCore()
 
-        dataInicio = datetime.strftime(
-            datetime.now() - timedelta(days=3), "%Y-%m-%d") + " 00:00:00"
-        dataInicio = datetime.strptime(dataInicio, "%Y-%m-%d %H:%M:%S")
+            dataInicio = datetime.strftime(
+                datetime.now() - timedelta(days=3), "%Y-%m-%d") + " 00:00:00"
+            dataInicio = datetime.strptime(dataInicio, "%Y-%m-%d %H:%M:%S")
 
-        dataFim = datetime.strftime(
-            datetime.now() + timedelta(days=3), "%Y-%m-%d") + " 23:59:59"
-        dataFim = datetime.strptime(dataFim, "%Y-%m-%d %H:%M:%S")
+            dataFim = datetime.strftime(
+                datetime.now() + timedelta(days=3), "%Y-%m-%d") + " 23:59:59"
+            dataFim = datetime.strptime(dataFim, "%Y-%m-%d %H:%M:%S")
 
-        filtrosPartida = partidaCore.getOpcoesFiltro()
+            filtrosPartida = partidaCore.getOpcoesFiltro()
 
-        filtrosPartida["dataHoraInicio"] = dataInicio
-        filtrosPartida["dataHoraFim"] = dataFim
+            filtrosPartida["dataHoraInicio"] = dataInicio
+            filtrosPartida["dataHoraFim"] = dataFim
 
-        partidasCadastradas = partidaCore.listPartidas(filtrosPartida)
+            partidasCadastradas = partidaCore.listPartidas(filtrosPartida)
 
-        indexLista = 0
+            indexLista = 0
 
-        for urlPartida in self.listaProcessamento:
-            executar = indexLista % self.totalThreads == self.idThread
-            if executar:
+            for urlPartida in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
 
-                resultado = self.salvarPartidaDoDia(urlPartida, partidasCadastradas)
-                if resultado:
-                    try:
-                        partidasCadastradas.remove(urlPartida)
-                    except:
-                        pass
-                    self.totalSucesso += 1
-                else:
-                    self.totalErros += 1
+                    resultado = self.salvarPartidaDoDia(urlPartida, partidasCadastradas)
+                    if resultado:
+                        try:
+                            partidasCadastradas.remove(urlPartida)
+                        except:
+                            pass
+                        self.totalSucesso += 1
+                    else:
+                        self.totalErros += 1
 
-            indexLista += 1
+                indexLista += 1
 
-        self.extrator.finalizarWebDriver()
-        self.processamentoFinalizado = True
+            self.extrator.finalizarWebDriver()
+            self.processamentoFinalizado = True
+
+        except Exception as e:
+            print(e.args[0])
+            if self.extrator is not None:
+                self.extrator.finalizarWebDriver()
 
     def processarScrapingPaises(self):
         try:
@@ -554,28 +547,28 @@ class MotorExtracao(threading.Thread):
             print("{} ==> {}".format(acao.value, acao.name))
 
     def run(self):
-        if self.acao == self.Acao.EXTRAIR_PARTIDAS_DO_DIA:
+        if self.acaoMotor == self.Acao.EXTRAIR_PARTIDAS_DO_DIA:
             self.extrairPartidasDia()
 
-        elif self.acao == self.Acao.SCRAPING_PAISES:
+        elif self.acaoMotor == self.Acao.SCRAPING_PAISES:
             self.processarScrapingPaises()
 
-        elif self.acao == self.Acao.SCRAPING_COMPETICOES:
+        elif self.acaoMotor == self.Acao.SCRAPING_COMPETICOES:
             self.processarScrapingCompeticoesPais()
 
-        elif self.acao == self.Acao.SCRAPING_EQUIPES:
+        elif self.acaoMotor == self.Acao.SCRAPING_EQUIPES:
             self.processarScrapingEquipesCompeticao()
 
-        elif self.acao == self.Acao.SCRAPING_PARTIDAS:
+        elif self.acaoMotor == self.Acao.SCRAPING_PARTIDAS:
             self.processarScrapingPartidasCompeticao()
 
-        elif self.acao == self.Acao.SALVAR_COMPETICOES:
+        elif self.acaoMotor == self.Acao.SALVAR_COMPETICOES:
             self.processarSalvarCompeticoes()
 
-        elif self.acao == self.Acao.SALVAR_EQUIPE:
+        elif self.acaoMotor == self.Acao.SALVAR_EQUIPE:
             self.processarSalvarEquipes()
 
-        elif self.acao == self.Acao.SALVAR_PARTIDAS:
+        elif self.acaoMotor == self.Acao.SALVAR_PARTIDAS:
             self.processarSalvarPartidas()
 
         else:
@@ -595,4 +588,3 @@ class MotorExtracao(threading.Thread):
         SALVAR_COMPETICOES = 6
         SALVAR_EQUIPE = 7
         SALVAR_PARTIDAS = 8
-
