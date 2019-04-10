@@ -34,15 +34,15 @@ class PartidaCore:
             if partida._id == "":
                 partida._id = HashString().encode(partida.url)
                 partida.dataCadastro = datetime.now()
-                return self.collection.inserir_documento(partida)
+                return self.collection.inserirDocumento(partida)
             else:
-                return self.collection.atualizar_documento(partida)
+                return self.collection.atualizarDocumento(partida)
         except Exception as e:
             print(e.args)
             return False
 
     def getPartidaPorId(self, id):
-        doc = self.collection.get_documento_por_id(id)
+        doc = self.collection.obterDocumentoPorId(id)
         if doc is not None:
             return Partida(doc)
         else:
@@ -73,9 +73,7 @@ class PartidaCore:
                     filter["status"] = {"$in": filter["status"]}
 
                 filter["dataHora"] = filtroDataHora
-            docs = self.collection.listar_documentos(filter, [("dataHora", -1)], limit, skip)
-
-
+            docs = self.collection.listarDocumentos(filter, [("dataHora", -1)], limit, skip)
 
             for doc in docs:
                 # print(json.dumps(doc, indent=2, default=json_util.default),",")

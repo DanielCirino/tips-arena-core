@@ -29,15 +29,15 @@ class EquipeCore:
             if equipe._id == "":
                 equipe._id = HashString().encode(equipe.url)
                 equipe.dataCadastro = datetime.now()
-                return self.collection.inserir_documento(equipe)
+                return self.collection.inserirDocumento(equipe)
             else:
-                return self.collection.atualizar_documento(equipe)
+                return self.collection.atualizarDocumento(equipe)
         except Exception as e:
             print(e.args)
             return False
 
     def getEquipePorId(self, id):
-        doc = self.collection.get_documento_por_id(id)
+        doc = self.collection.obterDocumentoPorId(id)
         if doc is not None:
             return Equipe(doc)
         else:

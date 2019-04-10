@@ -29,16 +29,16 @@ class CompeticaoCore:
             if competicao._id == "":
                 competicao._id = HashString().encode(competicao.url)
                 competicao.dataCadastro = datetime.now()
-                return self.collection.inserir_documento(competicao)
+                return self.collection.inserirDocumento(competicao)
             else:
-                return self.collection.atualizar_documento(competicao)
+                return self.collection.atualizarDocumento(competicao)
         except Exception as e:
             print(e.args)
             return False
 
     def getCompeticaoPorId(self, id):
         try:
-            doc = self.collection.get_documento_por_id(id)
+            doc = self.collection.obterDocumentoPorId(id)
             if doc is not None:
                 return Competicao(doc)
             else:

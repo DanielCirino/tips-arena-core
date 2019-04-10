@@ -616,8 +616,8 @@ class ScraperPartida(Scraper):
                 oddOver = campos[0].text.replace("-", "0")
                 oddUnder = campos[1].text.replace("-", "0")
 
-                if oddOver == "0": redutorQuantidadeUnder += 1
-                if oddUnder == "0": redutorQuantidadeOver += 1
+                if oddOver == "0": redutorQuantidadeOver += 1
+                if oddUnder == "0": redutorQuantidadeUnder += 1
 
                 valorOddsOver += float(oddOver)
                 valorOddsUnder += float(oddUnder)

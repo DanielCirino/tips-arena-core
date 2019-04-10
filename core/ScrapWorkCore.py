@@ -25,7 +25,7 @@ class ScrapWorkCore:
         }]
 
     def getScrapWorkById(self, id):
-        doc = self.collection.get_documento_por_id(id)
+        doc = self.collection.obterDocumentoPorId(id)
 
         if doc is not None:
             return ScrapWork(doc)
@@ -60,7 +60,7 @@ class ScrapWorkCore:
             else:
                 filter["status"] = {"$in": filter["status"]}
 
-        docs = self.collection.listar_documentos(
+        docs = self.collection.listarDocumentos(
             filter, [("prioridadeExtracao", 1)], limit, skip)
 
         for doc in docs:
@@ -74,9 +74,9 @@ class ScrapWorkCore:
             if scrapWork._id == "":
                 scrapWork._id = HashString().encode(scrapWork.url)
                 scrapWork.dataCadastro = datetime.now()
-                return self.collection.inserir_documento(scrapWork)
+                return self.collection.inserirDocumento(scrapWork)
             else:
-                return self.collection.atualizar_documento(scrapWork)
+                return self.collection.atualizarDocumento(scrapWork)
         except Exception as e:
             print(e.args)
             return False

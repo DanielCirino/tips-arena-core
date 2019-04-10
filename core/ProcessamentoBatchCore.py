@@ -23,7 +23,7 @@ class ProcessamentoBatchCore:
         }]
 
     def getProcessamentoBatchById(self, id):
-        doc = self.collection.get_documento_por_id(id)
+        doc = self.collection.obterDocumentoPorId(id)
 
         if doc is not None:
             return ProcessamentoBatch(doc)
@@ -70,9 +70,9 @@ class ProcessamentoBatchCore:
             processamento.dataAtualizacao = datetime.now()
             if processamento._id == "":
                 delattr(processamento,"_id")
-                return self.collection.inserir_documento(processamento)
+                return self.collection.inserirDocumento(processamento)
             else:
-                return self.collection.atualizar_documento(processamento)
+                return self.collection.atualizarDocumento(processamento)
         except Exception as e:
             print(e.args)
             return None

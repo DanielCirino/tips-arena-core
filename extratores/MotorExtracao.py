@@ -1,61 +1,39 @@
-
 # -*- coding: utf-8 -*-
 
 import threading
-from enum import Enum
 import time
 from datetime import datetime, timedelta
+from enum import Enum
 
-from utils.HashString import HashString
-
-from webscraping.ScraperPais import ScraperPais
-from webscraping.ScraperCompeticao import ScraperCompeticao
-from webscraping.ScraperEdicaoCompeticao import ScraperEdicaoCompeticao
-from webscraping.ScraperEquipe import ScraperEquipe
-from webscraping.ScraperPartida import ScraperPartida
-
-from models.ScrapWork import ScrapWork
-from models.Competicao import Competicao
-from models.EdicaoCompeticao import EdicaoCompeticao
-from models.Equipe import Equipe
-from models.Partida import Partida
-
-from core.ScrapWorkCore import ScrapWorkCore
 from core.CompeticaoCore import CompeticaoCore
-
 from core.EquipeCore import EquipeCore
 from core.PartidaCore import PartidaCore
+from core.ScrapWorkCore import ScrapWorkCore
+from models.Competicao import Competicao
+from models.Partida import Partida
+from models.ScrapWork import ScrapWork
+from utils.HashString import HashString
+from webscraping.ScraperCompeticao import ScraperCompeticao
+from webscraping.ScraperEquipe import ScraperEquipe
+from webscraping.ScraperPais import ScraperPais
+from webscraping.ScraperPartida import ScraperPartida
 
 
 class MotorExtracao(threading.Thread):
-    def __init__(self, acao=-1, id_thread=-1, total_threads=-1, lista_processamento=[]):
+    def __init__(self, acao=-1, idThread=-1, totalThreads=-1, listaProcessamento=[]):
 
         self.acao = acao
-        self.id_thread = id_thread
-        self.total_threads = total_threads
+        self.idThread = idThread
+        self.totalThreads = totalThreads
 
-        self.lista_processamento = lista_processamento
-        self.total_registros = len(lista_processamento)
+        self.listaProcessamento = listaProcessamento
+        self.totalItens = len(listaProcessamento)
 
-        self.range_inicio = id_thread * \
-            round(len(self.lista_processamento) / self.total_threads)
-        self.range_fim = (
-            (id_thread + 1) * round(len(self.lista_processamento) / self.total_threads)) - 1
-
-        if self.range_fim + 1 > len(self.lista_processamento):
-            self.range_fim = len(self.lista_processamento) - 1
-
-        if id_thread + 1 == total_threads:
-            if self.range_fim + 1 < len(self.lista_processamento):
-                self.range_fim = len(self.lista_processamento) - 1
-
-        # print("[{}a{}][{}]".format(self.range_inicio, self.range_fim, self.id_thread))
-
-        self.total_processado = 0
-        self.total_erros = 0
-        self.hora_inicio = time.strftime("%Y-%m-%d %H:%M:%S")
-        self.hora_fim = None
-        self.processamento_finalizado = False
+        self.totalSucesso = 0
+        self.totalErros = 0
+        self.horaInicio = time.strftime("%Y-%m-%d %H:%M:%S")
+        self.horaFim = None
+        self.processamentoFinalizado = False
 
         self.extrator = None
 
@@ -63,7 +41,6 @@ class MotorExtracao(threading.Thread):
 
     def salvarScrap(self, url, prioridade: int, tipo: str, status: str, idPai=0):
         try:
-
             scrapWorkCore = ScrapWorkCore()
             objectId = HashString().encode(url)
             scrap = scrapWorkCore.getScrapWorkById(objectId)
@@ -83,31 +60,31 @@ class MotorExtracao(threading.Thread):
             return False
 
     def salvarListaScraping(self, listaUrls, status, tipo, idPai):
+        contadorSucesso = 0
+        contadorErro = 0
         try:
-            contadorSucesso = 0
-            contadorErro = 0
-
             for item in listaUrls:
-                ret = self.salvarScrap(
+                resultado = self.salvarScrap(
                     item["url"], item["seq"], tipo, status, idPai)
-                if ret:
+
+                if resultado:
                     contadorSucesso += 1
                 else:
                     contadorErro += 1
-            return {"totalSucesso": contadorSucesso, "totalErro": contadorErro}
 
         except Exception as e:
             print(e.args)
-            return None
+
+        return {"totalRegistros": len(listaUrls), "totalSucesso": contadorSucesso, "totalErro": contadorErro}
 
     def scrapListaPaises(self):
         try:
             horaInicio = datetime.now()
             paises = ScraperPais().getListaPaises()
 
-            ret = self.salvarListaScraping(paises,
-                                           ScrapWork.Status.SCRAPING_COMPETICOES.name,
-                                           ScrapWork.Tipo.PAIS.name, "")
+            resultado = self.salvarListaScraping(paises,
+                                                 ScrapWork.Status.SCRAPING_COMPETICOES.name,
+                                                 ScrapWork.Tipo.PAIS.name, "")
 
             horaFim = datetime.now()
 
@@ -116,17 +93,17 @@ class MotorExtracao(threading.Thread):
                 "horaFim": horaFim,
                 "acaoMotor": self.acao,
                 "totalItens": len(paises),
-                "resultado": ret,
-                "idThread": self.id_thread,
-                "totalThread": self.total_threads
+                "resultado": resultado,
+                "idThread": self.idThread,
+                "totalThread": self.totalThreads
             }
         except Exception as e:
             print(e.args)
             return None
 
     def scrapListaCompeticoesPais(self, scrapPais: ScrapWork):
-        scrapWorkCore = ScrapWorkCore()
         try:
+            scrapWorkCore = ScrapWorkCore()
 
             horaInicio = datetime.now()
             competicoes = ScraperCompeticao().getListaCompeicoesPais(scrapPais.url)
@@ -135,9 +112,9 @@ class MotorExtracao(threading.Thread):
             scrapPais.status = ScrapWork.Status.PROCESSANDO.name
             scrapWorkCore.salvarScrapWork(scrapPais)
 
-            ret = self.salvarListaScraping(competicoes,
-                                           ScrapWork.Status.SCRAPING_EDICOES_COMPETICAO.name,
-                                           ScrapWork.Tipo.COMPETICAO.name, scrapPais._id)
+            resultado = self.salvarListaScraping(competicoes,
+                                                 ScrapWork.Status.SCRAPING_EDICOES_COMPETICAO.name,
+                                                 ScrapWork.Tipo.COMPETICAO.name, scrapPais._id)
 
             scrapPais.status = ScrapWork.Status.OK.name
             scrapWorkCore.salvarScrapWork(scrapPais)
@@ -149,9 +126,9 @@ class MotorExtracao(threading.Thread):
                 "horaFim": horaFim,
                 "acaoMotor": self.acao,
                 "totalItens": len(competicoes),
-                "resultado": ret,
-                "idThread": self.id_thread,
-                "totalThread": self.total_threads
+                "resultado": resultado,
+                "idThread": self.idThread,
+                "totalThread": self.totalThreads
             }
 
         except Exception as e:
@@ -161,20 +138,59 @@ class MotorExtracao(threading.Thread):
 
             return None
 
-    def scrapListaEdicoesCompeticoes(self, scrapCompeticao: ScrapWork):
+    def scrapListaEquipesCompeticao(self, scrapCompeticao: ScrapWork):
         scrapWorkCore = ScrapWorkCore()
         try:
 
             horaInicio = datetime.now()
-            edicoes = ScraperEdicaoCompeticao().getListaEdicoesCompeticao(scrapCompeticao.url)
+            equipes = ScraperEquipe().getListaEquipesEdicaoCompeticao(scrapCompeticao.url)
 
-            scrapCompeticao.target = len(edicoes)
+            scrapCompeticao.target = len(equipes)
             scrapCompeticao.status = ScrapWork.Status.PROCESSANDO.name
             scrapWorkCore.salvarScrapWork(scrapCompeticao)
 
-            ret = self.salvarListaScraping(edicoes,
-                                           ScrapWork.Status.SCRAPING_EQUIPES.name,
-                                           ScrapWork.Tipo.EDICAO_COMPETICAO.name, scrapCompeticao._id)
+            ret = self.salvarListaScraping(equipes,
+                                           ScrapWork.Status.AGUARDANDO_SCRAPING.name,
+                                           ScrapWork.Tipo.EQUIPE.name, scrapCompeticao._id)
+
+            scrapCompeticao.status = ScrapWork.Status.SCRAPING_PARTIDAS.name
+            scrapWorkCore.salvarScrapWork(scrapCompeticao)
+
+            horaFim = datetime.now()
+
+            return {
+                "horaInicio": horaInicio,
+                "horaFim": horaFim,
+                "acaoMotor": self.acao,
+                "totalItens": len(equipes),
+                "resultado": ret,
+                "idThread": self.idThread,
+                "totalThread": self.totalThreads
+            }
+
+        except Exception as e:
+            print(e.args)
+            scrapCompeticao.status = ScrapWork.Status.ERRO.name
+            scrapWorkCore.salvarScrapWork(scrapCompeticao)
+
+            return None
+
+    def scrapListaPartidasCompeticao(self, scrapCompeticao: ScrapWork):
+        scrapWorkCore = ScrapWorkCore()
+        try:
+            horaInicio = datetime.now()
+            partidas = self.extrator.getListaPartidasEdicaoCompeticao(
+                scrapCompeticao.url)
+            totalPartidas = len(partidas["agendadas"]) + \
+                            len(partidas["finalizadas"])
+
+            scrapCompeticao.target = totalPartidas
+            scrapCompeticao.status = ScrapWork.Status.PROCESSANDO.name
+            scrapWorkCore.salvarScrapWork(scrapCompeticao)
+
+            ret = self.salvarListaScraping(partidas["agendadas"] + partidas["finalizadas"],
+                                           ScrapWork.Status.AGUARDANDO_SCRAPING.name,
+                                           ScrapWork.Tipo.PARTIDA.name, scrapCompeticao._id)
 
             scrapCompeticao.status = ScrapWork.Status.AGUARDANDO_SCRAPING.name
             scrapWorkCore.salvarScrapWork(scrapCompeticao)
@@ -185,10 +201,10 @@ class MotorExtracao(threading.Thread):
                 "horaInicio": horaInicio,
                 "horaFim": horaFim,
                 "acaoMotor": self.acao,
-                "totalItens": len(edicoes),
+                "totalItens": totalPartidas,
                 "resultado": ret,
-                "idThread": self.id_thread,
-                "totalThread": self.total_threads
+                "idThread": self.idThread,
+                "totalThread": self.totalThreads
             }
 
         except Exception as e:
@@ -198,84 +214,8 @@ class MotorExtracao(threading.Thread):
 
             return None
 
-    def scrapListaEquipesEdicaoCompeticao(self, scrapEdicao: ScrapWork):
-        scrapWorkCore = ScrapWorkCore()
-        try:
-
-            horaInicio = datetime.now()
-            equipes = ScraperEquipe().getListaEquipesEdicaoCompeticao(scrapEdicao.url)
-
-            scrapEdicao.target = len(equipes)
-            scrapEdicao.status = ScrapWork.Status.PROCESSANDO.name
-            scrapWorkCore.salvarScrapWork(scrapEdicao)
-
-            ret = self.salvarListaScraping(equipes,
-                                           ScrapWork.Status.AGUARDANDO_SCRAPING.name,
-                                           ScrapWork.Tipo.EQUIPE.name, scrapEdicao._id)
-
-            scrapEdicao.status = ScrapWork.Status.SCRAPING_PARTIDAS.name
-            scrapWorkCore.salvarScrapWork(scrapEdicao)
-
-            horaFim = datetime.now()
-
-            return {
-                "horaInicio": horaInicio,
-                "horaFim": horaFim,
-                "acaoMotor": self.acao,
-                "totalItens": len(equipes),
-                "resultado": ret,
-                "idThread": self.id_thread,
-                "totalThread": self.total_threads
-            }
-
-        except Exception as e:
-            print(e.args)
-            scrapEdicao.status = ScrapWork.Status.ERRO.name
-            scrapWorkCore.salvarScrapWork(scrapEdicao)
-
-            return None
-
-    def scrapListaPartidasEdicaoCompeticao(self, scrapEdicao):
-        scrapWorkCore = ScrapWorkCore()
-        try:
-
-            horaInicio = datetime.now()
-            partidas = self.extrator.getListaPartidasEdicaoCompeticao(
-                scrapEdicao.url)
-            totalPartidas = len(partidas["agendadas"]) + \
-                len(partidas["finalizadas"])
-
-            scrapEdicao.target = totalPartidas
-            scrapEdicao.status = ScrapWork.Status.PROCESSANDO.name
-            scrapWorkCore.salvarScrapWork(scrapEdicao)
-
-            ret = self.salvarListaScraping(partidas["agendadas"] + partidas["finalizadas"],
-                                           ScrapWork.Status.AGUARDANDO_SCRAPING.name,
-                                           ScrapWork.Tipo.PARTIDA.name, scrapEdicao._id)
-
-            scrapEdicao.status = ScrapWork.Status.AGUARDANDO_SCRAPING.name
-            scrapWorkCore.salvarScrapWork(scrapEdicao)
-
-            horaFim = datetime.now()
-
-            return {
-                "horaInicio": horaInicio,
-                "horaFim": horaFim,
-                "acaoMotor": self.acao,
-                "totalItens": totalPartidas,
-                "resultado": ret,
-                "idThread": self.id_thread,
-                "totalThread": self.total_threads
-            }
-
-        except Exception as e:
-            print(e.args)
-            scrapEdicao.status = ScrapWork.Status.ERRO.name
-            scrapWorkCore.salvarScrapWork(scrapEdicao)
-
-            return None
-
     def salvarCompeticao(self, scrapCompeticao: ScrapWork):
+        scrapWorkCore = ScrapWorkCore()
         try:
             competicaoCore = CompeticaoCore()
             dadosCompeticao = ScraperCompeticao().getDadosCompeticao(scrapCompeticao.url)
@@ -287,52 +227,24 @@ class MotorExtracao(threading.Thread):
 
             competicao = Competicao(dadosCompeticao)
 
-            ret = competicaoCore.salvarCompeticao(competicao)
+            resultado = competicaoCore.salvarCompeticao(competicao)
 
-            if ret:
+            if resultado:
                 scrapCompeticao.status = ScrapWork.Status.OK.name
             else:
                 scrapCompeticao.status = ScrapWork.Status.ERRO.name
 
-            ScrapWorkCore().salvarScrapWork(scrapCompeticao)
+            scrapWorkCore.salvarScrapWork(scrapCompeticao)
 
-            return ret
+            return resultado
         except Exception as e:
             print(e.args)
             scrapCompeticao.status = ScrapWork.Status.ERRO.name
-            ScrapWorkCore().salvarScrapWork(scrapCompeticao)
-            return False
-
-    def salvarEdicaoCompeticao(self, scrapEdicao: ScrapWork):
-        try:
-            edicaoCore = EdicaoCompeticaoCore()
-            dadosEdicao = ScraperEdicaoCompeticao().getDadosEdicaoCompeticao(scrapEdicao.url)
-            objectId = HashString().encode(scrapEdicao.url)
-
-            edicao = edicaoCore.getEdicaoCompeticaoPorId(objectId)
-            dadosEdicao["_id"] = edicao._id
-            dadosEdicao["dataCadastro"] = edicao.dataCadastro
-
-            edicao = EdicaoCompeticao(dadosEdicao)
-            edicao.idCompeticao = scrapEdicao.idPai
-
-            ret = edicaoCore.salvarEdicaoCompeticao(edicao)
-
-            if ret:
-                scrapEdicao.status = ScrapWork.Status.OK.name
-            else:
-                scrapEdicao.status = ScrapWork.Status.ERRO.name
-
-            ScrapWorkCore().salvarScrapWork(scrapEdicao)
-
-            return ret
-        except Exception as e:
-            print(e.args)
-            scrapEdicao.status = ScrapWork.Status.ERRO.name
-            ScrapWorkCore().salvarScrapWork(scrapEdicao)
+            scrapWorkCore.salvarScrapWork(scrapCompeticao)
             return False
 
     def salvarEquipe(self, scrapEquipe: ScrapWork):
+        scrapWorkCore = ScrapWorkCore()
         try:
             equipeCore = EquipeCore()
             dadosEquipe = ScraperEquipe().getDadosEquipe(scrapEquipe.url)
@@ -344,25 +256,25 @@ class MotorExtracao(threading.Thread):
 
             equipe = Competicao(dadosEquipe)
 
-            ret = equipeCore.salvarEquipe(equipe)
+            resultado = equipeCore.salvarEquipe(equipe)
 
-            if ret:
+            if resultado:
                 scrapEquipe.status = ScrapWork.Status.OK.name
             else:
                 scrapEquipe.status = ScrapWork.Status.ERRO.name
 
-            ScrapWorkCore().salvarScrapWork(scrapEquipe)
+            scrapWorkCore.salvarScrapWork(scrapEquipe)
 
-            return ret
+            return resultado
         except Exception as e:
             print(e.args)
             scrapEquipe.status = ScrapWork.Status.ERRO.name
-            ScrapWorkCore().salvarScrapWork(scrapEquipe)
+            scrapWorkCore.salvarScrapWork(scrapEquipe)
             return False
 
     def salvarPartida(self, scrapPartida: ScrapWork):
+        scrapWorkCore = ScrapWorkCore()
         try:
-
             partidaCore = PartidaCore()
             dadosPartida = self.extrator.getDadosPartida(scrapPartida.url)
             objectId = HashString().encode(scrapPartida.url)
@@ -376,134 +288,311 @@ class MotorExtracao(threading.Thread):
             partida = Partida(dadosPartida)
             partida.idEdicaoCompeticao = scrapPartida.idPai
 
-            ret = partidaCore.salvarPartida(partida)
+            resultado = partidaCore.salvarPartida(partida)
 
-            if ret:
+            if resultado:
                 scrapPartida.status = ScrapWork.Status.OK.name
             else:
                 scrapPartida.status = ScrapWork.Status.ERRO.name
 
-            ScrapWorkCore().salvarScrapWork(scrapPartida)
+            scrapWorkCore.salvarScrapWork(scrapPartida)
 
-            return ret
+            return resultado
         except Exception as e:
             print(e.args)
             scrapPartida.status = ScrapWork.Status.ERRO.name
-            ScrapWorkCore().salvarScrapWork(scrapPartida)
+            scrapWorkCore.salvarScrapWork(scrapPartida)
             return False
+
+    def salvarPartidaDoDia(self, urlPartida, partidasCadastradas):
+        try:
+            partidaCore = PartidaCore()
+            partidaJaCadastrada = False
+
+            for partida in partidasCadastradas:
+                if partida.url == urlPartida:
+                    partidaJaCadastrada = True
+                    break
+
+            if partidaJaCadastrada:
+                return True
+
+            motorExtracao = MotorExtracao()
+            hashString = HashString()
+
+            dadosPartida = self.extrator.getDadosPartida(urlPartida)
+
+            urlPais = dadosPartida["competicao"]["pais"]["url"]
+            idPais = hashString.encode(urlPais)
+
+            urlCompeticao = dadosPartida["competicao"]["url"]
+            idCompeticao = hashString.encode(urlCompeticao)
+
+            dadosPartida["idCompeticao"] = idCompeticao
+            motorExtracao.salvarScrap(urlPais, 1, ScrapWork.Tipo.PAIS.name,
+                                      ScrapWork.Status.SCRAPING_COMPETICOES.name)
+
+            motorExtracao.salvarScrap(urlCompeticao, 1, ScrapWork.Tipo.COMPETICAO.name,
+                                      ScrapWork.Status.SCRAPING_EDICOES_COMPETICAO.name, idPais)
+
+            motorExtracao.salvarScrap(dadosPartida["equipeMandante"]["url"], 1, ScrapWork.Tipo.EQUIPE.name,
+                                      ScrapWork.Status.AGUARDANDO_SCRAPING.name, idCompeticao)
+
+            motorExtracao.salvarScrap(dadosPartida["equipeVisitante"]["url"], 1, ScrapWork.Tipo.EQUIPE.name,
+                                      ScrapWork.Status.AGUARDANDO_SCRAPING.name, idCompeticao)
+
+            motorExtracao.salvarScrap(dadosPartida["url"], 1, ScrapWork.Tipo.PARTIDA.name,
+                                      ScrapWork.Status.OK.name, idCompeticao)
+
+            novaPartida = Partida(dadosPartida)
+            return partidaCore.salvarPartida(novaPartida)
+
+        except Exception as e:
+            print(e.args)
+            return False
+
+    def extrairPartidasDia(self):
+        if self.extrator is None:
+            self.extrator = ScraperPartida()
+
+        partidaCore = PartidaCore()
+
+        dataInicio = datetime.strftime(
+            datetime.now() - timedelta(days=3), "%Y-%m-%d") + " 00:00:00"
+        dataInicio = datetime.strptime(dataInicio, "%Y-%m-%d %H:%M:%S")
+
+        dataFim = datetime.strftime(
+            datetime.now() + timedelta(days=3), "%Y-%m-%d") + " 23:59:59"
+        dataFim = datetime.strptime(dataFim, "%Y-%m-%d %H:%M:%S")
+
+        filtrosPartida = partidaCore.getOpcoesFiltro()
+
+        filtrosPartida["dataHoraInicio"] = dataInicio
+        filtrosPartida["dataHoraFim"] = dataFim
+
+        partidasCadastradas = partidaCore.listPartidas(filtrosPartida)
+
+        indexLista = 0
+
+        for urlPartida in self.listaProcessamento:
+            executar = indexLista % self.totalThreads == self.idThread
+            if executar:
+
+                resultado = self.salvarPartidaDoDia(urlPartida, partidasCadastradas)
+                if resultado:
+                    try:
+                        partidasCadastradas.remove(urlPartida)
+                    except:
+                        pass
+                    self.totalSucesso += 1
+                else:
+                    self.totalErros += 1
+
+            indexLista += 1
+
+        self.extrator.finalizarWebDriver()
+        self.processamentoFinalizado = True
+
+    def processarScrapingPaises(self):
+        try:
+            indexLista = 0
+
+            for urlPais in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    resultado = self.salvarScrap(
+                        urlPais,
+                        ScrapWork.Tipo.PAIS.name,
+                        ScrapWork.Status.SCRAPING_COMPETICOES.name)
+
+                    if resultado:
+                        self.totalSucesso += 1
+                    else:
+                        self.totalErros += 1
+
+                indexLista += 1
+        except Exception as e:
+            print(e.args[0])
+
+        self.processamentoFinalizado = True
+
+    def processarScrapingCompeticoesPais(self):
+        try:
+            indexLista = 0
+
+            for scrapPais in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    resultado = self.scrapListaCompeticoesPais(scrapPais)
+
+                    if resultado is not None:
+                        self.totalSucesso += resultado["resultado"]["totalSucesso"]
+                    else:
+                        self.totalErros += resultado["resultado"]["totalErro"]
+
+                indexLista += 1
+        except Exception as e:
+            print(e.args[0])
+
+        self.processamentoFinalizado = True
+
+    def processarScrapingEquipesCompeticao(self):
+        try:
+            indexLista = 0
+
+            for scrapCompeticao in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    resultado = self.scrapListaEquipesCompeticao(scrapCompeticao)
+
+                    if resultado is not None:
+                        self.totalSucesso += resultado["resultado"]["totalSucesso"]
+                    else:
+                        self.totalErros += resultado["resultado"]["totalErro"]
+
+                indexLista += 1
+        except Exception as e:
+            print(e.args[0])
+
+        self.processamentoFinalizado = True
+
+    def processarScrapingPartidasCompeticao(self):
+        try:
+            if self.extrator is None:
+                self.extrator = ScraperPartida()
+
+            indexLista = 0
+
+            for scrapCompeticao in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    resultado = self.scrapListaPartidasCompeticao(scrapCompeticao)
+
+                    if resultado is not None:
+                        self.totalSucesso += resultado["resultado"]["totalSucesso"]
+                    else:
+                        self.totalErros += resultado["resultado"]["totalErro"]
+
+                indexLista += 1
+
+        except Exception as e:
+            print(e.args[0])
+
+        self.extrator.finalizarWebDriver()
+        self.processamentoFinalizado = True
+
+    def processarSalvarCompeticoes(self):
+        try:
+            indexLista = 0
+
+            for scrapCompeticao in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    resultado = self.salvarCompeticao(scrapCompeticao)
+
+                    if resultado:
+                        self.totalSucesso += 1
+                    else:
+                        self.totalErros += 1
+
+                indexLista += 1
+
+        except Exception as e:
+            print(e.args[0])
+
+        self.processamentoFinalizado = True
+
+    def processarSalvarEquipes(self):
+        try:
+            indexLista = 0
+
+            for scrapEquipe in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    resultado = self.salvarEquipe(scrapEquipe)
+
+                    if resultado:
+                        self.totalSucesso += 1
+                    else:
+                        self.totalErros += 1
+
+                indexLista += 1
+
+        except Exception as e:
+            print(e.args[0])
+
+        self.processamentoFinalizado = True
+
+    def processarSalvarPartidas(self):
+        try:
+            if self.extrator is None:
+                self.extrator = ScraperPartida()
+
+            indexLista = 0
+
+            for scrapPartida in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    resultado = self.salvarPartida(scrapPartida)
+
+                    if resultado:
+                        self.totalSucesso += 1
+                    else:
+                        self.totalErros += 1
+
+                indexLista += 1
+
+
+        except Exception as e:
+            print(e.args[0])
+
+        self.extrator.finalizarWebDriver()
+        self.processamentoFinalizado = True
 
     def exibirAcoesMotor(self):
         for acao in self.Acao:
             print("{} ==> {}".format(acao.value, acao.name))
 
     def run(self):
-        # obter lista paises do site
-        # obter lista competicoes por pais
-        # obter lista partidas por competicao
-        # obter lista equipes por competicao
+        if self.acao == self.Acao.EXTRAIR_PARTIDAS_DO_DIA:
+            self.extrairPartidasDia()
 
-        # salvar competicoes por pais
-        # salvar partidas da competicao
-        # salvar equipes da competicao
-
-        if self.acao == self.Acao.SCRAPING_PAISES:
-
-            for i in range(self.range_inicio, self.range_fim + 1):
-                url = self.lista_processamento[i]
-                ret = self.salvarScrap(
-                    url, ScrapWork.Tipo.PAIS.name, ScrapWork.Status.SCRAPING_COMPETICOES.name)
-
-                if ret:
-                    self.total_processado += 1
-                else:
-                    self.total_erros += 1
+        elif self.acao == self.Acao.SCRAPING_PAISES:
+            self.processarScrapingPaises()
 
         elif self.acao == self.Acao.SCRAPING_COMPETICOES:
-            for i in range(self.range_inicio, self.range_fim + 1):
-                scrapPais = self.lista_processamento[i]
-                ret = self.scrapListaCompeticoesPais(scrapPais)
-
-                if ret is not None:
-                    self.total_processado += ret["resultado"]["totalSucesso"]
-                else:
-                    self.total_erros += ret["resultado"]["totalErro"]
-
-        elif self.acao == self.Acao.SCRAPING_EDICOES_COMPETICAO:
-            for i in range(self.range_inicio, self.range_fim + 1):
-                scrapCompeticao = self.lista_processamento[i]
-                ret = self.scrapListaEdicoesCompeticoes(scrapCompeticao)
-
-                if ret is not None:
-                    self.total_processado += ret["resultado"]["totalSucesso"]
-                else:
-                    self.total_erros += ret["resultado"]["totalErro"]
+            self.processarScrapingCompeticoesPais()
 
         elif self.acao == self.Acao.SCRAPING_EQUIPES:
-            for i in range(self.range_inicio, self.range_fim + 1):
-                scrapEdicao = self.lista_processamento[i]
-                ret = self.scrapListaEquipesEdicaoCompeticao(scrapEdicao)
-
-                if ret is not None:
-                    self.total_processado += ret["resultado"]["totalSucesso"]
-                else:
-                    self.total_erros += ret["resultado"]["totalErro"]
+            self.processarScrapingEquipesCompeticao()
 
         elif self.acao == self.Acao.SCRAPING_PARTIDAS:
-            self.extrator = ScraperPartida()
-
-            for i in range(self.range_inicio, self.range_fim + 1):
-                scrapEdicao = self.lista_processamento[i]
-                ret = self.scrapListaPartidasEdicaoCompeticao(scrapEdicao)
-
-                if ret is not None:
-                    self.total_processado += ret["resultado"]["totalSucesso"]
-                else:
-                    self.total_erros += ret["resultado"]["totalErro"]
-
-            self.extrator.finalizarWebDriver()
+            self.processarScrapingPartidasCompeticao()
 
         elif self.acao == self.Acao.SALVAR_COMPETICOES:
-            for i in range(self.range_inicio, self.range_fim + 1):
-                scrapCompeticao = self.lista_processamento[i]
-                ret = self.salvarCompeticao(scrapCompeticao)
-
-                if ret:
-                    self.total_processado += 1
-                else:
-                    self.total_erros += 1
-
-        elif self.acao == self.Acao.SALVAR_EDICAO_COMPETICAO:
-            for i in range(self.range_inicio, self.range_fim + 1):
-                scrap_edicao = self.lista_processamento[i]
-                self.salvar_edicao_competicao(scrap_edicao)
+            self.processarSalvarCompeticoes()
 
         elif self.acao == self.Acao.SALVAR_EQUIPE:
-            for i in range(self.range_inicio, self.range_fim + 1):
-                scrap_equipe = self.lista_processamento[i]
-                self.salvar_equipe(scrap_equipe)
+            self.processarSalvarEquipes()
 
         elif self.acao == self.Acao.SALVAR_PARTIDAS:
-            self.extrator = ScraperPartida()
-            for i in range(self.range_inicio, self.range_fim + 1):
-                scrap_partida = self.lista_processamento[i]
-                self.salvarPartida(scrap_partida)
-
-            self.extrator.finalizarWebDriver()
+            self.processarSalvarPartidas()
 
         else:
             print("ACAO INVALIDA")
 
-        self.processamento_finalizado = True
-        self.hora_fim = time.strftime("%Y-%m-%d %H:%M:%S")
+        self.horaFim = time.strftime("%Y-%m-%d %H:%M:%S")
+
+        if self.extrator is not None:
+            self.extrator.finalizarWebDriver()
 
     class Acao(Enum):
-        SCRAPING_PAISES = 1
-        SCRAPING_COMPETICOES = 2
-        SCRAPING_EDICOES_COMPETICAO = 3
+        EXTRAIR_PARTIDAS_DO_DIA = 1
+        SCRAPING_PAISES = 2
+        SCRAPING_COMPETICOES = 3
         SCRAPING_EQUIPES = 4
         SCRAPING_PARTIDAS = 5
-
         SALVAR_COMPETICOES = 6
-        SALVAR_EDICAO_COMPETICAO = 7
-        SALVAR_EQUIPE = 8
-        SALVAR_PARTIDAS = 9
+        SALVAR_EQUIPE = 7
+        SALVAR_PARTIDAS = 8
+

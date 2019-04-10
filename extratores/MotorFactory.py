@@ -21,78 +21,78 @@ from models.Partida import Partida
 
 
 class MotorFactory:
-    def __init__(self, codigo_motor, codigo_acao_motor, qtd_threads):
+    def __init__(self, codigoMotor, codigoAcaoMotor, qtdThreads):
         try:
-            self.data_inicio = datetime.now()
+            self.dataHoraInicio = datetime.now()
 
-            self.codigo_motor = codigo_motor
-            self.codigo_acao_motor = codigo_acao_motor
-            self.qtd_threads = qtd_threads
-            self.itens_processamento = []
-            self.total_itens_processamento = 0
+            self.codigoMotor = codigoMotor
+            self.codigoAcaoMotor = codigoAcaoMotor
+            self.qtdThreads = qtdThreads
+            self.itensProcessamento = []
+            self.totalItensProcessamento = 0
 
-            self.total_itens_processados = 0
-            self.total_itens_erro = 0
-            self.processamento_finalizado = False
+            self.totalItensSucesso = 0
+            self.totaltensErro = 0
+            self.processamentoFinalizado = False
 
-            self.tipo_motor = self.Motor(codigo_motor)
-            self.acao_motor = None
-            self.id_processamento_batch = ""
+            self.tipoMotor = self.Motor(codigoMotor)
+            self.acaoMotor = None
+            self.idProcessamentoBatch = ""
 
-            if self.codigo_motor != 0:
-                if self.codigo_acao_motor == 0:
-                    self.exibir_acoes_motor()
+            if self.codigoMotor != 0:
+                if self.codigoAcaoMotor == 0:
+                    self.exibirAcoesMotor()
                 else:
-                    self.iniciar_processamento()
+                    self.iniciarProcessamento()
             else:
-                self.exibir_opcoes_motor()
+                self.exibirOpcoesMotor()
 
         except Exception as e:
             print(traceback.format_exception(None, e, e.__traceback__))
-            print("Erro processamento.[Motor:{}][Acao:{}]".format(self.tipo_motor, self.codigo_acao_motor))
+            print("Erro processamento.[Motor:{}][Acao:{}]".format(self.tipoMotor, self.codigoAcaoMotor))
 
-    def iniciar_processamento(self):
+    def iniciarProcessamento(self):
         try:
-            itens_processamento = []
-            if self.tipo_motor == self.tipo_motor.MOTOR_EXTRACAO:
+            itensProcessamento = []
+            if self.tipoMotor == self.tipoMotor.MOTOR_EXTRACAO:
                 motor = MotorExtracao
-                self.getItensProcessamentoMotorExtracao()
-            elif self.tipo_motor == self.tipo_motor.MOTOR_ATUALIZACAO:
+                itensProcessamento = self.getItensProcessamentoMotorExtracao()
+            elif self.tipoMotor == self.tipoMotor.MOTOR_ATUALIZACAO:
                 motor = MotorAtualizacao
-                itens_processamento = self.getItensProcessamentoMotorAtualizacao()
+                itensProcessamento = self.getItensProcessamentoMotorAtualizacao()
             else:
                 print("Motor inválido...")
                 return
 
-            total_itens_processamento = len(itens_processamento)
+            totalItensProcessamento = len(itensProcessamento)
 
-            print("Lista de processamento possui {}".format(total_itens_processamento))
+            print("Lista de processamento possui {}".format(totalItensProcessamento))
 
             processamento = ProcessamentoBatch()
-            processamento.tipo = self.acao_motor.name
+            processamento.tipo = self.acaoMotor.name
             processamento.status = ProcessamentoBatch.Status.NAO_INICIADO.name
-            processamento.totalRegistros = total_itens_processamento
+            processamento.totalRegistros = totalItensProcessamento
 
             processamentoBatch = ProcessamentoBatchCore().salvarProcessamentoBatch(processamento)
 
             if processamentoBatch is not None:
-                self.id_processamento_batch = processamentoBatch.inserted_id
-                self.lista_threads = []
+                self.idProcessamentoBatch = processamentoBatch.inserted_id
+                self.listaThreads = []
 
-                for id_thread in range(0, self.qtd_threads):
-                    thread = motor(self.acao_motor, id_thread, self.qtd_threads,
-                                   itens_processamento)
+                for idThread in range(0, self.qtdThreads):
+                    thread = motor(self.acaoMotor, idThread, self.qtdThreads,
+                                   itensProcessamento)
                     thread.start()
-                    self.lista_threads.insert(id_thread, thread)
+                    self.listaThreads.insert(idThread, thread)
 
-                self.atualizar_processamento()
+                self.verificarProcessamento()
         except Exception as e:
             print(traceback.format_exception(None, e, e.__traceback__))
 
-    def atualizar_processamento_batch(self, quantidade_sucesso, quantidade_erro, status, data_hora_fim=None):
+    def salvarProcessamentoBatch(self, quantidade_sucesso, quantidade_erro, status, data_hora_fim=None):
         try:
             processamentoCore = ProcessamentoBatchCore()
-            processamento_batch = processamentoCore.getProcessamentoBatchById(self.id_processamento_batch)
+            processamento_batch = processamentoCore.getProcessamentoBatchById(self.idProcessamentoBatch)
 
             if processamento_batch._id != "":
                 processamento_batch.totalSucesso = quantidade_sucesso
@@ -105,55 +105,65 @@ class MotorFactory:
             print(e.args[0])
             return None
 
-    def atualizar_processamento(self):
+    def verificarProcessamento(self):
         try:
-            while not self.verificar_fim_processamento():
+            while not self.processamentoFinalizado():
                 time.sleep(300)
-                quantidades_processadas = self.get_quantidade_processada()
-                self.atualizar_processamento_batch(quantidades_processadas[0], quantidades_processadas[1],
-                                                   ProcessamentoBatch.Status.EM_PROCESSAMENTO.name)
+                quantidades_processadas = self.getQuantidadeProcessada()
+                self.salvarProcessamentoBatch(quantidades_processadas[0], quantidades_processadas[1],
+                                              ProcessamentoBatch.Status.EM_PROCESSAMENTO.name)
 
-            quantidades_processadas = self.get_quantidade_processada()
-            self.atualizar_processamento_batch(quantidades_processadas[0], quantidades_processadas[1],
-                                               ProcessamentoBatch.Status.FINALIZADO.name, datetime.now())
+            quantidades_processadas = self.getQuantidadeProcessada()
+            self.salvarProcessamentoBatch(quantidades_processadas[0], quantidades_processadas[1],
+                                          ProcessamentoBatch.Status.FINALIZADO.name, datetime.now())
         except Exception as e:
             print(e.args)
 
-    def verificar_fim_processamento(self) -> bool:
+    def processamentoFinalizado(self) -> bool:
         finalizado = True
-        for thread in self.lista_threads:
+        for thread in self.listaThreads:
             finalizado = finalizado and thread.processamentoFinalizado
 
         return finalizado
 
-    def get_quantidade_processada(self):
+    def getQuantidadeProcessada(self):
         qtd_sucesso = 0
         qtd_erro = 0
 
-        for thread in self.lista_threads:
+        for thread in self.listaThreads:
             qtd_sucesso += thread.totalSucesso
             qtd_erro += thread.totalErros
 
         return [qtd_sucesso, qtd_erro]
 
     def getItensProcessamentoMotorExtracao(self):
-        self.acao_motor = MotorExtracao.Acao(self.codigo_acao_motor)
+        self.acaoMotor = MotorExtracao.Acao(self.codigoAcaoMotor)
         scrapWorkCore = ScrapWorkCore()
 
-        if self.acao_motor == MotorExtracao.Acao.SCRAPING_PAISES:
-            self.itens_processamento = ScraperPais().getListaPaises()
+        if self.acaoMotor == MotorExtracao.Acao.EXTRAIR_PARTIDAS_DO_DIA:
+            try:
+                extrator = ScraperPartida()
+                itensProcessamento = extrator.getListaPartidasDia()
+                extrator.finalizarWebDriver()
+                return itensProcessamento
+            except Exception as e:
+                print(e.args[0])
+                return []
 
-        elif self.acao_motor == MotorExtracao.Acao.SCRAPING_COMPETICOES:
-            self.itens_processamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.PAIS.name,
-                                                                          ScrapWork.Status.SCRAPING_COMPETICOES.name)
+        elif self.acaoMotor == MotorExtracao.Acao.SCRAPING_PAISES:
+            self.itensProcessamento = ScraperPais().getListaPaises()
 
-        elif self.acao_motor == MotorExtracao.Acao.SCRAPING_EDICOES_COMPETICAO:
-            self.itens_processamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.COMPETICAO.name,
-                                                                          ScrapWork.Status.SCRAPING_EDICOES_COMPETICAO.name)
-        elif self.acao_motor == MotorExtracao.Acao.SCRAPING_EQUIPES:
-            self.itens_processamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.EDICAO_COMPETICAO.name,
-                                                                          ScrapWork.Status.SCRAPING_EQUIPES.name)
-        elif self.acao_motor == MotorExtracao.Acao.SCRAPING_PARTIDAS:
+        elif self.acaoMotor == MotorExtracao.Acao.SCRAPING_COMPETICOES:
+            self.itensProcessamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.PAIS.name,
+                                                                         ScrapWork.Status.SCRAPING_COMPETICOES.name)
+
+        elif self.acaoMotor == MotorExtracao.Acao.SCRAPING_EDICOES_COMPETICAO:
+            self.itensProcessamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.COMPETICAO.name,
+                                                                         ScrapWork.Status.SCRAPING_EDICOES_COMPETICAO.name)
+        elif self.acaoMotor == MotorExtracao.Acao.SCRAPING_EQUIPES:
+            self.itensProcessamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.EDICAO_COMPETICAO.name,
+                                                                         ScrapWork.Status.SCRAPING_EQUIPES.name)
+        elif self.acaoMotor == MotorExtracao.Acao.SCRAPING_PARTIDAS:
             scrapWorkCore = ScrapWorkCore()
             filtros = scrapWorkCore.getOpcoesFiltro()
             filtros["tipo"].append(ScrapWork.Tipo.EDICAO_COMPETICAO.name)
@@ -161,30 +171,30 @@ class MotorFactory:
                                  ScrapWork.Status.PROCESSANDO.name,
                                  ScrapWork.Status.ERRO.name]
 
-            self.itens_processamento = scrapWorkCore.listScrapWorks(filtros, scrapWorkCore.getOpcoesOrdenacao())
+            self.itensProcessamento = scrapWorkCore.listScrapWorks(filtros, scrapWorkCore.getOpcoesOrdenacao())
 
-        elif self.acao_motor == MotorExtracao.Acao.SALVAR_COMPETICOES:
-            self.itens_processamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.COMPETICAO.name,
-                                                                          ScrapWork.Status.AGUARDANDO_SCRAPING.name)
-
-
-        elif self.acao_motor == MotorExtracao.Acao.SALVAR_EDICAO_COMPETICAO:
-            self.itens_processamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.EDICAO_COMPETICAO.name,
-                                                                          ScrapWork.Status.AGUARDANDO_SCRAPING.name)
+        elif self.acaoMotor == MotorExtracao.Acao.SALVAR_COMPETICOES:
+            self.itensProcessamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.COMPETICAO.name,
+                                                                         ScrapWork.Status.AGUARDANDO_SCRAPING.name)
 
 
-        elif self.acao_motor == MotorExtracao.Acao.SALVAR_EQUIPE:
-            self.itens_processamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.EQUIPE.name,
-                                                                          ScrapWork.Status.AGUARDANDO_SCRAPING.name)
+        elif self.acaoMotor == MotorExtracao.Acao.SALVAR_EDICAO_COMPETICAO:
+            self.itensProcessamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.EDICAO_COMPETICAO.name,
+                                                                         ScrapWork.Status.AGUARDANDO_SCRAPING.name)
 
 
-        elif self.acao_motor == MotorExtracao.Acao.SALVAR_PARTIDAS:
-            self.itens_processamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.PARTIDA.name,
-                                                                          ScrapWork.Status.AGUARDANDO_SCRAPING.name)
+        elif self.acaoMotor == MotorExtracao.Acao.SALVAR_EQUIPE:
+            self.itensProcessamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.EQUIPE.name,
+                                                                         ScrapWork.Status.AGUARDANDO_SCRAPING.name)
+
+
+        elif self.acaoMotor == MotorExtracao.Acao.SALVAR_PARTIDAS:
+            self.itensProcessamento = scrapWorkCore.getScrapWorksPorTipo(ScrapWork.Tipo.PARTIDA.name,
+                                                                         ScrapWork.Status.AGUARDANDO_SCRAPING.name)
 
     def getItensProcessamentoMotorAtualizacao(self):
-        self.acao_motor = MotorAtualizacao.Acao(self.codigo_acao_motor)
-        if self.acao_motor == MotorAtualizacao.Acao.ATUALIZAR_PARTIDAS:
+        self.acaoMotor = MotorAtualizacao.Acao(self.codigoAcaoMotor)
+        if self.acaoMotor == MotorAtualizacao.Acao.ATUALIZAR_PARTIDAS:
 
             try:
                 partidaCore = PartidaCore()
@@ -208,7 +218,7 @@ class MotorFactory:
                 print(e.args[0])
                 return []
 
-        elif self.acao_motor == MotorAtualizacao.Acao.ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS:
+        elif self.acaoMotor == MotorAtualizacao.Acao.ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS:
 
             try:
                 partidaCore = PartidaCore()
@@ -232,24 +242,16 @@ class MotorFactory:
                 print(e.args[0])
                 return []
 
-        elif self.acao_motor == MotorAtualizacao.Acao.VALIDAR_PARTIDAS_DO_DIA:
-            try:
-                extrator = ScraperPartida()
-                itens_processamento = extrator.getListaPartidasDia()
-                extrator.finalizarWebDriver()
-                return itens_processamento
-            except Exception as e:
-                print(e.args[0])
-                return []
+
         else:
             print("Ação de motor inválida")
 
-    def exibir_opcoes_motor(self):
-        for motor in self.tipo_motor:
+    def exibirOpcoesMotor(self):
+        for motor in self.tipoMotor:
             print("{} ==> {}".format(motor.value, motor.name))
 
-    def exibir_acoes_motor(self):
-        self.tipo_motor.exibirAcoesMotor()
+    def exibirAcoesMotor(self):
+        self.tipoMotor.exibirAcoesMotor()
 
     class Motor(Enum):
         MOTOR_EXTRACAO = 1

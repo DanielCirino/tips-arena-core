@@ -433,5 +433,4 @@ class MotorAtualizacao(threading.Thread):
     class Acao(Enum):
         ATUALIZAR_PARTIDAS = 1
         ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS = 2
-        VALIDAR_PARTIDAS_DO_DIA = 3
-        ATUALIZAR_EDICOES_COMPETICAO = 4
+        ATUALIZAR_APOSTAS = 3

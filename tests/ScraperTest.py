@@ -89,7 +89,7 @@ class ScraperTest(unittest.TestCase):
     def teste_extrair_dados_partida(self):
         scraper = ScraperPartida()
         partida = scraper.getDadosPartida(
-            "/jogo/vyuYAwl2/")  # 0QqMMPUm ou jNK3xpne
+            "/jogo/vsl52EUH/")  # 0QqMMPUm ou jNK3xpne
         print(partida)
         scraper.finalizarWebDriver()
         self.assertTrue(partida != None)
@@ -115,7 +115,7 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrator_lista_competicoes_pais(self):
         objectId = HashString().encode("/futebol/brasil/")
-        doc = Collection("scrap_work").get_documento_por_id(objectId)
+        doc = Collection("scrap_work").obterDocumentoPorId(objectId)
         motor = MotorExtracao(
             MotorExtracao.Acao.SCRAPING_COMPETICOES, 0, 1, [])
         scrapPais = ScrapWork(doc)
@@ -124,7 +124,7 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrator_lista_edicoes_competicoes(self):
         objectId = HashString().encode("/futebol/brasil/campeonato-paulista/")
-        doc = Collection("scrap_work").get_documento_por_id(objectId)
+        doc = Collection("scrap_work").obterDocumentoPorId(objectId)
         motor = MotorExtracao(
             MotorExtracao.Acao.SCRAPING_EDICOES_COMPETICAO, 0, 1, [])
         scrapCompeticao = ScrapWork(doc)
@@ -139,7 +139,7 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrator_lista_equipes_edicao_competicao(self):
         objectId = HashString().encode("/futebol/brasil/campeonato-paulista/")
-        doc = Collection("scrap_work").get_documento_por_id(objectId)
+        doc = Collection("scrap_work").obterDocumentoPorId(objectId)
         motor = MotorExtracao(MotorExtracao.Acao.SCRAPING_EQUIPES, 0, 1, [])
         scrapEdicao = ScrapWork(doc)
         resultado = motor.scrapListaEquipesEdicaoCompeticao(scrapEdicao)
@@ -147,7 +147,7 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrator_lista_partidas_edicao_competicao(self):
         objectId = HashString().encode("/futebol/brasil/campeonato-paulista/")
-        doc = Collection("scrap_work").get_documento_por_id(objectId)
+        doc = Collection("scrap_work").obterDocumentoPorId(objectId)
         motor = MotorExtracao(MotorExtracao.Acao.SCRAPING_PARTIDAS, 0, 1, [])
         scrapEdicao = ScrapWork(doc)
         resultado = motor.scrapListaPartidasEdicaoCompeticao(scrapEdicao)
@@ -195,10 +195,10 @@ class ScraperTest(unittest.TestCase):
         self.assertTrue(ret)
 
     def teste_motor_extracao_factory(self):
-        factory = MotorFactory(2, 3, 3)
+        factory = MotorFactory(1, 1, 1)
         factory.getItensProcessamentoMotorExtracao()
 
-        lista = factory.itens_processamento
+        lista = factory.itensProcessamento
         print(len(lista))
 
         self.assertTrue(lista is not None)

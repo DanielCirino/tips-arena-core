@@ -10,7 +10,7 @@ class Collection(object):
         self.client = MongoClient()
         self.collection = self.client.getCollection(nome)
 
-    def inserir_documento(self, documento):
+    def inserirDocumento(self, documento):
         try:
             doc = documento.__dict__
             doc["timezoneOffset"] = DateTimeHandler().local_time_offset()
@@ -21,7 +21,7 @@ class Collection(object):
         finally:
             self.client.disconnect()
 
-    def atualizar_documento(self, documento):
+    def atualizarDocumento(self, documento):
         try:
             doc = documento.__dict__
             query_update = {"_id": documento._id}
@@ -34,7 +34,7 @@ class Collection(object):
         finally:
             self.client.disconnect()
 
-    def deletar_documento(self, id):
+    def deletaDocumento(self, id):
         query_delete = {"_id": id}
         try:
             return self.collection.delete_one(query_delete)
@@ -43,7 +43,7 @@ class Collection(object):
         finally:
             self.client.disconnect()
 
-    def listar_documentos(self, query={}, sort=[], limit=0, skip=0):
+    def listarDocumentos(self, query={}, sort=[], limit=0, skip=0):
         try:
             cursor = self.collection.find(query)
 
@@ -64,7 +64,7 @@ class Collection(object):
         finally:
             self.client.disconnect()
 
-    def get_documento_por_id(self, id):
+    def obterDocumentoPorId(self, id):
         try:
             doc = self.collection.find_one({"_id": id})
             return doc
