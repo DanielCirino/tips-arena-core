@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from threading import Thread
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from enum import Enum
+from threading import Thread
 
 from core.CompeticaoCore import CompeticaoCore
 from core.EquipeCore import EquipeCore
 from core.PartidaCore import PartidaCore
 from core.ScrapWorkCore import ScrapWorkCore
-from extratores.MotorExtracao import MotorExtracao
+from extratores.Motor import Motor
 from models.Competicao import Competicao
 from models.Partida import Partida
 from models.ScrapWork import ScrapWork
@@ -18,7 +18,6 @@ from webscraping.ScraperCompeticao import ScraperCompeticao
 from webscraping.ScraperEquipe import ScraperEquipe
 from webscraping.ScraperPais import ScraperPais
 from webscraping.ScraperPartida import ScraperPartida
-from extratores.Motor import Motor
 
 
 class MotorAtualizacao(Motor):
@@ -222,6 +221,7 @@ class MotorAtualizacao(Motor):
 
     def atualizarPartida(self, partida: Partida):
         try:
+
             partidaCore = PartidaCore()
             dadosPartida = self.extrator.getDadosPartida(partida.url)
 
@@ -235,14 +235,16 @@ class MotorAtualizacao(Motor):
             ret = partidaCore.salvarPartida(partidaAtualizada)
 
             if ret:
-                partidaCore.analisarAlteracoesPartida(
+                analiseAlteracoes = partidaCore.analisarAlteracoesPartida(
                     partida, partidaAtualizada)
+
+                worker = Thread(target=PartidaCore().processarAlteracoesPartida, args=(partida,analiseAlteracoes,))
+                worker.start()
 
             return ret
         except Exception as e:
             print(e.args)
             return False
-
 
     def exibirAcoesMotor(self):
         for acao in self.Acao:
@@ -253,33 +255,46 @@ class MotorAtualizacao(Motor):
             if self.extrator is None:
                 self.extrator = ScraperPartida()
 
-            for i in range(self.rangeInicio, self.rangeFim + 1):
-                partida = self.listaProcessamento[i]
-                ret = self.atualizarPartida(partida)
+            indexLista = 0
+            for partida in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    ret = self.atualizarPartida(partida)
 
-                if ret:
-                    self.totalSucesso += 1
-                else:
-                    self.totalErros += 1
+                    if ret:
+                        self.totalSucesso += 1
+                    else:
+                        self.totalErros += 1
+
+                indexLista += 1
 
             self.extrator.finalizarWebDriver()
+            self.processamentoFinalizado = True
         except Exception as e:
             print(e.args[0])
+            if self.extrator is not None:
+                self.extrator.finalizarWebDriver()
 
     def atualizarPartidasAntigasNaoFinalizadas(self):
         try:
-            self.extrator = ScraperPartida()
+            if self.extrator is None:
+                self.extrator = ScraperPartida()
 
-            for i in range(self.rangeInicio, self.rangeFim + 1):
-                partida = self.listaProcessamento[i]
-                ret = self.atualizarPartida(partida)
+            indexLista = 0
+            for partida in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    ret = self.atualizarPartida(partida)
 
-                if ret:
-                    self.totalSucesso += 1
-                else:
-                    self.totalErros += 1
+                    if ret:
+                        self.totalSucesso += 1
+                    else:
+                        self.totalErros += 1
+
+                indexLista += 1
 
             self.extrator.finalizarWebDriver()
+            self.processamentoFinalizado = True
         except Exception as e:
             print(e.args[0])
 
@@ -290,10 +305,10 @@ class MotorAtualizacao(Motor):
             print(e.args[0])
 
     def run(self):
-        if self.acao == self.Acao.ATUALIZAR_PARTIDAS:
+        if self.acaoMotor == self.Acao.ATUALIZAR_PARTIDAS:
             self.atualizarPartidas()
 
-        elif self.acao == self.Acao.ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS:
+        elif self.acaoMotor == self.Acao.ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS:
             self.atualizarPartidasAntigasNaoFinalizadas()
 
         elif self.acaoMotor == self.Acao.ATUALIZAR_APOSTAS:

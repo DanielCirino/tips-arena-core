@@ -363,9 +363,9 @@ class MotorExtracao(Motor):
             indexLista = 0
 
             for urlPartida in self.listaProcessamento:
+
                 executar = indexLista % self.totalThreads == self.idThread
                 if executar:
-
                     resultado = self.salvarPartidaDoDia(urlPartida, partidasCadastradas)
                     if resultado:
                         try:

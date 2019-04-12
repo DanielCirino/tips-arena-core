@@ -1,12 +1,14 @@
-
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
 from bson import json_util
+
+from core.ApostaCore import ApostaCore
 from utils.HashString import HashString
 from repository.Collection import Collection
 from models.Partida import Partida
 import json
+
 
 class PartidaCore:
     def __init__(self):
@@ -72,7 +74,9 @@ class PartidaCore:
                 else:
                     filter["status"] = {"$in": filter["status"]}
 
-                filter["dataHora"] = filtroDataHora
+                if filter["dataHora"] != {}:
+                    filter["dataHora"] = filtroDataHora
+
             docs = self.collection.listarDocumentos(filter, [("dataHora", -1)], limit, skip)
 
             for doc in docs:
@@ -102,5 +106,15 @@ class PartidaCore:
             print(e.args)
             return None
 
-
-
+    def processarAlteracoesPartida(self, partida: Partida, alteracoes):
+        try:
+            for alteracao in alteracoes:
+                if alteracao["campo"] == "status":
+                    if alteracao["valorNovo"] == Partida.Status.FINALIZADO.name:
+                        # obter apostas da partida
+                        # finalizar apostas
+                        ApostaCore().finalizarApostasPartida(partida)
+                if alteracao["campo"] == "placarFinal":
+                    ApostaCore().finalizarApostasPartida(partida)
+        except Exception as e:
+            print(e.args[0])
