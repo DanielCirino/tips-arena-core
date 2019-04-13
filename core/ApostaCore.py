@@ -127,14 +127,14 @@ class ApostaCore:
             elif analise["resultado"] == "VITORIA_MANDANTE" or analise["resultado"] == "VITORIA_VISITANTE":
                 analise["duplaChance"] = "CONTRA_EMPATE"
 
-            analise["imparPar"] = "PAR" if totalGols % 2 == 0 else "IMPAR"
+            analise["imparPar"] = "ODD" if totalGols % 2 == 0 else "EVEN"
 
             if placarMandante > 0 and placarVisitante > 0:
                 analise["btts"] = "BTTS_YES"
             else:
                 analise["btts"] = "BTTS_NO"
 
-            analise["underOver"] = totalGols
+            analise["totalGols"] = totalGols
 
             return analise
 
@@ -159,7 +159,10 @@ class ApostaCore:
                         self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["resultado"])
 
                     if aposta.mercado == Aposta.Mercados.DNB.name:
-                        self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["drawNoBet"])
+                        if analiseResultado["drawNoBet"] == "ANULA_APOSTA":
+                            self.cancelarAposta(aposta)
+                        else:
+                            self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["drawNoBet"])
 
                     if aposta.mercado == Aposta.Mercados.DOUBLE_CHANCE.name:
                         self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["duplaChance"])
@@ -170,11 +173,20 @@ class ApostaCore:
                     if aposta.mercado == Aposta.Mercados.ODD_EVEN.name:
                         self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["imparPar"])
 
-                if aposta.mercado == Aposta.Mercados.CORRECT_SCORE.name:
-                    self.finalizarApostaPlacarExato(aposta, aposta.opcaoMercado == analiseResultado["placar"])
+                    if aposta.mercado == Aposta.Mercados.CORRECT_SCORE.name:
+                        self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["placar"])
 
-                if aposta.mercado == Aposta.Mercados.UNDER_OVER.name:
-                    self.finalizarApostaUnderOver(aposta, aposta.opcaoMercado == analiseResultado["underOver"])
+                    if aposta.mercado == Aposta.Mercados.UNDER_OVER.name:
+                        self.finalizarApostaUnderOver(aposta, analiseResultado["totalGols"])
+                else:
+                    if aposta.mercado == Aposta.Mercados.CORRECT_SCORE.name:
+                        self.analisarApostaPlacarExato(aposta, int(placarPartida[0]), int(placarPartida[1]))
+
+                    if aposta.mercado == Aposta.Mercados.BTTS.name:
+                        self.analisarApostaBtts(aposta, int(placarPartida[0]), int(placarPartida[1]))
+
+                    if aposta.mercado == Aposta.Mercados.UNDER_OVER.name:
+                        self.analisarApostaUnderOver(aposta, analiseResultado["totalGols"])
 
 
         except Exception as e:
@@ -206,8 +218,69 @@ class ApostaCore:
         except Exception as e:
             print(e.args)
 
-    def finalizarApostaPlacarExato(self):
-        print('TODO: finalizar apostas para partida nao finalizada e finalizada')
+    def analisarApostaPlacarExato(self, aposta, placarMandante: int, placarVisitante: int):
+        try:
+            detalhesAposta = aposta.opcaoMercado.split("_")
+            finalizarAposta = int(detalhesAposta[1]) < placarMandante or int(detalhesAposta[2]) < placarVisitante
 
-    def finalizarApostaPlacarExato(self):
-        print("TODO: finalziar aposta para partida finalizada e nao finalizada")
+            if finalizarAposta:
+                self.finalizarAposta(aposta, False)
+
+        except Exception as e:
+            print(e.args[0])
+
+    def finalizarApostaUnderOver(self, aposta: Aposta, totalGols: int):
+        try:
+            detalhesAposta = aposta.opcaoMercado.split("_")  # UNDER_4_5
+            if detalhesAposta[0] == "UNDER":
+                apostaCerta = int(detalhesAposta[1]) <= totalGols
+            if detalhesAposta[0] == "OVER":
+                apostaCerta = int(detalhesAposta[1]) > totalGols
+
+            self.finalizarAposta(aposta, apostaCerta)
+
+        except Exception as e:
+            print(e.args[0])
+
+    def analisarApostaUnderOver(self, aposta: Aposta, totalGols: int):
+        try:
+            detalhesAposta = aposta.opcaoMercado.split("_")  # UNDER_1_5
+            finalizarAposta = totalGols > int(detalhesAposta[1])
+
+            if finalizarAposta:
+                apostaCerta = detalhesAposta[0] == "OVER"
+                self.finalizarAposta(aposta, apostaCerta)
+
+        except Exception as e:
+            print(e.args[0])
+
+    def analisarApostaBtts(self, aposta, placarMandante: int, placarVisitante: int):
+        try:
+            ambosMarcaram = placarMandante > 0 and placarVisitante > 0
+
+            if ambosMarcaram:
+                apostaCerta = (aposta.opcaoMercado == "BTTS_YES")
+                self.finalizarAposta(aposta, apostaCerta)
+
+        except Exception as e:
+            print(e.args[0])
+
+    def cancelarAposta(self, aposta: Aposta):
+        try:
+            transacao = Transacao()
+            transacao.idUsuario = aposta.idUsuario
+            transacao.tipo = Transacao.Tipo.CANCELAMENTO_APOSTA.name
+            transacao.operacao = Transacao.Operacao.CREDITO.name
+            transacao.descricao = "Apota cancelada: {}".format(aposta.descricao)
+            transacao.valor = aposta.valor
+
+            transacaoSalva = TransacaoCore().salvarTransacao(transacao)
+            print(transacaoSalva.inserted_id)
+
+            if transacaoSalva:
+                aposta.resultado = Aposta.Resultado.CANCELADA.name
+                aposta.status = Aposta.Status.CANCELADA.name
+                self.salvarAposta(aposta)
+
+        except Exception as e:
+            print(e.args[0])

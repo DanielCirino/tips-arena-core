@@ -39,3 +39,4 @@ class Aposta:
         PENDENTE = 1
         LUCRO = 2
         PREJUIZO = 3
+        CANCELADA = 4

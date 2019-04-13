@@ -116,5 +116,6 @@ class PartidaCore:
                         ApostaCore().finalizarApostasPartida(partida)
                 if alteracao["campo"] == "placarFinal":
                     ApostaCore().finalizarApostasPartida(partida)
+
         except Exception as e:
             print(e.args[0])
