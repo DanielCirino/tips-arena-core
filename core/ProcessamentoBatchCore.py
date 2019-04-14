@@ -67,7 +67,7 @@ class ProcessamentoBatchCore:
 
     def salvarProcessamentoBatch(self, processamento: ProcessamentoBatch):
         try:
-            processamento.dataAtualizacao = datetime.now()
+            processamento.dataAtualizacao = datetime.utcnow()
             if processamento._id == "":
                 delattr(processamento,"_id")
                 return self.collection.inserirDocumento(processamento)

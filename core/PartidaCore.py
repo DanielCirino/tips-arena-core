@@ -32,10 +32,10 @@ class PartidaCore:
 
     def salvarPartida(self, partida: Partida):
         try:
-            partida.dataAtualizacao = datetime.now()
+            partida.dataAtualizacao = datetime.utcnow()
             if partida._id == "":
                 partida._id = HashString().encode(partida.url)
-                partida.dataCadastro = datetime.now()
+                partida.dataCadastro = datetime.utcnow()
                 return self.collection.inserirDocumento(partida)
             else:
                 return self.collection.atualizarDocumento(partida)

@@ -30,11 +30,11 @@ class TransacaoCore:
 
     def salvarTransacao(self, transacao: Transacao):
         try:
-            transacao.dataAtualizacao = datetime.now()
+            transacao.dataAtualizacao = datetime.utcnow()
             if transacao._id == "":
                 delattr(transacao, "_id")
                 transacao.idUsuario = ObjectId(transacao.idUsuario)
-                transacao.dataCadastro = datetime.now()
+                transacao.dataCadastro = datetime.utcnow()
                 return self.collection.inserirDocumento(transacao)
             else:
                 return self.collection.atualizarDocumento(transacao)

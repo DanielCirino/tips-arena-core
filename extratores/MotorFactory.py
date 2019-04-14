@@ -115,7 +115,7 @@ class MotorFactory:
 
             quantidadesProcessadas = self.getQuantidadeProcessada()
             self.salvarProcessamentoBatch(quantidadesProcessadas[0], quantidadesProcessadas[1],
-                                          ProcessamentoBatch.Status.FINALIZADO.name, datetime.now())
+                                          ProcessamentoBatch.Status.FINALIZADO.name, datetime.utcnow())
         except Exception as e:
             print(e.args)
 
