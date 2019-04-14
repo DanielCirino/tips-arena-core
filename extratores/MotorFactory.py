@@ -122,7 +122,7 @@ class MotorFactory:
     def verificarFimDoProcessamento(self) -> bool:
         finalizado = True
         for thread in self.listaThreads:
-            finalizado = finalizado and thread.isAlive()
+            finalizado = finalizado and not thread.is_alive()
 
         return finalizado
 

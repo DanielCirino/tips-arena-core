@@ -238,8 +238,7 @@ class MotorAtualizacao(Motor):
                 analiseAlteracoes = partidaCore.analisarAlteracoesPartida(
                     partida, partidaAtualizada)
 
-                worker = Thread(target=PartidaCore().processarAlteracoesPartida, args=(partida,analiseAlteracoes,))
-                worker.start()
+                Thread(target=PartidaCore().processarAlteracoesPartida, args=(partida, analiseAlteracoes,)).start()
 
             return ret
         except Exception as e:

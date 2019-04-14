@@ -195,7 +195,7 @@ class ScraperTest(unittest.TestCase):
         self.assertTrue(ret)
 
     def teste_motor_extracao_factory(self):
-        factory = MotorFactory(2, 2, 1)
+        factory = MotorFactory(1, 1, 2)
         factory.getItensProcessamentoMotorExtracao()
 
         lista = factory.itensProcessamento
