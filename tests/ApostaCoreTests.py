@@ -13,7 +13,7 @@ class ApostaCoreTests(unittest.TestCase):
         partidaCore = PartidaCore()
 
         partida: Partida = partidaCore.getPartidaPorId(
-            "49f9e33ff140ada0b276f853")
+            "c1afc46e2f07ad08bbcb68fb")
 
 
         aposta = Aposta()
@@ -243,7 +243,7 @@ class ApostaCoreTests(unittest.TestCase):
     def testeFinalizarApostasPartida(self):
         partidaCore = PartidaCore()
         extrator = ScraperPartida()
-        partida = partidaCore.getPartidaPorId("49f9e33ff140ada0b276f853")
+        partida = partidaCore.getPartidaPorId("c1afc46e2f07ad08bbcb68fb")
         dadosPartida = extrator.getDadosPartida(partida.url)
 
         extrator.finalizarWebDriver()

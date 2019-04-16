@@ -111,8 +111,6 @@ class PartidaCore:
             for alteracao in alteracoes:
                 if alteracao["campo"] == "status":
                     if alteracao["valorNovo"] == Partida.Status.FINALIZADO.name:
-                        # obter apostas da partida
-                        # finalizar apostas
                         ApostaCore().finalizarApostasPartida(partida)
                 if alteracao["campo"] == "placarFinal":
                     ApostaCore().finalizarApostasPartida(partida)
