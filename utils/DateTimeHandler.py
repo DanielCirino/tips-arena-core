@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time
+from datetime import datetime,timedelta
 
 
 class DateTimeHandler:
@@ -18,3 +19,8 @@ class DateTimeHandler:
             offset = time.timezone
 
         return int(offset / 60 / 60)
+    def converterHoraLocalToUtc(self,dataHoraLocal:datetime):
+        try:
+            return dataHoraLocal - timedelta(hours=self.local_time_offset())
+        except Exception as e:
+            return None

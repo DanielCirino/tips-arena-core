@@ -10,6 +10,7 @@ from core.ProcessamentoBatchCore import ProcessamentoBatchCore
 from extratores.MotorExtracao import MotorExtracao
 from extratores.MotorAtualizacao import MotorAtualizacao
 from models.ProcessamentoBatch import ProcessamentoBatch
+from utils.DateTimeHandler import DateTimeHandler
 
 from webscraping.ScraperPais import ScraperPais
 
@@ -198,14 +199,14 @@ class MotorFactory:
 
             try:
                 partidaCore = PartidaCore()
-                data_inicio = datetime.strftime(datetime.today(), "%Y-%m-%d") + " 00:00:00"
+                data_inicio = datetime.strftime(datetime.utcnow(), "%Y-%m-%d 00:00:00")
                 data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
                 data_fim = datetime.now()
 
                 filtrosPartida = partidaCore.getOpcoesFiltro()
 
-                filtrosPartida["dataHoraInicio"] = data_inicio
-                filtrosPartida["dataHoraFim"] = data_fim
+                filtrosPartida["dataHoraInicio"] = DateTimeHandler().converterHoraLocalToUtc(data_inicio)
+                filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
                 filtrosPartida["status"].append(Partida.Status.AGENDADO.name)
                 filtrosPartida["status"].append(Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
                 filtrosPartida["status"].append(Partida.Status.EM_ANDAMENTO.name)
@@ -229,7 +230,7 @@ class MotorFactory:
                 filtrosPartida = partidaCore.getOpcoesFiltro()
 
                 # filtrosPartida["dataHoraInicio"] = data_inicio
-                filtrosPartida["dataHoraFim"] = data_fim
+                filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
                 filtrosPartida["status"].append(Partida.Status.AGENDADO.name)
                 filtrosPartida["status"].append(Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
                 filtrosPartida["status"].append(Partida.Status.EM_ANDAMENTO.name)

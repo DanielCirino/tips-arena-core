@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+
+import pytz
 from bson import json_util
 
 from core.ApostaCore import ApostaCore
@@ -52,6 +54,7 @@ class PartidaCore:
 
     def listPartidas(self, filter={}, sort=[], limit=0, skip=0):
         try:
+
             listaPartidas = []
             filtroDataHora = {}
 
@@ -77,7 +80,7 @@ class PartidaCore:
                 if filter["dataHora"] != {}:
                     filter["dataHora"] = filtroDataHora
 
-            docs = self.collection.listarDocumentos(filter, [("dataHora", -1)], limit, skip)
+            docs = self.collection.listarDocumentos(filter, [("oddsDisponiveis", -1), ("dataHora", -1)], limit, skip)
 
             for doc in docs:
                 # print(json.dumps(doc, indent=2, default=json_util.default),",")

@@ -13,3 +13,4 @@ ENV/
 *.log
 .idea/e sz
 .idea
+*.pngs

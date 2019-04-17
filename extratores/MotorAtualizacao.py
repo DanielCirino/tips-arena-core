@@ -240,7 +240,6 @@ class MotorAtualizacao(Motor):
 
                 workerAtualizacao = Thread(target=PartidaCore().processarAlteracoesPartida, args=(partidaAtualizada, analiseAlteracoes,))
                 workerAtualizacao.start()
-
             return ret
         except Exception as e:
             print(e.args)
