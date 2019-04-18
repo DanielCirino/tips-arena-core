@@ -344,7 +344,7 @@ class ScraperPartida(Scraper):
 
         except Exception as e:
             print(str(e))
-            return partida
+            return None
 
     def verificarInformacoesDisponiveis(self, htmlLinks):
         try:

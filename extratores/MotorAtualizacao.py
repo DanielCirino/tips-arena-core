@@ -224,7 +224,10 @@ class MotorAtualizacao(Motor):
         try:
 
             partidaCore = PartidaCore()
-            dadosPartida = self.extrator.getDadosPartida(partida.url)
+            dadosPartida = self.extrator.getDadosPartida(partida.url, extrairOdds=not partida.oddsDisponiveis)
+
+            if dadosPartida is None:
+                return False
 
             dadosPartida["_id"] = partida._id
             dadosPartida["idCompeticao"] = partida.idCompeticao
