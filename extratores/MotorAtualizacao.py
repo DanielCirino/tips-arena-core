@@ -5,6 +5,7 @@ from datetime import datetime
 from enum import Enum
 from threading import Thread
 
+from core.ApostaCore import ApostaCore
 from core.CompeticaoCore import CompeticaoCore
 from core.EquipeCore import EquipeCore
 from core.PartidaCore import PartidaCore
@@ -238,8 +239,10 @@ class MotorAtualizacao(Motor):
                 analiseAlteracoes = partidaCore.analisarAlteracoesPartida(
                     partida, partidaAtualizada)
 
-                workerAtualizacao = Thread(target=PartidaCore().processarAlteracoesPartida, args=(partidaAtualizada, analiseAlteracoes,))
+                workerAtualizacao = Thread(target=PartidaCore().processarAlteracoesPartida,
+                                           args=(partidaAtualizada, analiseAlteracoes,))
                 workerAtualizacao.start()
+
             return ret
         except Exception as e:
             print(e.args)
@@ -299,7 +302,25 @@ class MotorAtualizacao(Motor):
 
     def atualizarApostas(self):
         try:
-            print("Nao implementado...")
+            if self.extrator is None:
+                self.extrator = ScraperPartida()
+
+            partidaCore = PartidaCore()
+            apostaCore = ApostaCore()
+
+            indexLista = 0
+            for aposta in self.listaProcessamento:
+                executar = indexLista % self.totalThreads == self.idThread
+                if executar:
+                    partida = partidaCore.getPartidaPorId(aposta.idPartida)
+
+                    if partida.status == Partida.Status.FINALIZADO.name:
+                        apostaCore.finalizarApostaPartida(aposta)
+                    else:
+                        self.atualizarPartida(partida)
+
+                indexLista += 1
+            self.extrator.finalizarWebDriver()
         except Exception as e:
             print(e.args[0])
 

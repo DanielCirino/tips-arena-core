@@ -4,6 +4,7 @@ from datetime import datetime
 
 from bson import ObjectId
 
+
 from core.TransacaoCore import TransacaoCore
 from models.Partida import Partida
 from models.Transacao import Transacao
@@ -144,9 +145,6 @@ class ApostaCore:
 
     def finalizarApostasPartida(self, partida: Partida):
         try:
-            placarPartida = partida.placarFinal.split(":")
-            analiseResultado = self.analisarResultadoPartida(int(placarPartida[0]), int(placarPartida[1]))
-
             filtrosAposta = self.getOpcoesFiltro()
             filtrosAposta["idPartida"] = partida._id
             filtrosAposta["status"].append(Aposta.Status.PENDENTE.name)
@@ -154,40 +152,51 @@ class ApostaCore:
             apostasPartida = ApostaCore().listarApostas(filtrosAposta)
 
             for aposta in apostasPartida:
-                if (partida.status == Partida.Status.FINALIZADO.name):
-                    if aposta.mercado == Aposta.Mercados.RESULT.name:
-                        self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["resultado"])
+                self.finalizarApostaPartida(aposta)
 
-                    if aposta.mercado == Aposta.Mercados.DNB.name:
-                        if analiseResultado["drawNoBet"] == "ANULA_APOSTA":
-                            self.cancelarAposta(aposta)
-                        else:
-                            self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["drawNoBet"])
+        except Exception as e:
+            print(e.args[0])
 
-                    if aposta.mercado == Aposta.Mercados.DOUBLE_CHANCE.name:
-                        self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["duplaChance"])
+    def finalizarApostaPartida(self, aposta):
+        try:
+            from core.PartidaCore import PartidaCore
+            partida = PartidaCore().getPartidaPorId(aposta.idPartida)
+            placarPartida = partida.placarFinal.split(":")
+            analiseResultado = self.analisarResultadoPartida(int(placarPartida[0]), int(placarPartida[1]))
 
-                    if aposta.mercado == Aposta.Mercados.BTTS.name:
-                        self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["btts"])
+            if (partida.status == Partida.Status.FINALIZADO.name):
+                if aposta.mercado == Aposta.Mercados.RESULT.name:
+                    self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["resultado"])
 
-                    if aposta.mercado == Aposta.Mercados.ODD_EVEN.name:
-                        self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["imparPar"])
+                if aposta.mercado == Aposta.Mercados.DNB.name:
+                    if analiseResultado["drawNoBet"] == "ANULA_APOSTA":
+                        self.cancelarAposta(aposta)
+                    else:
+                        self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["drawNoBet"])
 
-                    if aposta.mercado == Aposta.Mercados.CORRECT_SCORE.name:
-                        self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["placar"])
+                if aposta.mercado == Aposta.Mercados.DOUBLE_CHANCE.name:
+                    self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["duplaChance"])
 
-                    if aposta.mercado == Aposta.Mercados.UNDER_OVER.name:
-                        self.finalizarApostaUnderOver(aposta, analiseResultado["totalGols"])
-                else:
-                    if aposta.mercado == Aposta.Mercados.CORRECT_SCORE.name:
-                        self.analisarApostaPlacarExato(aposta, int(placarPartida[0]), int(placarPartida[1]))
+                if aposta.mercado == Aposta.Mercados.BTTS.name:
+                    self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["btts"])
 
-                    if aposta.mercado == Aposta.Mercados.BTTS.name:
-                        self.analisarApostaBtts(aposta, int(placarPartida[0]), int(placarPartida[1]))
+                if aposta.mercado == Aposta.Mercados.ODD_EVEN.name:
+                    self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["imparPar"])
 
-                    if aposta.mercado == Aposta.Mercados.UNDER_OVER.name:
-                        self.analisarApostaUnderOver(aposta, analiseResultado["totalGols"])
+                if aposta.mercado == Aposta.Mercados.CORRECT_SCORE.name:
+                    self.finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["placar"])
 
+                if aposta.mercado == Aposta.Mercados.UNDER_OVER.name:
+                    self.finalizarApostaUnderOver(aposta, analiseResultado["totalGols"])
+            else:
+                if aposta.mercado == Aposta.Mercados.CORRECT_SCORE.name:
+                    self.analisarApostaPlacarExato(aposta, int(placarPartida[0]), int(placarPartida[1]))
+
+                if aposta.mercado == Aposta.Mercados.BTTS.name:
+                    self.analisarApostaBtts(aposta, int(placarPartida[0]), int(placarPartida[1]))
+
+                if aposta.mercado == Aposta.Mercados.UNDER_OVER.name:
+                    self.analisarApostaUnderOver(aposta, analiseResultado["totalGols"])
 
         except Exception as e:
             print(e.args[0])
@@ -195,7 +204,7 @@ class ApostaCore:
     def finalizarAposta(self, aposta: Aposta, apostaCerta):
         try:
 
-            lucroAposta = (aposta.valor * aposta.valorOdd) - aposta.valor if apostaCerta else 0
+            lucroAposta = (aposta.valor * aposta.valorOdd) - aposta.valor if apostaCerta else -aposta.valor
             resultadoAposta = Aposta.Resultado.LUCRO.name if apostaCerta else Aposta.Resultado.PREJUIZO.name
 
             # Salvar transacao da aposta em caso de acerto

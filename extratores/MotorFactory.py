@@ -5,20 +5,23 @@ import time
 from enum import Enum
 from datetime import datetime, timedelta
 
+from core.ApostaCore import ApostaCore
 from core.PartidaCore import PartidaCore
+from core.ScrapWorkCore import ScrapWorkCore
 from core.ProcessamentoBatchCore import ProcessamentoBatchCore
+
 from extratores.MotorExtracao import MotorExtracao
 from extratores.MotorAtualizacao import MotorAtualizacao
-from models.ProcessamentoBatch import ProcessamentoBatch
+
 from utils.DateTimeHandler import DateTimeHandler
 
 from webscraping.ScraperPais import ScraperPais
-
-from core.ScrapWorkCore import ScrapWorkCore
 from webscraping.ScraperPartida import ScraperPartida
 
+from models.ProcessamentoBatch import ProcessamentoBatch
 from models.ScrapWork import ScrapWork
 from models.Partida import Partida
+from models.Aposta import Aposta
 
 
 class MotorFactory:
@@ -223,11 +226,11 @@ class MotorFactory:
 
             try:
                 partidaCore = PartidaCore()
+                filtrosPartida = partidaCore.getOpcoesFiltro()
+
                 data_inicio = datetime.strftime(datetime.today() - timedelta(days=365 * 10), "%Y-%m-%d") + " 00:00:00"
                 data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
                 data_fim = datetime.now()
-
-                filtrosPartida = partidaCore.getOpcoesFiltro()
 
                 # filtrosPartida["dataHoraInicio"] = data_inicio
                 filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
@@ -242,7 +245,23 @@ class MotorFactory:
             except Exception as e:
                 print(e.args[0])
                 return []
+        elif self.acaoMotor == MotorAtualizacao.Acao.ATUALIZAR_APOSTAS:
+            try:
+                apostaCore = ApostaCore()
+                filtrosAposta = apostaCore.getOpcoesFiltro()
 
+                data_inicio = datetime.strftime(datetime.today() - timedelta(days=365 * 10), "%Y-%m-%d") + " 00:00:00"
+                data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
+                data_fim = datetime.now()
+
+                # filtrosAposta["dataCadastroInicio"] = data_inicio
+                filtrosAposta["dataCadastroFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
+                filtrosAposta["status"].append(Aposta.Status.PENDENTE.name)
+
+                return apostaCore.listarApostas(filtrosAposta)
+
+            except Exception as e:
+                return []
 
         else:
             print("Ação de motor inválida")

@@ -9,7 +9,6 @@ from core.ApostaCore import ApostaCore
 from utils.HashString import HashString
 from repository.Collection import Collection
 from models.Partida import Partida
-import json
 
 
 class PartidaCore:
