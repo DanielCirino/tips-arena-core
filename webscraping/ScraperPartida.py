@@ -910,7 +910,6 @@ class ScraperPartida(Scraper):
 
     def processarTabelaPartidasEquipe(self, linhasTabela):
         try:
-            quantidadePartidas = 0
             listaPartidas = []
 
             for linha in linhasTabela:
@@ -945,10 +944,9 @@ class ScraperPartida(Scraper):
                            }
 
                 listaPartidas.append(partida)
-                quantidadePartidas += 1
 
-                if quantidadePartidas > 9:
-                    break
+
+
 
             return listaPartidas
         except Exception as e:
