@@ -232,6 +232,10 @@ class ScraperTest(unittest.TestCase):
 
         self.assertTrue(lista != None)
 
+    def teste_get_head_to_head(self):
+        headToHead = ScraperPartida().obterUltimasPartidasEquipes()
+        print(headToHead)
+        self.assertTrue(headToHead!={})
 
 if __name__ == '__main__':
     unittest.main()
