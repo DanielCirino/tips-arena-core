@@ -328,7 +328,7 @@ class MotorAtualizacao(Motor):
             print(e.args[0])
 
     def run(self):
-        if self.acaoMotor == self.Acao.ATUALIZAR_PARTIDAS:
+        if self.acaoMotor == self.Acao.ATUALIZAR_PARTIDAS_EM_ANDAMENTO:
             self.atualizarPartidas()
 
         elif self.acaoMotor == self.Acao.ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS:
@@ -336,6 +336,8 @@ class MotorAtualizacao(Motor):
 
         elif self.acaoMotor == self.Acao.ATUALIZAR_APOSTAS:
             self.atualizarApostas()
+        elif self.acaoMotor == self.Acao.ATUALIZAR_PARTIDAS_DO_DIA:
+            self.atualizarPartidas()
         else:
             print("ACAO INVALIDA")
 
@@ -343,6 +345,7 @@ class MotorAtualizacao(Motor):
             self.horaFim = time.strftime("%Y-%m-%d %H:%M:%S")
 
     class Acao(Enum):
-        ATUALIZAR_PARTIDAS = 1
+        ATUALIZAR_PARTIDAS_EM_ANDAMENTO = 1
         ATUALIZAR_PARTIDAS_ANTIGAS_NAO_FINALIZADAS = 2
         ATUALIZAR_APOSTAS = 3
+        ATUALIZAR_PARTIDAS_DO_DIA = 4

@@ -198,11 +198,11 @@ class MotorFactory:
 
     def getItensProcessamentoMotorAtualizacao(self):
         self.acaoMotor = MotorAtualizacao.Acao(self.codigoAcaoMotor)
-        if self.acaoMotor == MotorAtualizacao.Acao.ATUALIZAR_PARTIDAS:
+        if self.acaoMotor == MotorAtualizacao.Acao.ATUALIZAR_PARTIDAS_EM_ANDAMENTO:
 
             try:
                 partidaCore = PartidaCore()
-                data_inicio = datetime.strftime(datetime.utcnow(), "%Y-%m-%d 00:00:00")
+                data_inicio = datetime.strftime(datetime.now(), "%Y-%m-%d 00:00:00")
                 data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
                 data_fim = datetime.now()
 
@@ -262,7 +262,26 @@ class MotorFactory:
 
             except Exception as e:
                 return []
+        elif self.acaoMotor == MotorAtualizacao.Acao.ATUALIZAR_PARTIDAS_DO_DIA:
+            try:
+                partidaCore = PartidaCore()
 
+                data_inicio = datetime.strftime(datetime.now(), "%Y-%m-%d 00:00:00")
+                data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
+
+                data_fim = datetime.strftime(datetime.now(), "%Y-%m-%d 23:59:59")
+                data_fim =datetime.strptime(data_fim, "%Y-%m-%d %H:%M:%S")
+
+                filtrosPartida = partidaCore.getOpcoesFiltro()
+
+                filtrosPartida["dataHoraInicio"] = DateTimeHandler().converterHoraLocalToUtc(data_inicio)
+                filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
+                
+
+                return partidaCore.listPartidas(filtrosPartida)
+            except Exception as e:
+                print(e.args[0])
+                return []
         else:
             print("Ação de motor inválida")
 
