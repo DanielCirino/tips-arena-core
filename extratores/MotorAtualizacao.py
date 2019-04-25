@@ -241,7 +241,7 @@ class MotorAtualizacao(Motor):
 
             dadosPartida["odds"] = partida.odds if not extrairOdds else dadosPartida["odds"]
             dadosPartida["timeline"] = partida.timeline if not extrairTimeline else dadosPartida["timeline"]
-            dadosPartida["estatisticas"] = partida.estatisticas if not extrairEstatisticas == [] else dadosPartida[
+            dadosPartida["estatisticas"] = partida.estatisticas if not extrairEstatisticas else dadosPartida[
                 "estatisticas"]
             dadosPartida["headToHead"] = partida.headToHead if not extrairHeadToHead else dadosPartida[
                 "headToHead"]
