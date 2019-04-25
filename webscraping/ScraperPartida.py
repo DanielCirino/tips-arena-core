@@ -151,7 +151,11 @@ class ScraperPartida(Scraper):
             CSS_INFO_PARTIDA = ".info-bubble>span.text"
 
             partida = {
-                "url": str.replace(urlPartida, self.URL_BASE, "")
+                "url": str.replace(urlPartida, self.URL_BASE, ""),
+                "timeline": [],
+                "estatisticas": [],
+                "headToHead": {},
+                "odds": {}
             }
 
             if self.webDriver is None:
@@ -944,9 +948,6 @@ class ScraperPartida(Scraper):
                            }
 
                 listaPartidas.append(partida)
-
-
-
 
             return listaPartidas
         except Exception as e:

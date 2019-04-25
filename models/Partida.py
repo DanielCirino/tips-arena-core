@@ -26,7 +26,7 @@ class Partida(object):
         self.timeline = []
 
         self.estatisticasDisponiveis = False
-        self.estatisticas = ""
+        self.estatisticas = []
 
         self.oddsDisponiveis = False
         self.odds = {}
@@ -38,7 +38,7 @@ class Partida(object):
         self.relatorio = []
 
         self.headToHeadDisponivel = False
-        self.headToHead = []
+        self.headToHead = {}
 
         self.videosDisponiveis = False
         self.videos = []
