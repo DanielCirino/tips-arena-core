@@ -229,6 +229,9 @@ class MotorAtualizacao(Motor):
             extrairOdds = partida.odds == {} or partida.odds == ""
             extrairEstatisticas = partida.estatisticas == [] or partida.estatisticas == ""
             extrairHeadToHead = partida.headToHead == {} or partida.headToHead == []
+            extrairHeadToHead = extrairHeadToHead or partida.headToHead["mandante"] == []
+            extrairHeadToHead = extrairHeadToHead or partida.headToHead["visitante"] == []
+            extrairHeadToHead = extrairHeadToHead or partida.headToHead["confrontosDiretos"] == []
 
             dadosPartida = self.extrator.getDadosPartida(partida.url, extrairTimeline, extrairOdds,
                                                          extrairEstatisticas, extrairHeadToHead)
