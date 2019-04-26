@@ -335,6 +335,9 @@ class ScraperPartida(Scraper):
 
                 htmlTimeline = self.webDriver.find_elements_by_css_selector(
                     "#summary-content>div.detailMS")
+
+                partida["timelineDisponivel"] = len(htmlTimeline) > 0
+
                 if len(htmlTimeline) > 0:
                     partida["timeline"] = self.getTimelinePartida(
                         htmlTimeline[0].get_attribute("innerHTML"))
