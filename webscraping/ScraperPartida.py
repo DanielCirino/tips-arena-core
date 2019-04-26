@@ -321,7 +321,7 @@ class ScraperPartida(Scraper):
             informacoesDiponiveis = self.verificarInformacoesDisponiveis(
                 linksInformacoesDisponiveis)
 
-            partida["timelineDisponivel"] = informacoesDiponiveis["timeline"]
+            partida["timelineDisponivel"] = informacoesDiponiveis["timeline"] or informacoesDiponiveis["summary"]
             partida["estatisticasDisponiveis"] = informacoesDiponiveis["statistics"]
             partida["oddsDisponiveis"] = informacoesDiponiveis["odds-comparison"]
             partida["relatorioDisponivel"] = informacoesDiponiveis["commentary"]
