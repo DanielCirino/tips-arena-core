@@ -4,6 +4,8 @@
 from datetime import datetime
 from repository.Collection import Collection
 from models.ProcessamentoBatch import ProcessamentoBatch
+from utils.DateTimeHandler import DateTimeHandler
+
 
 class ProcessamentoBatchCore:
     def __init__(self):
@@ -67,7 +69,7 @@ class ProcessamentoBatchCore:
 
     def salvarProcessamentoBatch(self, processamento: ProcessamentoBatch):
         try:
-            processamento.dataAtualizacao = datetime.utcnow()
+            processamento.dataAtualizacao = DateTimeHandler().converterHoraLocalToUtc(datetime.now())
             if processamento._id == "":
                 delattr(processamento,"_id")
                 return self.collection.inserirDocumento(processamento)

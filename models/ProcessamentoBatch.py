@@ -4,6 +4,8 @@
 from enum import Enum
 from datetime import datetime
 
+from utils.DateTimeHandler import DateTimeHandler
+
 
 class ProcessamentoBatch(object):
     def __init__(self, documento: dict = {}):
@@ -14,9 +16,9 @@ class ProcessamentoBatch(object):
         self.totalSucesso = 0
         self.totalErro = 0
         self.detalhes = 0
-        self.dataHoraInicio = datetime.utcnow()
+        self.dataHoraInicio =  DateTimeHandler().converterHoraLocalToUtc(datetime.now())
         self.dataHoraFim = None
-        self.dataAtualizacao = datetime.utcnow()
+        self.dataAtualizacao = DateTimeHandler().converterHoraLocalToUtc(datetime.now())
 
         if documento is not None:
             for key in documento:
