@@ -227,7 +227,7 @@ class MotorAtualizacao(Motor):
 
             extrairTimeline = partida.timeline == []
             extrairOdds = partida.odds == {} or partida.odds == ""
-            extrairEstatisticas = partida.estatisticas == {} or partida.estatisticas == ""
+            extrairEstatisticas = partida.estatisticas == [] or partida.estatisticas == ""
             extrairHeadToHead = partida.headToHead == {} or partida.headToHead == []
 
             dadosPartida = self.extrator.getDadosPartida(partida.url, extrairTimeline, extrairOdds,
@@ -239,12 +239,10 @@ class MotorAtualizacao(Motor):
             dadosPartida["_id"] = partida._id
             dadosPartida["idCompeticao"] = partida.idCompeticao
 
-            dadosPartida["odds"] = partida.odds if not extrairOdds else dadosPartida["odds"]
-            dadosPartida["timeline"] = partida.timeline if not extrairTimeline else dadosPartida["timeline"]
-            dadosPartida["estatisticas"] = partida.estatisticas if not extrairEstatisticas else dadosPartida[
-                "estatisticas"]
-            dadosPartida["headToHead"] = partida.headToHead if not extrairHeadToHead else dadosPartida[
-                "headToHead"]
+            dadosPartida["odds"] = dadosPartida["odds"] if extrairOdds else partida.odds
+            dadosPartida["timeline"] = dadosPartida["timeline"] if extrairTimeline else partida.timeline
+            dadosPartida["estatisticas"] = dadosPartida["estatisticas"] if extrairEstatisticas else partida.estatisticas
+            dadosPartida["headToHead"] = dadosPartida["headToHead"] if extrairHeadToHead else partida.headToHead
 
             dadosPartida["dataCadastro"] = partida.dataCadastro
 
