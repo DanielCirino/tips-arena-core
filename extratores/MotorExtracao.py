@@ -12,6 +12,7 @@ from core.ScrapWorkCore import ScrapWorkCore
 from models.Competicao import Competicao
 from models.Partida import Partida
 from models.ScrapWork import ScrapWork
+from utils.DateTimeHandler import DateTimeHandler
 from utils.HashString import HashString
 from webscraping.ScraperCompeticao import ScraperCompeticao
 from webscraping.ScraperEquipe import ScraperEquipe
@@ -355,8 +356,8 @@ class MotorExtracao(Motor):
 
             filtrosPartida = partidaCore.getOpcoesFiltro()
 
-            filtrosPartida["dataHoraInicio"] = dataInicio
-            filtrosPartida["dataHoraFim"] = dataFim
+            filtrosPartida["dataHoraInicio"] = DateTimeHandler().converterHoraLocalToUtc( dataInicio)
+            filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc( dataFim)
 
             partidasCadastradas = partidaCore.listPartidas(filtrosPartida)
 

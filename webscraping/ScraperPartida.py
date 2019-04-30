@@ -179,6 +179,7 @@ class ScraperPartida(Scraper):
                 CSS_DATA_PARTIDA).text
             partida["dataHora"] = datetime.strptime(
                 dataPartida, "%d.%m.%Y %H:%M")
+            partida["dataHora"] = DateTimeHandler().converterHoraLocalToUtc(partida["dataHora"])
             partida["timezoneOffset"] = DateTimeHandler().local_time_offset(
                 time.mktime(partida["dataHora"].timetuple()))
 
