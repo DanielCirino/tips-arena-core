@@ -88,7 +88,7 @@ class PartidaCore:
             return listaPartidas
         except Exception as e:
             print(e.args)
-            return None
+            return []
 
     def analisarAlteracoesPartida(self, partida: Partida, partidaAtualizada: Partida):
         try:
