@@ -356,8 +356,8 @@ class MotorExtracao(Motor):
 
             filtrosPartida = partidaCore.getOpcoesFiltro()
 
-            filtrosPartida["dataHoraInicio"] = DateTimeHandler().converterHoraLocalToUtc( dataInicio)
-            filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc( dataFim)
+            filtrosPartida["dataHoraInicio"] = DateTimeHandler().converterHoraLocalToUtc(dataInicio)
+            filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(dataFim)
 
             partidasCadastradas = partidaCore.listPartidas(filtrosPartida)
 

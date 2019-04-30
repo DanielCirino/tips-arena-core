@@ -102,7 +102,7 @@ class MotorFactory:
                 processamento_batch.totalSucesso = quantidade_sucesso
                 processamento_batch.totalErro = quantidade_erro
                 processamento_batch.status = status
-                processamento_batch.dataHoraFim = data_hora_fim
+                processamento_batch.dataHoraFim = DateTimeHandler().converterHoraLocalToUtc(data_hora_fim)
 
             return processamentoCore.salvarProcessamentoBatch(processamento_batch)
         except Exception as e:
@@ -119,7 +119,7 @@ class MotorFactory:
 
             quantidadesProcessadas = self.getQuantidadeProcessada()
             self.salvarProcessamentoBatch(quantidadesProcessadas[0], quantidadesProcessadas[1],
-                                          ProcessamentoBatch.Status.FINALIZADO.name, datetime.utcnow())
+                                          ProcessamentoBatch.Status.FINALIZADO.name, datetime.now())
         except Exception as e:
             print(e.args)
 

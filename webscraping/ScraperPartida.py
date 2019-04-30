@@ -135,7 +135,7 @@ class ScraperPartida(Scraper):
             if self.webDriver:
                 self.webDriver.save_screenshot("error_screenshot.png")
 
-            return None
+            return []
 
     def getDadosPartida(self, urlPartida, extrairTimeline=True, extrairOdds=True, extrairStats=True,
                         extrairUltimasPartidas=True):
