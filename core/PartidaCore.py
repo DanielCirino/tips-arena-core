@@ -79,7 +79,7 @@ class PartidaCore:
                 if filter["dataHora"] != {}:
                     filter["dataHora"] = filtroDataHora
 
-            docs = self.collection.listarDocumentos(filter, [("oddsDisponiveis", -1), ("dataHora", -1)], limit, skip)
+            docs = self.collection.listarDocumentos(filter, [("dataHora", -1)], limit, skip)
 
             for doc in docs:
                 # print(json.dumps(doc, indent=2, default=json_util.default),",")
