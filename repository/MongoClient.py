@@ -9,7 +9,7 @@ import pymongo
 class MongoClient(object):
     def __init__(self):
         try:
-            user = os.environ.get("TA_MONGO_USER")
+            user = urllib.parse.quote_plus(os.environ.get("TA_MONGO_USER"))
             pwd = urllib.parse.quote_plus(os.environ.get("TA_MONGO_PWD"))
             server = urllib.parse.quote_plus(os.environ.get("TA_MONGO_SERVER"))
             port = urllib.parse.quote_plus(os.environ.get("TA_MONGO_PORT"))
@@ -25,6 +25,7 @@ class MongoClient(object):
             self.database = self.mongo_client[database]
         except Exception as e:
             print(e.args[0])
+            print(databaseUri)
 
     def getCollection(self, name):
         return self.database[name]
