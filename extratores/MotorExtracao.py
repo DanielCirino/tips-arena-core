@@ -292,21 +292,16 @@ class MotorExtracao(Motor):
             scrapWorkCore.salvarScrapWork(scrapPartida)
             return False
 
-    def salvarPartidaDoDia(self, urlPartida, partidasCadastradas):
+    def salvarPartidaDoDia(self, urlPartida):
         try:
             partidaCore = PartidaCore()
-            partidaJaCadastrada = False
+            hashString = HashString()
 
-            for partida in partidasCadastradas:
-                if partida.url == urlPartida:
-                    partidaJaCadastrada = True
-                    break
+            partidaCadastrada = partidaCore.getPartidaPorId(hashString.encode(urlPartida))
 
-            if partidaJaCadastrada:
-                return True
+            if partidaCadastrada.url == urlPartida: return True
 
             motorExtracao = MotorExtracao()
-            hashString = HashString()
 
             dadosPartida = self.extrator.getDadosPartida(urlPartida)
 
@@ -333,7 +328,10 @@ class MotorExtracao(Motor):
                                       ScrapWork.Status.OK.name, idCompeticao)
 
             novaPartida = Partida(dadosPartida)
-            return partidaCore.salvarPartida(novaPartida)
+
+            resultado = partidaCore.salvarPartida(novaPartida)
+
+            return resultado.acknowledged
 
         except Exception as e:
             print(e.args)
@@ -344,35 +342,14 @@ class MotorExtracao(Motor):
             if self.extrator is None:
                 self.extrator = ScraperPartida()
 
-            partidaCore = PartidaCore()
-
-            dataInicio = datetime.strftime(
-                datetime.now() - timedelta(days=3), "%Y-%m-%d") + " 00:00:00"
-            dataInicio = datetime.strptime(dataInicio, "%Y-%m-%d %H:%M:%S")
-
-            dataFim = datetime.strftime(
-                datetime.now() + timedelta(days=3), "%Y-%m-%d") + " 23:59:59"
-            dataFim = datetime.strptime(dataFim, "%Y-%m-%d %H:%M:%S")
-
-            filtrosPartida = partidaCore.getOpcoesFiltro()
-
-            filtrosPartida["dataHoraInicio"] = DateTimeHandler().converterHoraLocalToUtc(dataInicio)
-            filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(dataFim)
-
-            partidasCadastradas = partidaCore.listPartidas(filtrosPartida)
-
             indexLista = 0
 
             for urlPartida in self.listaProcessamento:
-
                 executar = indexLista % self.totalThreads == self.idThread
                 if executar:
-                    resultado = self.salvarPartidaDoDia(urlPartida, partidasCadastradas)
+                    resultado = self.salvarPartidaDoDia(urlPartida)
+
                     if resultado:
-                        try:
-                            partidasCadastradas.remove(urlPartida)
-                        except:
-                            pass
                         self.totalSucesso += 1
                     else:
                         self.totalErros += 1

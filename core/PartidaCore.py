@@ -53,7 +53,6 @@ class PartidaCore:
 
     def listPartidas(self, filter={}, sort=[], limit=0, skip=0):
         try:
-
             listaPartidas = []
             filtroDataHora = {}
 

@@ -127,6 +127,8 @@ class ScraperPartida(Scraper):
                 proximo_dia.click()
                 self.aguardarCarregamentoPagina(CSS_LOADING)
 
+            listaPartidas.reverse()
+
             return listaPartidas
 
         except Exception as e:
