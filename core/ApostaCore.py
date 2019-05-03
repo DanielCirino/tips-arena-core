@@ -4,7 +4,6 @@ from datetime import datetime
 
 from bson import ObjectId
 
-
 from core.TransacaoCore import TransacaoCore
 from models.Partida import Partida
 from models.Transacao import Transacao
@@ -241,10 +240,12 @@ class ApostaCore:
     def finalizarApostaUnderOver(self, aposta: Aposta, totalGols: int):
         try:
             detalhesAposta = aposta.opcaoMercado.split("_")  # UNDER_4_5
+            totalGolsAposta = int(detalhesAposta[1])
+
             if detalhesAposta[0] == "UNDER":
-                apostaCerta = int(detalhesAposta[1]) <= totalGols
+                apostaCerta = totalGols <= totalGolsAposta
             if detalhesAposta[0] == "OVER":
-                apostaCerta = int(detalhesAposta[1]) > totalGols
+                apostaCerta = totalGols > totalGolsAposta
 
             self.finalizarAposta(aposta, apostaCerta)
 
