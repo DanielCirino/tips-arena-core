@@ -70,10 +70,10 @@ class ScrapWorkCore:
 
     def salvarScrapWork(self, scrapWork: ScrapWork):
         try:
-            scrapWork.dataAtualizacao = datetime.utcnow()
+            scrapWork.dataAtualizacao = datetime.now()
             if scrapWork._id == "":
                 scrapWork._id = HashString().encode(scrapWork.url)
-                scrapWork.dataCadastro = datetime.utcnow()
+                scrapWork.dataCadastro = datetime.now()
                 return self.collection.inserirDocumento(scrapWork)
             else:
                 return self.collection.atualizarDocumento(scrapWork)

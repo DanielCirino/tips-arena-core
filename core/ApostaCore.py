@@ -33,11 +33,11 @@ class ApostaCore:
 
     def salvarAposta(self, aposta: Aposta):
         try:
-            aposta.dataAtualizacao = datetime.utcnow()
+            aposta.dataAtualizacao = datetime.now()
             if aposta._id == "":
                 delattr(aposta, "_id")
                 aposta.idUsuario = ObjectId(aposta.idUsuario)
-                aposta.dataCadastro = datetime.utcnow()
+                aposta.dataCadastro = datetime.now()
                 return self.collection.inserirDocumento(aposta)
             else:
                 return self.collection.atualizarDocumento(aposta)

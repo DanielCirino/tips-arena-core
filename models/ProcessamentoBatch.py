@@ -16,9 +16,9 @@ class ProcessamentoBatch(object):
         self.totalSucesso = 0
         self.totalErro = 0
         self.detalhes = 0
-        self.dataHoraInicio =  DateTimeHandler().converterHoraLocalToUtc(datetime.now())
+        self.dataHoraInicio =  datetime.now()
         self.dataHoraFim = None
-        self.dataAtualizacao = DateTimeHandler().converterHoraLocalToUtc(datetime.now())
+        self.dataAtualizacao = datetime.now()
 
         if documento is not None:
             for key in documento:

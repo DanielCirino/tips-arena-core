@@ -102,7 +102,7 @@ class MotorFactory:
                 processamento_batch.totalSucesso = quantidade_sucesso
                 processamento_batch.totalErro = quantidade_erro
                 processamento_batch.status = status
-                processamento_batch.dataHoraFim = DateTimeHandler().converterHoraLocalToUtc(data_hora_fim)
+                processamento_batch.dataHoraFim = data_hora_fim
 
             return processamentoCore.salvarProcessamentoBatch(processamento_batch)
         except Exception as e:
@@ -270,13 +270,12 @@ class MotorFactory:
                 data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
 
                 data_fim = datetime.strftime(datetime.now(), "%Y-%m-%d 23:59:59")
-                data_fim =datetime.strptime(data_fim, "%Y-%m-%d %H:%M:%S")
+                data_fim = datetime.strptime(data_fim, "%Y-%m-%d %H:%M:%S")
 
                 filtrosPartida = partidaCore.getOpcoesFiltro()
 
-                filtrosPartida["dataHoraInicio"] = DateTimeHandler().converterHoraLocalToUtc(data_inicio)
-                filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
-                
+                filtrosPartida["dataHoraInicio"] = data_inicio
+                filtrosPartida["dataHoraFim"] = data_fim
 
                 return partidaCore.listPartidas(filtrosPartida)
             except Exception as e:
