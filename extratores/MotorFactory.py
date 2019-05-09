@@ -281,6 +281,8 @@ class MotorFactory:
             except Exception as e:
                 print(e.args[0])
                 return []
+
+
         else:
             print("Ação de motor inválida")
 
