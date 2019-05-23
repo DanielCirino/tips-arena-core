@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 from webscraping.Scraper import Scraper
@@ -34,17 +33,16 @@ class ScraperCompeticao(Scraper):
             paisCompeticao = {"url": linksCabecalho[1]["href"],
                               "nome": linksCabecalho[1]["text"]}
 
-            anoEdicao = linksCabecalho[3]["text"]
-            urlCompeticao = linksCabecalho[2]["href"][:-
-                                                      1] + "-" + anoEdicao.replace("/", "-") + "/"
+            anoEdicao = documentoHtml.select(".tournament-season")[0].text
+            urlCompeticao = urlCompeticao[:-1] + "-" + anoEdicao.replace("/", "-") + "/"
 
-            nomeCompeticao = UtilBll().limparString(linksCabecalho[2]["text"])
+            nomeCompeticao = documentoHtml.select(".tournament-name")[0].text
             logoCompeticao = documentoHtml.select(".tournament-logo")
             logoCompeticao = logoCompeticao[0]["style"].split("(")[1]
             logoCompeticao = logoCompeticao.replace(")", "")
 
             return {
-                "nome": nomeCompeticao,
+                "nome": UtilBll().limparString(nomeCompeticao),
                 "pais": paisCompeticao,
                 "urlLogo": logoCompeticao,
                 "url": urlCompeticao,

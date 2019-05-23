@@ -47,9 +47,7 @@ class Scraper:
                 self.webDriver = webdriver.Firefox(capabilities=caps,
                                                    executable_path=self.pathToDriver,
                                                    firefox_options=options)
-                # self.webDriver = webdriver.Remote(
-                #     command_executor='http://127.0.0.1:4444/wd/hub',
-                #     desired_capabilities=caps)
+
 
         except Exception as e:
             print("Erro ao iniciar webdriver - " +

@@ -25,7 +25,7 @@ class MongoClient(object):
             self.database = self.mongo_client[database]
         except Exception as e:
             print(e.args[0])
-            print(databaseUri)
+            # print(databaseUri)
 
     def getCollection(self, name):
         return self.database[name]

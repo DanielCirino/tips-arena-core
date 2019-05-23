@@ -34,7 +34,7 @@ class ScraperEquipe(Scraper):
             paisEquipe = {"nome": linksCabecalho[1]["text"],
                           "url": linksCabecalho[1]["href"]}
 
-            nomeEquipe = linksCabecalho[2]["text"]
+            nomeEquipe = documentoHtml.select(".team-name")[0].text
 
             urlEscudoEquipe = documentoHtml.select(".team-logo")
             urlEscudoEquipe = urlEscudoEquipe[0]["style"].split("(")[1]
