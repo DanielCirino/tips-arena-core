@@ -285,7 +285,7 @@ class ApostaCore:
             transacao.valor = aposta.valor
 
             transacaoSalva = TransacaoCore().salvarTransacao(transacao)
-            print(transacaoSalva.inserted_id)
+            # print(transacaoSalva.inserted_id)
 
             if transacaoSalva:
                 aposta.resultado = Aposta.Resultado.CANCELADA.name

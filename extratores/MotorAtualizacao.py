@@ -225,9 +225,9 @@ class MotorAtualizacao(Motor):
 
             partidaCore = PartidaCore()
 
-            extrairTimeline = partida.timeline == []
+            extrairTimeline = partida.status != Partida.Status.FINALIZADO.name
             extrairOdds = partida.odds == {} or partida.odds == ""
-            extrairEstatisticas = partida.estatisticas == [] or partida.estatisticas == ""
+            extrairEstatisticas = partida.status!=Partida.Status.FINALIZADO.name
             extrairHeadToHead = partida.headToHead == {} or partida.headToHead == []
             extrairHeadToHead = extrairHeadToHead or partida.headToHead["mandante"] == []
             extrairHeadToHead = extrairHeadToHead or partida.headToHead["visitante"] == []

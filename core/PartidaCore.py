@@ -9,6 +9,7 @@ from core.ApostaCore import ApostaCore
 from utils.HashString import HashString
 from repository.Collection import Collection
 from models.Partida import Partida
+from utils.DateTimeHandler import DateTimeHandler
 
 
 class PartidaCore:
@@ -33,10 +34,10 @@ class PartidaCore:
 
     def salvarPartida(self, partida: Partida):
         try:
-            partida.dataAtualizacao = datetime.now()
+            partida.dataAtualizacao = DateTimeHandler().converterHoraLocalToUtc(datetime.now())
             if partida._id == "":
                 partida._id = HashString().encode(partida.url)
-                partida.dataCadastro = datetime.now()
+                partida.dataCadastro = DateTimeHandler().converterHoraLocalToUtc(datetime.now())
                 return self.collection.inserirDocumento(partida)
             else:
                 return self.collection.atualizarDocumento(partida)

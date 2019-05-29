@@ -274,8 +274,8 @@ class MotorFactory:
 
                 filtrosPartida = partidaCore.getOpcoesFiltro()
 
-                filtrosPartida["dataHoraInicio"] = data_inicio
-                filtrosPartida["dataHoraFim"] = data_fim
+                filtrosPartida["dataHoraInicio"] = DateTimeHandler().converterHoraLocalToUtc(data_inicio)
+                filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
 
                 return partidaCore.listPartidas(filtrosPartida)
             except Exception as e:

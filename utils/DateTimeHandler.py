@@ -21,6 +21,6 @@ class DateTimeHandler:
         return int(offset / 60 / 60)
     def converterHoraLocalToUtc(self,dataHoraLocal:datetime):
         try:
-            return dataHoraLocal - timedelta(hours=self.local_time_offset())
+            return dataHoraLocal + timedelta(hours=self.local_time_offset())
         except Exception as e:
             return None
