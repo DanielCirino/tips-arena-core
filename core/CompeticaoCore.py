@@ -25,10 +25,10 @@ class CompeticaoCore:
 
     def salvarCompeticao(self, competicao: Competicao):
         try:
-            competicao.dataAtualizacao = datetime.now()
+            competicao.dataAtualizacao = datetime.utcnow()
             if competicao._id == "":
                 competicao._id = HashString().encode(competicao.url)
-                competicao.dataCadastro = datetime.now()
+                competicao.dataCadastro = datetime.utcnow()
                 return self.collection.inserirDocumento(competicao)
             else:
                 return self.collection.atualizarDocumento(competicao)

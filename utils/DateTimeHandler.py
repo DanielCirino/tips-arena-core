@@ -2,10 +2,21 @@
 # -*- coding: utf-8 -*-
 
 import time
+import pytz
 from datetime import datetime,timedelta
 
 
 class DateTimeHandler:
+
+    def converterHoraLocalToUtc(self,dataHoraLocal:datetime):
+        try:
+            fusoHorario = pytz.timezone("America/Sao_Paulo")
+            dataComFusoHorario = fusoHorario.localize(dataHoraLocal)
+
+            return dataComFusoHorario
+        except Exception as e:
+            return None
+
 
     def local_time_offset(self, t=None):
         offset = 0
@@ -19,8 +30,13 @@ class DateTimeHandler:
             offset = time.timezone
 
         return int(offset / 60 / 60)
+
+
     def converterHoraLocalToUtc(self,dataHoraLocal:datetime):
         try:
-            return dataHoraLocal + timedelta(hours=self.local_time_offset())
+            fusoHorario = pytz.timezone("UTC")
+            dataHoraUtc = dataHoraLocal + timedelta(hours=self.local_time_offset())
+
+            return  fusoHorario.localize(dataHoraUtc)
         except Exception as e:
             return None

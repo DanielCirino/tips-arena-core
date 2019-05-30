@@ -12,7 +12,12 @@ class Collection(object):
 
     def inserirDocumento(self, documento):
         try:
-            doc = documento.__dict__
+
+            if(hasattr(documento,"__dict__")):
+                doc = documento.__dict__
+            else:
+                doc = documento
+
             doc["timezoneOffset"] = DateTimeHandler().local_time_offset()
 
             return self.collection.insert_one(doc)
@@ -23,7 +28,11 @@ class Collection(object):
 
     def atualizarDocumento(self, documento):
         try:
-            doc = documento.__dict__
+            if (hasattr(documento, "__dict__")):
+                doc = documento.__dict__
+            else:
+                doc = documento
+
             query_update = {"_id": documento._id}
 
             return self.collection.update_one(query_update, {"$set": doc})
@@ -34,7 +43,7 @@ class Collection(object):
         finally:
             self.client.disconnect()
 
-    def deletaDocumento(self, id):
+    def deletarDocumento(self, id):
         query_delete = {"_id": id}
         try:
             return self.collection.delete_one(query_delete)

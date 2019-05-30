@@ -25,10 +25,10 @@ class EquipeCore:
 
     def salvarEquipe(self, equipe: Equipe):
         try:
-            equipe.dataAtualizacao = datetime.now()
+            equipe.dataAtualizacao = datetime.utcnow()
             if equipe._id == "":
                 equipe._id = HashString().encode(equipe.url)
-                equipe.dataCadastro = datetime.now()
+                equipe.dataCadastro = datetime.utcnow()
                 return self.collection.inserirDocumento(equipe)
             else:
                 return self.collection.atualizarDocumento(equipe)
