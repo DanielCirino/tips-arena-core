@@ -184,9 +184,8 @@ class ScraperPartida(Scraper):
             partida["dataHora"] = DateTimeHandler().converterHoraLocalToUtc(datetime.strptime(
                 dataPartida, "%d.%m.%Y %H:%M"))
 
-            print("{}<==>{}".format(dataPartida,partida["dataHora"]))
 
-            partida["timezoneOffset"] = DateTimeHandler().local_time_offset(
+            partida["timezoneOffset"] = DateTimeHandler().calcularTimezoneOffSet(
                 time.mktime(partida["dataHora"].timetuple()))
 
             statusPartida = self.webDriver.find_element_by_css_selector(

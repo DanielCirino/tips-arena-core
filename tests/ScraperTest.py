@@ -195,7 +195,7 @@ class ScraperTest(unittest.TestCase):
         self.assertTrue(ret)
 
     def teste_motor_extracao_factory(self):
-        factory = MotorFactory(2, 4, 1)
+        factory = MotorFactory(2, 1, 1)
         factory.getItensProcessamentoMotorExtracao()
 
         lista = factory.itensProcessamento
@@ -205,7 +205,7 @@ class ScraperTest(unittest.TestCase):
 
     def teste_conversao_data(self):
         date = datetime.strptime("2019-02-02 12:15", "%Y-%m-%d %H:%M")
-        timezone_off_set = DateTimeHandler().local_time_offset(
+        timezone_off_set = DateTimeHandler().calcularTimezoneOffSet(
             time.mktime(date.timetuple()))
         self.assertTrue(timezone_off_set == -3)
 

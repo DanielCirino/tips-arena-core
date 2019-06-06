@@ -18,7 +18,7 @@ class DateTimeHandler:
             return None
 
 
-    def local_time_offset(self, t=None):
+    def calcularTimezoneOffSet(self, t=None):
         offset = 0
 
         if t is None:
@@ -35,7 +35,7 @@ class DateTimeHandler:
     def converterHoraLocalToUtc(self,dataHoraLocal:datetime):
         try:
             fusoHorario = pytz.timezone("UTC")
-            dataHoraUtc = dataHoraLocal + timedelta(hours=self.local_time_offset())
+            dataHoraUtc = dataHoraLocal + timedelta(hours=self.calcularTimezoneOffSet())
 
             return  fusoHorario.localize(dataHoraUtc)
         except Exception as e:

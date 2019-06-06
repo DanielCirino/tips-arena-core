@@ -204,12 +204,12 @@ class MotorFactory:
                 partidaCore = PartidaCore()
                 data_inicio = datetime.strftime(datetime.now(), "%Y-%m-%d 00:00:00")
                 data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
-                data_fim = datetime.now()
+                data_fim = datetime.utcnow()
 
                 filtrosPartida = partidaCore.getOpcoesFiltro()
 
                 filtrosPartida["dataHoraInicio"] = DateTimeHandler().converterHoraLocalToUtc(data_inicio)
-                filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
+                filtrosPartida["dataHoraFim"] = data_fim
                 filtrosPartida["status"].append(Partida.Status.AGENDADO.name)
                 filtrosPartida["status"].append(Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
                 filtrosPartida["status"].append(Partida.Status.EM_ANDAMENTO.name)
@@ -230,10 +230,10 @@ class MotorFactory:
 
                 data_inicio = datetime.strftime(datetime.today() - timedelta(days=365 * 10), "%Y-%m-%d") + " 00:00:00"
                 data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
-                data_fim = datetime.now()
+                data_fim = datetime.utcnow()
 
                 # filtrosPartida["dataHoraInicio"] = data_inicio
-                filtrosPartida["dataHoraFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
+                filtrosPartida["dataHoraFim"] = data_fim
                 filtrosPartida["status"].append(Partida.Status.AGENDADO.name)
                 filtrosPartida["status"].append(Partida.Status.RESULTADO_NAO_DISPONIVEL.name)
                 filtrosPartida["status"].append(Partida.Status.EM_ANDAMENTO.name)
@@ -252,10 +252,10 @@ class MotorFactory:
 
                 data_inicio = datetime.strftime(datetime.today() - timedelta(days=365 * 10), "%Y-%m-%d") + " 00:00:00"
                 data_inicio = datetime.strptime(data_inicio, "%Y-%m-%d %H:%M:%S")
-                data_fim = datetime.now()
+                data_fim = datetime.utcnow()
 
                 # filtrosAposta["dataCadastroInicio"] = data_inicio
-                filtrosAposta["dataCadastroFim"] = DateTimeHandler().converterHoraLocalToUtc(data_fim)
+                filtrosAposta["dataCadastroFim"] = data_fim
                 filtrosAposta["status"].append(Aposta.Status.PENDENTE.name)
 
                 return apostaCore.listarApostas(filtrosAposta)

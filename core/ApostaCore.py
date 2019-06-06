@@ -283,6 +283,7 @@ class ApostaCore:
             transacao.operacao = Transacao.Operacao.CREDITO.name
             transacao.descricao = "Apota cancelada: {}".format(aposta.descricao)
             transacao.valor = aposta.valor
+            transacao.efetivado = True
 
             transacaoSalva = TransacaoCore().salvarTransacao(transacao)
             # print(transacaoSalva.inserted_id)

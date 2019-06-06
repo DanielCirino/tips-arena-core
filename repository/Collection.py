@@ -18,7 +18,7 @@ class Collection(object):
             else:
                 doc = documento
 
-            doc["timezoneOffset"] = DateTimeHandler().local_time_offset()
+            doc["timezoneOffset"] = DateTimeHandler().calcularTimezoneOffSet()
 
             return self.collection.insert_one(doc)
         except Exception as e:
