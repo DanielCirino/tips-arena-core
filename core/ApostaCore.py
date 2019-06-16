@@ -127,7 +127,7 @@ class ApostaCore:
             elif analise["resultado"] == "VITORIA_MANDANTE" or analise["resultado"] == "VITORIA_VISITANTE":
                 analise["duplaChance"] = "CONTRA_EMPATE"
 
-            analise["imparPar"] = "ODD" if totalGols % 2 == 0 else "EVEN"
+            analise["imparPar"] = "EVEN" if totalGols % 2 == 0 else "ODD"
 
             if placarMandante > 0 and placarVisitante > 0:
                 analise["btts"] = "BTTS_YES"
