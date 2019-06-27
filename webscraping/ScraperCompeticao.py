@@ -33,13 +33,16 @@ class ScraperCompeticao(Scraper):
             paisCompeticao = {"url": linksCabecalho[1]["href"],
                               "nome": linksCabecalho[1]["text"]}
 
-            anoEdicao = documentoHtml.select(".tournament-season")[0].text
+            anoEdicao = documentoHtml.select(".teamHeader__text")[0].text
             urlCompeticao = urlCompeticao[:-1] + "-" + anoEdicao.replace("/", "-") + "/"
 
-            nomeCompeticao = documentoHtml.select(".tournament-name")[0].text
-            logoCompeticao = documentoHtml.select(".tournament-logo")
+            nomeCompeticao = documentoHtml.select(".teamHeader__name")[0].text
+            logoCompeticao = documentoHtml.select(".teamHeader__logo")
             logoCompeticao = logoCompeticao[0]["style"].split("(")[1]
             logoCompeticao = logoCompeticao.replace(")", "")
+            logoCompeticao = logoCompeticao.replace("\\", "")
+            logoCompeticao = logoCompeticao.replace("'", "")
+
 
             return {
                 "nome": UtilBll().limparString(nomeCompeticao),
@@ -54,7 +57,7 @@ class ScraperCompeticao(Scraper):
             }
 
         except Exception as e:
-            print(e.args)
+            print("Erro ao extrair dados partidas [{}]".format(e.args))
             return None
 
     def getListaEdicoesCompeticao(self, urlCompeticao):

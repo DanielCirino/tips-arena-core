@@ -34,11 +34,11 @@ class ScraperEquipe(Scraper):
             paisEquipe = {"nome": linksCabecalho[1]["text"],
                           "url": linksCabecalho[1]["href"]}
 
-            nomeEquipe = documentoHtml.select(".team-name")[0].text
+            nomeEquipe = documentoHtml.select(".teamHeader__name")[0].text
 
-            urlEscudoEquipe = documentoHtml.select(".team-logo")
-            urlEscudoEquipe = urlEscudoEquipe[0]["style"].split("(")[1]
-            urlEscudoEquipe = urlEscudoEquipe.replace(")", "")
+            urlEscudoEquipe = documentoHtml.select(".teamHeader__logo")
+            urlEscudoEquipe = urlEscudoEquipe[0]["style"].split("(")
+            urlEscudoEquipe = urlEscudoEquipe[1].replace(")", "")
 
             return {
                 "nome": UtilBll().limparString(nomeEquipe),
@@ -48,5 +48,5 @@ class ScraperEquipe(Scraper):
             }
 
         except Exception as e:
-            print(e.args)
+            print("Erro ao obter dados da equipe [{}]".format(e.args))
             return None

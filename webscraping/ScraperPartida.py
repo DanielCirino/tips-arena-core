@@ -360,7 +360,7 @@ class ScraperPartida(Scraper):
             return partida
 
         except Exception as e:
-            print(e)
+            print("Erro ao obter dados partida [{}]".format(e.args[0]))
             return None
 
     def verificarInformacoesDisponiveis(self, htmlLinks):
