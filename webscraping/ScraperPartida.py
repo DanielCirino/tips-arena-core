@@ -430,7 +430,7 @@ class ScraperPartida(Scraper):
             return bookmakers
 
         except Exception as e:
-            print(e.args)
+            print("Erro ao obter odds da partida [{}]".format(e.args[0]))
             return bookmakers
 
     def getMercadosApostaDisponiveis(self):
@@ -482,7 +482,7 @@ class ScraperPartida(Scraper):
             return listaBookmakers
 
         except Exception as e:
-            print(e.args[0])
+            print("Erro ao obter mercados dispniveis para aposta [{}]".format(e.args[0]))
             return []
 
     def getOddsPorMercado(self, mercado):
@@ -512,7 +512,8 @@ class ScraperPartida(Scraper):
                     if ".5" in qtd_gols:
                         odds = self.getOddsUnderOver(
                             tabela.find_elements_by_css_selector("tbody>tr"), qtd_gols)
-                        listaOdds.append(odds)
+                        if odds != {}:
+                            listaOdds.append(odds)
 
             if mercado["tipo"] == self.TipoMercado.DNB:
                 tabelaOdds = self.webDriver.find_elements_by_css_selector(
@@ -546,7 +547,7 @@ class ScraperPartida(Scraper):
             return listaOdds
 
         except Exception as e:
-            print(e.args[0])
+            print("Erro ao obter odds por mercado: {}[{}]".format(mercado,e.args[0]))
 
     def getOddsResultado(self, bookmakers):
 
@@ -584,7 +585,7 @@ class ScraperPartida(Scraper):
             }
 
         except Exception as e:
-            print(e.args[0])
+            print("Erro ao obter odds resultado [{}]".format(e.args[0]))
             return {}
 
     def getOddsDrawNoBet(self, tabelaOdds):
@@ -617,7 +618,7 @@ class ScraperPartida(Scraper):
             }
 
         except Exception as e:
-            print(e.args[0])
+            print("Erro ao obter odds DNB [{}]".format(e.args[0]))
             return {}
 
     def getOddsUnderOver(self, tabelaOdds, quantidadeGols):
@@ -648,7 +649,7 @@ class ScraperPartida(Scraper):
             }
 
         except Exception as e:
-            print(e.args[0])
+            print("Erro ao obter odds under/over [{}]".format(e.args[0]))
             return {}
 
     def getOddsPlacarExato(self, tabelaOdds):
@@ -676,7 +677,7 @@ class ScraperPartida(Scraper):
                 "valor": round(valorOddsPlacar / (quantidadeOdds - redutorQuantidadeOdds), self.CASAS_DECIMAIS)
             }
         except Exception as e:
-            print(e.args[0])
+            print("Erro ao obter odds placar exato [{}]".format(e.args[0]))
             return {}
 
     def getOddsBtts(self, tabelaOdds):
@@ -707,7 +708,7 @@ class ScraperPartida(Scraper):
             }
 
         except Exception as e:
-            print(e.args[0])
+            print("Erro ao obter odds btts [{}]".format(e.args[0]))
             return {}
 
     def getOddsImparPar(self, tabelaOdds):
@@ -737,7 +738,7 @@ class ScraperPartida(Scraper):
             }
 
         except Exception as e:
-            print(e.args[0])
+            print("Erro ao obter odds impar/par [{}]".format(e.args[0]))
             return {}
 
     def getOddsDuplaChance(self, tabelaOdds):
@@ -776,7 +777,7 @@ class ScraperPartida(Scraper):
             }
 
         except Exception as e:
-            print(e.args[0])
+            print("Erro ao obter odds dupla chance [{}]".format(e.args[0]))
             return {}
 
     def getTimelinePartida(self, htmlEventos):
