@@ -143,6 +143,8 @@ class ScraperPartida(Scraper):
                         extrairUltimasPartidas=True):
 
         try:
+            urlPartida = urlPartida.replace('jogo', 'match')
+
             CSS_LOADING = "#preload-all"
             CSS_CABECALHO_PARTIDA = ".fleft"
             CSS_DADOS_MANDANTE = ".tname-home>div>div>a"
@@ -180,10 +182,8 @@ class ScraperPartida(Scraper):
             dataPartida = self.webDriver.find_element_by_css_selector(
                 CSS_DATA_PARTIDA).text
 
-
             partida["dataHora"] = DateTimeHandler().converterHoraLocalToUtc(datetime.strptime(
                 dataPartida, "%d.%m.%Y %H:%M"))
-
 
             partida["timezoneOffset"] = DateTimeHandler().calcularTimezoneOffSet(
                 time.mktime(partida["dataHora"].timetuple()))
@@ -547,7 +547,7 @@ class ScraperPartida(Scraper):
             return listaOdds
 
         except Exception as e:
-            print("Erro ao obter odds por mercado: {}[{}]".format(mercado,e.args[0]))
+            print("Erro ao obter odds por mercado: {}[{}]".format(mercado, e.args[0]))
 
     def getOddsResultado(self, bookmakers):
 
@@ -904,7 +904,6 @@ class ScraperPartida(Scraper):
 
             html = self.webDriver.find_element_by_css_selector("#tab-h2h-overall").get_attribute("innerHTML")
 
-
             dadosHtml = self.converterStringParaHtml(html)
 
             linhasTabelaPartidasMandante = dadosHtml.select(CSS_TABLE_PARTIDAS_MANDANTE + " tbody tr.highlight")
@@ -969,22 +968,22 @@ class ScraperPartida(Scraper):
         if status == "":
             statusPartida = Partida.Status.AGENDADO.name
 
-        elif status.find("1º tempo") != -1:
+        elif status.find("1º tempo") != -1 or status.find("1st Half") != -1:
             statusPartida = Partida.Status.PRIMEIRO_TEMPO.name
 
-        elif status.find("2º tempo") != -1:
+        elif status.find("2º tempo") != -1 or status.find("2nd Half") != -1:
             statusPartida = Partida.Status.SEGUNDO_TEMPO.name
 
-        elif status == "Adiado":
+        elif status == "Adiado" or status=="Postponed":
             statusPartida = Partida.Status.ADIADO.name
 
-        elif status == "Após Pênaltis":
+        elif status == "Após Pênaltis" or status == "After Penalties":
             statusPartida = Partida.Status.FINALIZADO.name
 
-        elif status == "Após Prorrogação":
+        elif status == "Após Prorrogação" or status == "After Extra Time":
             statusPartida = Partida.Status.FINALIZADO.name
 
-        elif status == "Intervalo":
+        elif status == "Intervalo" or status == "Half Time":
             statusPartida = Partida.Status.INTERVALO.name
 
         elif status == "Atribuído":
@@ -993,16 +992,16 @@ class ScraperPartida(Scraper):
         elif status == "Abandonado":
             statusPartida = Partida.Status.ABANDONADO.name
 
-        elif status == "Cancelado":
+        elif status == "Cancelado" or status == "Cancelled":
             statusPartida = Partida.Status.CANCELADO.name
 
-        elif status == "SRF - Só resultado final.":
+        elif status == "SRF - Só resultado final." or status=="FRO - Final result only.":
             statusPartida = Partida.Status.RESULTADO_NAO_DISPONIVEL.name
 
-        elif status == "SRF ":
+        elif status == "SRF " or status == "FRO ":
             statusPartida = Partida.Status.RESULTADO_NAO_DISPONIVEL.name
 
-        elif status == "Encerrado":
+        elif status == "Encerrado" or status == "Finished":
             statusPartida = Partida.Status.FINALIZADO.name
 
         elif status == "Walkover":

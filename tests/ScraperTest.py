@@ -89,7 +89,7 @@ class ScraperTest(unittest.TestCase):
     def teste_extrair_dados_partida(self):
         scraper = ScraperPartida()
         partida = scraper.getDadosPartida(
-            "/jogo/IPMRioQR/")  # 0QqMMPUm ou jNK3xpne
+            "/match/IPMRioQR/")  # 0QqMMPUm ou jNK3xpne
         print(partida)
         scraper.finalizarWebDriver()
         self.assertTrue(partida != None)

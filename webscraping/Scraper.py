@@ -15,7 +15,7 @@ from selenium.webdriver.firefox.options import Options
 class Scraper:
     def __init__(self):
         try:
-            self.URL_BASE = "https://www.resultados.com"
+            self.URL_BASE = "https://www.flashscore.com"
             self.webDriver = None
             self.pathToDriver = os.environ.get("TA_PATH_TO_WEBDRIVER")
 
