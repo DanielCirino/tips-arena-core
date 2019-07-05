@@ -36,7 +36,8 @@ class PartidaCore:
         try:
             partida.dataAtualizacao = datetime.utcnow()
             if partida._id == "":
-                partida._id = HashString().encode(partida.url)
+                idExterno = partida.url.split("/")[2]
+                partida._id = HashString().encode(idExterno)
                 partida.dataCadastro = datetime.utcnow()
                 return self.collection.inserirDocumento(partida)
             else:

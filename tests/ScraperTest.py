@@ -237,6 +237,54 @@ class ScraperTest(unittest.TestCase):
         print(headToHead)
         self.assertTrue(headToHead!={})
 
+    def teste_alteracao_id_partidas(self):
+
+        collectionPartidas = Collection("partidas").collection
+        collectionApostas = Collection("apostas").collection
+
+        partidas =  Collection("partidas").listarDocumentos(sort=[("dataHora", -1)])
+        for partida in partidas:
+            try:
+                idExterno = partida["url"].split("/")[2]
+                novoId = HashString().encode(idExterno)
+                idAntigo = partida["_id"]
+                partida["_id"] = novoId
+
+                idComparacao=HashString().encode(partida["url"])
+                if partida["_id"] == idComparacao:
+
+                    result = collectionPartidas.insert_one(partida)
+                    print(result.inserted_id)
+
+                    if result.acknowledged:
+                        query_update = {"_id": idAntigo}
+                        partidaExcluida = collectionPartidas.delete_one(query_update)
+                        print(partidaExcluida.acknowledged)
+                        apostasAtualizadas = collectionApostas.update_many({"idPartida":idAntigo},{"$set":{"idPartida":novoId}})
+                        print(apostasAtualizadas.raw_result)
+                        print("___________________________________________")
+            except Exception as e:
+                print(e.args[0])
+
+        self.teste_deletar_partidas_duplicadas()
+        self.assertTrue(partidas)
+
+    def teste_deletar_partidas_duplicadas(self):
+
+        collectionPartidas = Collection("partidas").collection
+
+        partidas =  Collection("partidas").listarDocumentos(sort=[("dataHora", -1)])
+        for partida in partidas:
+            try:
+                idComparacao = HashString().encode(partida["url"])
+                if partida["_id"] == idComparacao:
+                    partidaExcluida =  collectionPartidas.delete_one({"_id":idComparacao})
+                    print(partidaExcluida.acknowledged)
+                    print("___________________________________________")
+            except Exception as e:
+                print(e.args[0])
+
+        self.assertTrue(partidas)
 
 
 if __name__ == '__main__':

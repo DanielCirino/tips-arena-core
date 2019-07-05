@@ -297,7 +297,9 @@ class MotorExtracao(Motor):
             partidaCore = PartidaCore()
             hashString = HashString()
 
-            partidaCadastrada = partidaCore.getPartidaPorId(hashString.encode(urlPartida))
+            idExterno = urlPartida.split("/")[2]
+
+            partidaCadastrada = partidaCore.getPartidaPorId(hashString.encode(idExterno))
 
             if partidaCadastrada.url == urlPartida: return True
 

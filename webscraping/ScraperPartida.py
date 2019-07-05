@@ -945,7 +945,10 @@ class ScraperPartida(Scraper):
 
                 partidaEmCasa = len(camposTabela[2].attrs["class"]) > 1
 
-                partida = {"idPartida": HashString().encode(urlPartida),
+
+                idExterno = urlPartida.split("/")[2]
+
+                partida = {"idPartida": HashString().encode(idExterno),
                            "urlPartida": urlPartida,
                            "data": datetime.strptime(dataPartida, "%d.%m.%y"),
                            "competicao": competicao,
