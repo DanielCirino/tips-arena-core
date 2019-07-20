@@ -9,14 +9,14 @@ import pymongo
 class MongoClient(object):
     def __init__(self):
         try:
-            user = urllib.parse.quote_plus(os.environ.get("TA_MONGO_USER"))
-            pwd = urllib.parse.quote_plus(os.environ.get("TA_MONGO_PWD"))
-            server = urllib.parse.quote_plus(os.environ.get("TA_MONGO_SERVER"))
-            port = urllib.parse.quote_plus(os.environ.get("TA_MONGO_PORT"))
-            databaseName = urllib.parse.quote_plus(os.environ.get("TA_DATABASE_NAME"))
+            user = os.environ["TA_MONGO_USER"]
+            pwd = os.environ["TA_MONGO_PWD"]
+            server = os.environ["TA_MONGO_SERVER"]
+            port = os.environ["TA_MONGO_PORT"]
+            databaseName = os.environ["TA_DATABASE_NAME"]
 
             databaseUri = "mongodb://{}:{}@{}:{}/{}".format(user, pwd, server, port, databaseName)
-            databaseUri = os.environ["TA_MONGO_CONNECTION"]
+            # databaseUri = os.environ["TA_MONGO_CONNECTION"]
 
             print(databaseUri)
 
