@@ -89,7 +89,7 @@ class ScraperTest(unittest.TestCase):
     def teste_extrair_dados_partida(self):
         scraper = ScraperPartida()
         partida = scraper.getDadosPartida(
-            "/match/IPMRioQR/")  # 0QqMMPUm ou jNK3xpne
+            "/match/UZGaKnC4/")  # 0QqMMPUm ou jNK3xpne
         print(partida)
         scraper.finalizarWebDriver()
         self.assertTrue(partida != None)
@@ -185,7 +185,7 @@ class ScraperTest(unittest.TestCase):
         self.assertTrue(ret)
 
     def teste_motor_salvar_partida(self):
-        objectId = HashString().encode("/jogo/v5hgQNv3/")
+        objectId = HashString().encode("/match/UZGaKnC4/")
         scrap = ScrapWorkCore().getScrapWorkById(objectId)
 
         motor = MotorExtracao(MotorExtracao.Acao.SALVAR_EQUIPE, 0, 1, [])
@@ -193,6 +193,7 @@ class ScraperTest(unittest.TestCase):
         ret = motor.salvarPartida(scrap)
 
         self.assertTrue(ret)
+
 
     def teste_motor_extracao_factory(self):
         factory = MotorFactory(2, 1, 1)

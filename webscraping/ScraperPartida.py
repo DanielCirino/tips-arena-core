@@ -360,7 +360,7 @@ class ScraperPartida(Scraper):
             return partida
 
         except Exception as e:
-            print("Erro ao obter dados partida [{}]".format(e.args[0]))
+            print("Erro ao obter dados partida: {} [{}]".format(urlPartida, e.args[0]))
             return None
 
     def verificarInformacoesDisponiveis(self, htmlLinks):
@@ -945,7 +945,6 @@ class ScraperPartida(Scraper):
 
                 partidaEmCasa = len(camposTabela[2].attrs["class"]) > 1
 
-
                 idExterno = urlPartida.split("/")[2]
 
                 partida = {"idPartida": HashString().encode(idExterno),
@@ -977,7 +976,7 @@ class ScraperPartida(Scraper):
         elif status.find("2º tempo") != -1 or status.find("2nd Half") != -1:
             statusPartida = Partida.Status.SEGUNDO_TEMPO.name
 
-        elif status == "Adiado" or status=="Postponed":
+        elif status == "Adiado" or status == "Postponed":
             statusPartida = Partida.Status.ADIADO.name
 
         elif status == "Após Pênaltis" or status == "After Penalties":
@@ -992,13 +991,13 @@ class ScraperPartida(Scraper):
         elif status == "Atribuído":
             statusPartida = Partida.Status.RESULTADO_NAO_DISPONIVEL.name
 
-        elif status == "Abandonado":
+        elif status == "Abandonado" or status == "Abandoned":
             statusPartida = Partida.Status.ABANDONADO.name
 
         elif status == "Cancelado" or status == "Cancelled":
             statusPartida = Partida.Status.CANCELADO.name
 
-        elif status == "SRF - Só resultado final." or status=="FRO - Final result only.":
+        elif status == "SRF - Só resultado final." or status == "FRO - Final result only.":
             statusPartida = Partida.Status.RESULTADO_NAO_DISPONIVEL.name
 
         elif status == "SRF " or status == "FRO ":
@@ -1012,10 +1011,20 @@ class ScraperPartida(Scraper):
 
         elif status.find("Walkover") != -1:
             statusPartida = Partida.Status.W_O.name
-        else:
-            print(" Status não mapeado:" + status)
 
+        elif status == "Ao Vivo" or status == "Live":
+            statusPartida = Partida.Status.EM_ANDAMENTO.name
+
+        elif status == "Extra Time":
+            statusPartida = Partida.Status.EM_ANDAMENTO.name
+
+        elif status == "Penalties":
+            statusPartida = "PENALTIES"
+
+        else:
+            print("Status não mapeado:" + status)
             statusPartida = status
+
 
         return statusPartida
 
@@ -1051,6 +1060,55 @@ class ScraperPartida(Scraper):
             print(desc)
 
         return desc
+
+    def normalizarDescricaoEstatistica(self,descricao: str):
+        novaDescricao = descricao
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Goal Attempts":
+            novaDescricao = "Tentativa de Gols"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Shots on Goal":
+            novaDescricao = "Chutes a gol"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        if descricao == "Ball Possession":
+            novaDescricao = "Posse de Bola"
+
+        else:
+            print("Descricao nao mapeada [{}]".format(descricao))
+
+        return novaDescricao
 
     class TipoMercado(Enum):
         RESULTADO = "1x2-odds"""
