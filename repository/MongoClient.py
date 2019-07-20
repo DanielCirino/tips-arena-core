@@ -16,7 +16,7 @@ class MongoClient(object):
             databaseName = os.environ["TA_DATABASE_NAME"]
 
             databaseUri = "mongodb://{}:{}@{}:{}/{}".format(user, pwd, server, port, databaseName)
-            # databaseUri = os.environ["TA_MONGO_CONNECTION"]
+            databaseUri = os.environ["TA_MONGO_CONNECTION"]
 
             print(databaseUri)
 
