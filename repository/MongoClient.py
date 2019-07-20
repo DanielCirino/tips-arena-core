@@ -10,7 +10,7 @@ class MongoClient(object):
     def __init__(self):
         try:
             user = urllib.parse.quote_plus(os.environ.get("TA_MONGO_USER"))
-            pwd = urllib.parse.quote_plus(os.environ.get("TA_MONGO_PWD")).encode("utf-8")
+            pwd = urllib.parse.quote_plus(os.environ.get("TA_MONGO_PWD"))
             server = urllib.parse.quote_plus(os.environ.get("TA_MONGO_SERVER"))
             port = urllib.parse.quote_plus(os.environ.get("TA_MONGO_PORT"))
             databaseName = urllib.parse.quote_plus(os.environ.get("TA_DATABASE_NAME"))
