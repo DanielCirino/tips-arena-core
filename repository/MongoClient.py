@@ -22,7 +22,7 @@ class MongoClient(object):
                 exit(0)
 
             self.mongo_client = pymongo.MongoClient(databaseUri)
-            self.database = self.mongo_client[database]
+            self.database = self.mongo_client[databaseName]
         except Exception as e:
             print(e.args[0])
             # print(databaseUri)
