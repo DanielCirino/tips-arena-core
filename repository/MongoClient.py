@@ -16,7 +16,7 @@ class MongoClient(object):
             databaseName = urllib.parse.quote_plus(os.environ.get("TA_DATABASE_NAME"))
 
             databaseUri = "mongodb://{}:{}@{}:{}/{}".format(user, pwd, server, port, databaseName)
-            databaseUri = urllib.parse.quote_plus(os.environ.get("TA_MONGO_CONNECTION"))
+            databaseUri = os.environ["TA_MONGO_CONNECTION"]
 
             print(databaseUri)
 
