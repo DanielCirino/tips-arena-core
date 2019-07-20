@@ -17,7 +17,7 @@ class MongoClient(object):
 
             databaseUri = "mongodb://{}:{}@{}:{}/{}".format(user, pwd, server, port, databaseName)
 
-            print(databaseUri)
+            print(pwd)
 
             if databaseUri is None:
                 print("Variavel de ambiente TA_MONGO_CONNECTION precisa ser criada.")
