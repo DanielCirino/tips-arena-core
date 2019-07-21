@@ -985,7 +985,7 @@ class ScraperPartida(Scraper):
         elif status == "Após Prorrogação" or status == "After Extra Time":
             statusPartida = Partida.Status.FINALIZADO.name
 
-        elif status == "Intervalo" or status == "Half Time":
+        elif status == "Intervalo" or status == "Half Time" or status=="Break Time":
             statusPartida = Partida.Status.INTERVALO.name
 
         elif status == "Atribuído":
