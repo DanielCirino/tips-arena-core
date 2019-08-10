@@ -80,12 +80,15 @@ class ScraperPartida(Scraper):
             print(e.args)
             return None
 
-    def getListaPartidasDia(self):
+    def obterListaPartidasDia(self):
         CSS_LOADING = ".loadingOverlay"
         CSS_LINK_YESTERDAY = "div.calendar__direction--yesterday"
         CSS_LINK_TOMORROW = "div.calendar__direction--tomorrow"
         CSS_LINK_EXPAND_LEAGUE = "div.event__info"
         CSS_LINHA_PARTIDA = "div[id^=g_1_]"
+
+        DIAS_ANTERIORES = 3
+        DIAS_FUTUROS = 3
 
         try:
             if self.webDriver is None:
@@ -94,40 +97,66 @@ class ScraperPartida(Scraper):
             self.webDriver.get(self.URL_BASE)
 
             listaPartidas = []
-            cont_dia = -3
+            indiceDiaProcessamento = -2
 
-            while cont_dia < 0:
-                cont_dia += 1
+            while indiceDiaProcessamento < 0:
                 self.aguardarCarregamentoPagina(CSS_LOADING)
+
+                listaPartidas.extend(self.extrairListaPartidasHtml())
+
                 dia_anterior = self.webDriver.find_element_by_css_selector(
                     CSS_LINK_YESTERDAY)
                 dia_anterior.click()
                 self.aguardarCarregamentoPagina(CSS_LOADING)
 
-            while cont_dia < 6:
-                cont_dia += 1
+                indiceDiaProcessamento += 1
 
+            indiceDiaProcessamento = 0
+
+            self.webDriver.get(self.URL_BASE)
+
+            while indiceDiaProcessamento < 2:
                 self.aguardarCarregamentoPagina(CSS_LOADING)
-
-                links_competicao_oculta = self.webDriver.find_elements_by_css_selector(
-                    CSS_LINK_EXPAND_LEAGUE)
-
-                for link in links_competicao_oculta:
-                    link.click()
-
-                partidas = self.webDriver.find_elements_by_css_selector(
-                    CSS_LINHA_PARTIDA)
-
-                for partida in partidas:
-                    id = partida.get_attribute("id").split("_")[2]
-                    listaPartidas.append("/jogo/" + id + "/")
-
                 proximo_dia = self.webDriver.find_element_by_css_selector(
                     CSS_LINK_TOMORROW)
                 proximo_dia.click()
                 self.aguardarCarregamentoPagina(CSS_LOADING)
 
-            listaPartidas.reverse()
+                listaPartidas.extend(self.extrairListaPartidasHtml())
+                indiceDiaProcessamento += 1
+
+            # while indiceDiaProcessamento < 0:
+            #     indiceDiaProcessamento += 1
+            #     self.aguardarCarregamentoPagina(CSS_LOADING)
+            #     dia_anterior = self.webDriver.find_element_by_css_selector(
+            #         CSS_LINK_YESTERDAY)
+            #     dia_anterior.click()
+            #     self.aguardarCarregamentoPagina(CSS_LOADING)
+            #
+            # while indiceDiaProcessamento < 1:
+            #     indiceDiaProcessamento += 1
+            #
+            #     self.aguardarCarregamentoPagina(CSS_LOADING)
+            #
+            #     links_competicao_oculta = self.webDriver.find_elements_by_css_selector(
+            #         CSS_LINK_EXPAND_LEAGUE)
+            #
+            #     for link in links_competicao_oculta:
+            #         link.click()
+            #
+            #     partidas = self.webDriver.find_elements_by_css_selector(
+            #         CSS_LINHA_PARTIDA)
+            #
+            #     for partida in partidas:
+            #         id = partida.get_attribute("id").split("_")[2]
+            #         listaPartidas.append("/jogo/" + id + "/")
+            #
+            #     proximo_dia = self.webDriver.find_element_by_css_selector(
+            #         CSS_LINK_TOMORROW)
+            #     proximo_dia.click()
+            #     self.aguardarCarregamentoPagina(CSS_LOADING)
+
+            # listaPartidas.reverse()
 
             return listaPartidas
 
@@ -137,6 +166,33 @@ class ScraperPartida(Scraper):
             if self.webDriver:
                 self.webDriver.save_screenshot("error_screenshot.png")
 
+            return []
+
+    def extrairListaPartidasHtml(self):
+        try:
+            listaPartidas = []
+            CSS_LOADING = ".loadingOverlay"
+            CSS_LINK_EXPAND_LEAGUE = "div.event__info"
+            CSS_LINHA_PARTIDA = "div[id^=g_1_]"
+
+            self.aguardarCarregamentoPagina(CSS_LOADING)
+
+            links_competicao_oculta = self.webDriver.find_elements_by_css_selector(
+                CSS_LINK_EXPAND_LEAGUE)
+
+            for link in links_competicao_oculta:
+                link.click()
+
+            partidas = self.webDriver.find_elements_by_css_selector(
+                CSS_LINHA_PARTIDA)
+
+            for partida in partidas:
+                id = partida.get_attribute("id").split("_")[2]
+                listaPartidas.append("/jogo/" + id + "/")
+
+            return listaPartidas
+        except Exception as e:
+            print(e.args[0])
             return []
 
     def getDadosPartida(self, urlPartida, extrairTimeline=True, extrairOdds=True, extrairStats=True,
@@ -985,10 +1041,10 @@ class ScraperPartida(Scraper):
         elif status == "Após Prorrogação" or status == "After Extra Time":
             statusPartida = Partida.Status.FINALIZADO.name
 
-        elif status == "Intervalo" or status == "Half Time" or status=="Break Time":
+        elif status == "Intervalo" or status == "Half Time" or status == "Break Time":
             statusPartida = Partida.Status.INTERVALO.name
 
-        elif status == "Atribuído":
+        elif status == "Atribuído" or status=="Awarded":
             statusPartida = Partida.Status.RESULTADO_NAO_DISPONIVEL.name
 
         elif status == "Abandonado" or status == "Abandoned":
@@ -1025,7 +1081,6 @@ class ScraperPartida(Scraper):
             print("Status não mapeado:" + status)
             statusPartida = status
 
-
         return statusPartida
 
     def normalizarDescricaoEvento(self, desc: str):
@@ -1061,7 +1116,7 @@ class ScraperPartida(Scraper):
 
         return desc
 
-    def normalizarDescricaoEstatistica(self,descricao: str):
+    def normalizarDescricaoEstatistica(self, descricao: str):
         novaDescricao = descricao
         if descricao == "Ball Possession":
             novaDescricao = "Posse de Bola"

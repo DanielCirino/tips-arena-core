@@ -104,7 +104,7 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrair_lista_partidas_dia(self):
         scraper = ScraperPartida()
-        lista = scraper.getListaPartidasDia()
+        lista = scraper.obterListaPartidasDia()
 
         self.assertTrue(len(lista) > 0)
 
@@ -196,7 +196,7 @@ class ScraperTest(unittest.TestCase):
 
 
     def teste_motor_extracao_factory(self):
-        factory = MotorFactory(2, 1, 1)
+        factory = MotorFactory(1, 1, 1)
         factory.getItensProcessamentoMotorExtracao()
 
         lista = factory.itensProcessamento

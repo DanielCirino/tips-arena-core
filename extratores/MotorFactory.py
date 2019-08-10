@@ -147,7 +147,7 @@ class MotorFactory:
         if self.acaoMotor == MotorExtracao.Acao.EXTRAIR_PARTIDAS_DO_DIA:
             try:
                 extrator = ScraperPartida()
-                itensProcessamento = extrator.getListaPartidasDia()
+                itensProcessamento = extrator.obterListaPartidasDia()
                 extrator.finalizarWebDriver()
                 return itensProcessamento
             except Exception as e:
