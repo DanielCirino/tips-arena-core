@@ -202,7 +202,7 @@ class ScraperPartida(Scraper):
             urlPartida = urlPartida.replace('jogo', 'match')
 
             CSS_LOADING = "#preload-all"
-            CSS_CABECALHO_PARTIDA = ".fleft"
+            CSS_CABECALHO_PARTIDA = ".description__match"
             CSS_DADOS_MANDANTE = ".tname-home>div>div>a"
             CSS_DADOS_VISITANTE = ".tname-away>div>div>a"
             CSS_PLACAR_PARTIDA = ".scoreboard"
