@@ -166,7 +166,7 @@ def atualizarQuantidadeItemsFilhos(itemExtracao, quantidade):
 
 def extrairPaises():
   try:
-    listaPaises = extrator_pais.obterListaPaises()
+    listaPaises = extrator_pais.extrairHtmlPaises()
     barraProgresso = Bar('Extraindo lista de países:',
                          max=len(listaPaises),
                          suffix=INDICADOR_PROGRESSO, fill='=')

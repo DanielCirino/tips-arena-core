@@ -2877,3 +2877,35 @@ Exiting due to channel error.
 Exiting due to channel error.
 Exiting due to channel error.
 Exiting due to channel error.
+1626190088616	geckodriver	INFO	Listening on 127.0.0.1:50097
+1626190088710	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileSvIv4A"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626190098506	Marionette	INFO	Listening on port 50106
+1626190098795	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=F6CF6FC6-0829-2C0B-5C07-166346282437?620768743, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=F6CF6FC6-0829-2C0B-5C07-166346282437?620768743, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=F6CF6FC6-0829-2C0B-5C07-166346282437?620768743, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=F6CF6FC6-0829-2C0B-5C07-166346282437?620768743, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626190114095	Marionette	INFO	Stopped listening on port 50106
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+

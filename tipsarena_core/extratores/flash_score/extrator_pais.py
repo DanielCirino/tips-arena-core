@@ -2,34 +2,33 @@
 from datetime import datetime
 from tipsarena_core.extratores.flash_score import navegador_web
 from tipsarena_core.services import log_service as log
+from tipsarena_core.utils import html_utils, hash_utils, string_utils
+from tipsarena_core.utils.html_utils import DadosBrutos
 
-
-def obterListaPaises():
+def extrairHtmlPaises():
   try:
-    CSS_LISTA_PAISES = "a[id^=lmenu_]"
-
+    CSS_LISTA_PAISES = "#category-left-menu"
+    CSS_LISTAR_MAIS_PAISES = "[class^=itemMore_]"
+    url = f"{navegador_web.URL_BASE}/futebol"
     browser = navegador_web.obterNavegadorWeb()
-    browser.get(navegador_web.URL_BASE + "/futebol/")
+    browser.get(url)
     navegador_web.fecharPopupCookies()
-    htmlListaPaises = navegador_web.obterElementoAposCarregamento("#category-left-menu")
-    elementoListaMaisPaises = navegador_web.obterElementoAposCarregamento("[class^=itemMore_]")
+
+    elementoListaMaisPaises = navegador_web.obterElementoAposCarregamento(CSS_LISTAR_MAIS_PAISES)
     elementoListaMaisPaises.click()
 
-    htmlPaises = htmlListaPaises.find_elements_by_css_selector(CSS_LISTA_PAISES)
+    htmlListaPaises = navegador_web.obterElementoAposCarregamento(CSS_LISTA_PAISES)
 
-    listaPaises = []
+    return DadosBrutos(hash_utils.gerarHash(url),
+                       "PAISES",
+                       url,
+                       string_utils.limparString(
+                         htmlListaPaises.get_attribute("innerHTML"))
+                       )
 
-    sequencial = 1
-    for urlPais in htmlPaises:
-      url = urlPais.get_attribute("href").replace(navegador_web.URL_BASE, "")
-      if url != "#":
-        listaPaises.append({"url": url, "sequencial": sequencial})
-        sequencial += 1
-
-    return listaPaises
   except Exception as e:
     log.ERRO("Não foi possível extrair lista de países.", e.args)
     browser.save_screenshot(f"error_screenshot_{datetime.now().strftime('%Y%m%d')}.png")
-    return []
+    return None
   finally:
     navegador_web.finalizarNavegadorWeb()
