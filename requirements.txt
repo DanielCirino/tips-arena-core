@@ -5,3 +5,7 @@ requests
 selenium
 urllib3
 pytz
+python-dotenv
+progress
+PyJWT
+bcrypt

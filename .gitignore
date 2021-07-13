@@ -1,16 +1,13 @@
-### Python ###
-
-# Byte-compiled / optimized / DLL files
-
-__pycache__/
-*.py[cod]
-*$py.class
-
-# virtualenv
-.venv/
 venv/
-ENV/
-*.log
-.idea/e sz
+.pytest_cache
+tests/.pytest_cache
+.vscode
 .idea
-*.pngs
+.env
+*__pycache__
+dist
+build
+*.egg-info
+.key
+.licence
+.coverage*

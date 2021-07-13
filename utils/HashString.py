@@ -1,9 +1,8 @@
 
 # -*- coding: utf-8 -*-
 
-import hashlib
 import binascii
-from bson.objectid import ObjectId
+import hashlib
 
 
 class HashString():

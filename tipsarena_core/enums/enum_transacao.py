@@ -1,0 +1,16 @@
+from enum import Enum
+
+
+class TIPO(Enum):
+  ACESSO_DIARIO = 1
+  APOSTA = 2
+  CANCELAMENTO_APOSTA = 3
+  RESULTADO_APOSTA = 4
+  CONVITE = 5
+  ATIVACAO_CADASTRO = 6
+  BONUS_VIDEO = 7
+
+
+class OPERACAO(Enum):
+  DEBITO = 1
+  CREDITO = 2
