@@ -3,17 +3,12 @@
 from multiprocessing import Pool, cpu_count
 from datetime import datetime
 from progress.bar import Bar
-from progress.counter import Counter
 
 from tipsarena_core.core import item_extracao_core
 from tipsarena_core.utils import hash_utils
 from tipsarena_core.services import log_service as log
-from tipsarena_core.extratores import \
-  extrator_pais, \
-  extrator_competicao, \
-  extrator_equipe, \
-  extrator_partida, \
-  navegador_web
+from tipsarena_core.extratores.flash_score import extrator_partida, navegador_web, extrator_competicao, extrator_equipe, \
+  extrator_pais
 from tipsarena_core.enums.enum_extracao import TIPO as TIPO_EXTRACAO, STATUS as STATUS_EXTRACAO
 
 INDICADOR_PROGRESSO = '%(percent).1f%% | %(elapsed)ds | %(index)d de %(max)d'
@@ -79,7 +74,7 @@ def extrairItensProcessamentoCompeticao(itemProcessamentoPais):
     itemProcessamentoPais["status"] = STATUS_EXTRACAO.PROCESSANDO.name
     item_extracao_core.salvarItemExtracao(itemProcessamentoPais)
 
-    itensProcessamento = extrator_competicao.obterListaCompeticoesPais(itemProcessamentoPais["url"])
+    itensProcessamento = extrator_competicao.extrairHtmlCompeticoesPais(itemProcessamentoPais["url"])
     resultado = salvarListaItensExtracao(itensProcessamento,
                                          STATUS_EXTRACAO.EXTRACAO_EDICOES_COMPETICAO.name,
                                          TIPO_EXTRACAO.COMPETICAO.name, itemProcessamentoPais["_id"])
@@ -97,7 +92,7 @@ def extrairItensProcessamentoEdicoesCompeticao(itemProcessamentoCompeticao):
     itemProcessamentoCompeticao["status"] = STATUS_EXTRACAO.PROCESSANDO.name
     item_extracao_core.salvarItemExtracao(itemProcessamentoCompeticao)
 
-    itensProcessamento = extrator_competicao.obterListaEdicoesCompeticao(itemProcessamentoCompeticao["url"])
+    itensProcessamento = extrator_competicao.extrairHtmlEdicoesCompeticao(itemProcessamentoCompeticao["url"])
     resultado = salvarListaItensExtracao(itensProcessamento,
                                          STATUS_EXTRACAO.EXTRACAO_PARTIDAS.name,
                                          TIPO_EXTRACAO.EDICAO_COMPETICAO.name, itemProcessamentoCompeticao["_id"])

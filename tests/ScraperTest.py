@@ -9,11 +9,7 @@ from extratores.MotorExtracao import MotorExtracao
 from extratores.MotorFactory import MotorFactory
 from repository.Collection import Collection
 from tipsarena_core.core import partida_core, item_extracao_core
-from tipsarena_core.extratores import extrator_edicao_competicao
-from tipsarena_core.extratores import extrator_competicao
-from tipsarena_core.extratores import extrator_equipe
-from tipsarena_core.extratores import extrator_pais
-from tipsarena_core.extratores import extrator_partida
+from tipsarena_core.extratores.flash_score import extrator_partida, extrator_edicao_competicao
 from tipsarena_core.models.Partida import Partida
 from tipsarena_core.models.ItemExtracao import ItemExtracao
 from utils.DateTimeHandler import DateTimeHandler

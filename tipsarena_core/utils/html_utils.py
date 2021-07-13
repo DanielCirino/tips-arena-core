@@ -1,7 +1,10 @@
+from collections import namedtuple
 import requests
 from bs4 import BeautifulSoup
 
 from tipsarena_core.services import log_service as log
+
+DadosBrutos = namedtuple("DadosBrutos", "id tipo url html")
 
 
 def obterHtml(url):
@@ -20,7 +23,7 @@ def converterStringParaHtml(string):
     dados_html = BeautifulSoup(string, "html.parser")
     return dados_html
   except Exception as e:
-    log.ERRO( "Não foi possível converter o texto para HTML.", e.args)
+    log.ERRO("Não foi possível converter o texto para HTML.", e.args)
     return None
 
 
@@ -43,7 +46,7 @@ def obterDadosCabecalho(html):
 
     return linksCabecalho
   except Exception as e:
-    log.ERRO( "Não foi possível obter dados do cabeçalho.", e.args)
+    log.ERRO("Não foi possível obter dados do cabeçalho.", e.args)
     return None
 
 
@@ -52,5 +55,5 @@ def obterUrlAtributoOnClick(onclick):
     url = onclick.split("(")[1].split(")")[0].replace("'", "")
     return url
   except Exception as e:
-    log.ERRO( "Não foi possível extrair URL do atributo onclick.", e.args)
+    log.ERRO("Não foi possível extrair URL do atributo onclick.", e.args)
     return ""

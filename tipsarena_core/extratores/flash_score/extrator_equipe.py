@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from tipsarena_core.extratores import navegador_web
+from tipsarena_core.extratores.flash_score import navegador_web
 from tipsarena_core.utils import string_utils, html_utils
 from tipsarena_core.services import log_service as log
 

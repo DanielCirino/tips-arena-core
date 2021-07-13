@@ -1,4 +1,4 @@
-from tipsarena_core.extratores import navegador_web, extrator_partida
+from tipsarena_core.extratores.flash_score import extrator_partida
 
 
 def teste_extrair_lista_ids_partida():

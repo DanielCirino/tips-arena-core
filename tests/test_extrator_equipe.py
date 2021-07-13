@@ -1,4 +1,4 @@
-from tipsarena_core.extratores import extrator_equipe, navegador_web
+from tipsarena_core.extratores.flash_score import navegador_web, extrator_equipe
 
 
 def teste_extrair_lista_equipes_edicao_competicao(navegadorWeb):

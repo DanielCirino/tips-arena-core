@@ -1,4 +1,5 @@
-from tipsarena_core.extratores import extrator_pais
+from tipsarena_core.extratores.flash_score import extrator_pais
+
 
 def teste_extracao_lista_paises():
   listaPaises = extrator_pais.obterListaPaises()

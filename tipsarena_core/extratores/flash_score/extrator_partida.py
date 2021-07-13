@@ -3,16 +3,10 @@ import time
 
 from datetime import datetime
 
-from tipsarena_core.extratores import extrator_competicao
-from tipsarena_core.extratores import extrator_equipe
-from tipsarena_core.extratores import navegador_web
+from tipsarena_core.extratores.flash_score import navegador_web
 from tipsarena_core.models.Partida import Partida
 from tipsarena_core.utils import hash_utils, string_utils, datetime_utils, html_utils
-from tipsarena_core.enums.enum_partida import TIPO_MERCADO, \
-  MERCADO, \
-  ANALISE_PROBABILIDADE, \
-  STATUS, \
-  CALCULO_PROBABILIDADE
+from tipsarena_core.enums.enum_partida import TIPO_MERCADO
 from tipsarena_core.services import log_service as log
 
 CASAS_DECIMAIS = 3

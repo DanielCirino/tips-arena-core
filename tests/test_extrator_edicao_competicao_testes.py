@@ -1,5 +1,4 @@
-
-from tipsarena_core.extratores import extrator_edicao_competicao
+from tipsarena_core.extratores.flash_score import extrator_edicao_competicao
 
 
 def teste_extrair_lista_edicoes_competicoes():

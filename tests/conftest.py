@@ -2,7 +2,7 @@ import os
 
 import pytest
 from tipsarena_core.repository import mongodb
-from tipsarena_core.extratores import navegador_web
+from tipsarena_core.extratores.flash_score import navegador_web
 from tipsarena_core.services import log_service
 
 os.environ["GD_ENV"] = 'DEV'

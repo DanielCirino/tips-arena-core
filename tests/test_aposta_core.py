@@ -1,8 +1,6 @@
-import unittest
-
 from tipsarena_core.core import aposta_core
 from tipsarena_core.core import partida_core
-from tipsarena_core.extratores import extrator_partida
+from tipsarena_core.extratores.flash_score import extrator_partida
 from tipsarena_core.models.Aposta import Aposta
 from tipsarena_core.models.Partida import Partida
 
