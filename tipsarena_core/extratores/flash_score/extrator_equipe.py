@@ -1,70 +1,44 @@
 # -*- coding: utf-8 -*-
 
 from tipsarena_core.extratores.flash_score import navegador_web
-from tipsarena_core.utils import string_utils, html_utils
+from tipsarena_core.utils import string_utils, html_utils, hash_utils
+from tipsarena_core.utils.html_utils import DadosBrutos
 from tipsarena_core.services import log_service as log
 
 
-def obterListaEquipesEdicaoCompeticao(navegador: navegador_web):
+def extrairHtmlEquipesEdicaoCompeticao(urlEdicao: str):
   try:
-    browser = navegador.obterNavegadorWeb()
-    CSS_LISTA_EQUIPES = "[class^=rowCellParticipantImage]"
+    CSS_TABELA_CLASSIFICACAO = "#tournament-table-tabs-and-content"
 
-    navegador.obterElementoAposCarregamento(CSS_LISTA_EQUIPES)
-    htmlEquipes = browser.find_elements_by_css_selector(CSS_LISTA_EQUIPES)
+    url = f"{navegador_web.URL_BASE}{urlEdicao}classificacao/"
+    browser = navegador_web.obterNavegadorWeb()
+    browser.get(url)
 
-    listaEquipes = []
-    sequencial = 1
+    tabelaClassificacao = navegador_web.obterElementoAposCarregamento(CSS_TABELA_CLASSIFICACAO)
 
-    for html in htmlEquipes:
-      htmlEscudo = html.find_element_by_css_selector("img")
-      listaEquipes.append(
-        {"nome": htmlEscudo.get_attribute("alt"),
-         "url": html.get_attribute("href"),
-         "urlEscudo": htmlEscudo.get_attribute("src"),
-         "sequencial": sequencial}
-      )
-      sequencial += 1
+    return DadosBrutos(hash_utils.gerarHash(urlEdicao),
+                       "EQUIPES_EDICAO_COMPETICAO",
+                       url,
+                       string_utils.limparString(
+                         tabelaClassificacao.get_attribute("innerHTML"))
+                       )
 
-    return listaEquipes
   except Exception as e:
-    log.ERRO(f"Não foi possível extrair lista de equipes da competição [{browser.current_url}]", e.args)
+    log.ERRO(f"Não foi possível extrair html de equipes da edição da competição [{urlEdicao}]", e.args)
     return None
 
 
-def obterDadosEquipe(urlEquipe):
+def extrairHtmlEquipe(urlEquipe):
   try:
+    url = f"{navegador_web.URL_BASE}{urlEquipe}"
+    documentoHtml = html_utils.obterHtml(url)
 
-    documentoHtml = html_utils.obterHtml(navegador_web.URL_BASE + urlEquipe)
-    linksCabecalho = html_utils.obterDadosCabecalho(documentoHtml)
+    return DadosBrutos(hash_utils.gerarHash(urlEquipe),
+                       "EQUIPE",
+                       url,
+                       string_utils.limparString(str(documentoHtml)))
 
-    paisEquipe = {"nome": linksCabecalho[1]["text"],
-                  "url": linksCabecalho[1]["href"]}
-
-    nomeEquipe = documentoHtml.select(".teamHeader__name")[0].text
-
-    urlEscudoEquipe = documentoHtml.select(".teamHeader__logo")
-    urlEscudoEquipe = urlEscudoEquipe[0]["style"].split("(")
-    urlEscudoEquipe = urlEscudoEquipe[1].replace(")", "")
-
-    return {
-      "nome": string_utils.limparString(nomeEquipe),
-      "pais": paisEquipe,
-      "urlEscudo": urlEscudoEquipe,
-      "url": urlEquipe
-    }
 
   except Exception as e:
-    log.ERRO(f"Não foi possível extrair dados da equipe [{urlEquipe}]", e.args)
+    log.ERRO(f"Não foi possível extrair html da equipe [{urlEquipe}]", e.args)
     return None
-
-
-def extrairUrlOnclick(textoOnclick):
-  try:
-    primeiraQuebra = textoOnclick.split("?")[1].split(":")[1]
-    urlEquipe = primeiraQuebra.replace("window.open(\'", "").replace("\', \'_blank\');", "")
-    return urlEquipe
-    pass
-  except Exception as e:
-    log.ERRO(f"Não foi possível extrair URL do atributo onclick.", e.args)
-    return ""

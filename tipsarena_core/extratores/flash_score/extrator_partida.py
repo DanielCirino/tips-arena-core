@@ -233,8 +233,8 @@ def obterDadosPartida(urlPartida, extrairTimeline=True, extrairOdds=True, extrai
 
     # competicao = extrator_competicao.obterDadosCompeticao(urlCompeticao)
 
-    # equipeMandante = extrator_equipe.obterDadosEquipe(urlEquipeMandante)
-    # equipeVisitante = extrator_equipe.obterDadosEquipe(urlEquipeVisitante)
+    # equipeMandante = extrator_equipe.extrairHtmlEquipe(urlEquipeMandante)
+    # equipeVisitante = extrator_equipe.extrairHtmlEquipe(urlEquipeVisitante)
 
     placarMandantePrimeiroTempo = browser.find_elements_by_css_selector(
       ".p1_home")

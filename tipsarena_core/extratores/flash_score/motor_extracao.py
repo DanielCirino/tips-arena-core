@@ -113,7 +113,7 @@ def extrairItensProcessamentoEquipes(itemProcessamentoEdicao):
     navegador = navegador_web.obterNavegadorWeb()
     navegador.get(navegador_web.URL_BASE + itemProcessamentoEdicao["url"])
 
-    itensProcessamento = extrator_equipe.obterListaEquipesEdicaoCompeticao(navegador)
+    itensProcessamento = extrator_equipe.extrairHtmlEquipesEdicaoCompeticao(navegador)
     if itensProcessamento is None:
       itemProcessamentoEdicao["status"] = STATUS_EXTRACAO.EXTRACAO_PARTIDAS.name
       return (itemProcessamentoEdicao, 0)
