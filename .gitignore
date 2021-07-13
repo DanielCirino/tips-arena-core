@@ -5,8 +5,8 @@ tests/.pytest_cache
 .idea
 .env
 *__pycache__
-dist
-build
+dist/
+build/
 *.egg-info
 .key
 .licence

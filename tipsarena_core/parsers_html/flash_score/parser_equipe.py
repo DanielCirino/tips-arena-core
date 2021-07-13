@@ -28,15 +28,18 @@ def processarHtmlEquipesCompeticao(html: str):
 
 def processarHtmlEquipe(html:str):
   try:
+    CSS_NOME_EQUIPE = ".teamHeader__name"
+    CSS_ESCUDO_EQUIPE = ".teamHeader__logo"
+
     documentoHtml = html_utils.converterStringParaHtml(html)
     linksCabecalho = html_utils.obterDadosCabecalho(documentoHtml)
 
     paisEquipe = {"nome": linksCabecalho[1]["text"],
                   "url": linksCabecalho[1]["href"]}
 
-    nomeEquipe = documentoHtml.select(".teamHeader__name")[0].text
+    nomeEquipe = documentoHtml.select_one(CSS_NOME_EQUIPE).text
 
-    urlEscudoEquipe = documentoHtml.select(".teamHeader__logo")
+    urlEscudoEquipe = documentoHtml.select(CSS_ESCUDO_EQUIPE)
     urlEscudoEquipe = urlEscudoEquipe[0]["style"].split("(")
     urlEscudoEquipe = urlEscudoEquipe[1].replace(")", "")
 

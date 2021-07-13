@@ -2909,3 +2909,658 @@ IPDL protocol error: Handler returned error code!
 
 ###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
 
+1626198020341	geckodriver	INFO	Listening on 127.0.0.1:50256
+1626198020374	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileXhAq3R"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626198024388	Marionette	INFO	Listening on port 50265
+1626198024429	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626198031439	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=459C7897-5187-BF9C-3AEF-E430E7AD839A?660904914, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=459C7897-5187-BF9C-3AEF-E430E7AD839A?660904914, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=459C7897-5187-BF9C-3AEF-E430E7AD839A?660904914, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=459C7897-5187-BF9C-3AEF-E430E7AD839A?660904914, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626198114605	geckodriver	INFO	Listening on 127.0.0.1:50809
+1626198114651	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofiled3lVfA"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626198121421	Marionette	INFO	Listening on port 50818
+1626198121571	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=F54CE754-093C-458B-7C52-FE8716EF003A?838243846, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=F54CE754-093C-458B-7C52-FE8716EF003A?838243846, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=F54CE754-093C-458B-7C52-FE8716EF003A?838243846, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=F54CE754-093C-458B-7C52-FE8716EF003A?838243846, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626198231517	geckodriver	INFO	Listening on 127.0.0.1:51500
+1626198231584	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilemJxpso"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626198243158	Marionette	INFO	Listening on port 51509
+1626198243442	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626198254884	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=7EA5353D-320E-2724-9041-352F90322665?554671583, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=7EA5353D-320E-2724-9041-352F90322665?554671583, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=7EA5353D-320E-2724-9041-352F90322665?554671583, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=7EA5353D-320E-2724-9041-352F90322665?554671583, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAZ66B6AQAA42tef7nSbQd5yHq-I43ACp8u5P7g8NPklMm-J_v1VP5UyaB5&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1626199232539	geckodriver	INFO	Listening on 127.0.0.1:55884
+1626199232764	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileLPwnrR"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626199254317	Marionette	INFO	Listening on port 55893
+1626199255431	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626199269283	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=5BF8EF47-E40E-681D-3E9D-7796F736FE23?395022707, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=5BF8EF47-E40E-681D-3E9D-7796F736FE23?395022707, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=5BF8EF47-E40E-681D-3E9D-7796F736FE23?395022707, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=5BF8EF47-E40E-681D-3E9D-7796F736FE23?395022707, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AACRBqF6AQAA2anW5a_SrxxG4KsELwAzGXPuaokE5N3wReCsev5ZbuYCjPU7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AACRBqF6AQAA2anW5a_SrxxG4KsELwAzGXPuaokE5N3wReCsev5ZbuYCjPU7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AACRBqF6AQAA2anW5a_SrxxG4KsELwAzGXPuaokE5N3wReCsev5ZbuYCjPU7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AACRBqF6AQAA2anW5a_SrxxG4KsELwAzGXPuaokE5N3wReCsev5ZbuYCjPU7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626199427958	geckodriver	INFO	Listening on 127.0.0.1:57039
+1626199428161	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofile9tnmIU"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626199456954	Marionette	INFO	Listening on port 57048
+1626199457284	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626199471927	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=7A3E8C2E-9A8A-355E-3A75-EB1E9CFD65BC?731508777, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=7A3E8C2E-9A8A-355E-3A75-EB1E9CFD65BC?731508777, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=7A3E8C2E-9A8A-355E-3A75-EB1E9CFD65BC?731508777, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=7A3E8C2E-9A8A-355E-3A75-EB1E9CFD65BC?731508777, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AACRBqF6AQAA2anW5a_SrxxG4KsELwAzGXPuaokE5N3wReCsev5ZbuYCjPU7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AACRBqF6AQAA2anW5a_SrxxG4KsELwAzGXPuaokE5N3wReCsev5ZbuYCjPU7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AACRBqF6AQAA2anW5a_SrxxG4KsELwAzGXPuaokE5N3wReCsev5ZbuYCjPU7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AACRBqF6AQAA2anW5a_SrxxG4KsELwAzGXPuaokE5N3wReCsev5ZbuYCjPU7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+[GFX1]: [Tiling:Client] Failed to allocate a TextureClient
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+1626203378623	geckodriver	INFO	Listening on 127.0.0.1:57262
+1626203378647	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileuo00Fx"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626203384161	Marionette	INFO	Listening on port 57271
+1626203384273	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=0C631CFD-EA25-760C-3F8C-8398A1D366FF?675835532, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=0C631CFD-EA25-760C-3F8C-8398A1D366FF?675835532, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=0C631CFD-EA25-760C-3F8C-8398A1D366FF?675835532, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=0C631CFD-EA25-760C-3F8C-8398A1D366FF?675835532, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626203731800	geckodriver	INFO	Listening on 127.0.0.1:58927
+1626203731824	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileaetZD4"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626203736262	Marionette	INFO	Listening on port 58936
+1626203736384	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626203745453	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=0B80E66F-F41B-715D-6FF2-6ED764D9CD0D?375504864, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=0B80E66F-F41B-715D-6FF2-6ED764D9CD0D?375504864, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=0B80E66F-F41B-715D-6FF2-6ED764D9CD0D?375504864, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=0B80E66F-F41B-715D-6FF2-6ED764D9CD0D?375504864, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+1626203753865	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626203825053	geckodriver	INFO	Listening on 127.0.0.1:59498
+1626203825160	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilefzr8GE"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626203838810	Marionette	INFO	Listening on port 59507
+1626203839149	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626203853866	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1626203855712	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626203857438	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=49863F1B-9B2F-A478-4FD9-7CEE7045F345?489481236, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=49863F1B-9B2F-A478-4FD9-7CEE7045F345?489481236, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=49863F1B-9B2F-A478-4FD9-7CEE7045F345?489481236, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=49863F1B-9B2F-A478-4FD9-7CEE7045F345?489481236, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626203880316	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1626204204523	geckodriver	INFO	Listening on 127.0.0.1:61326
+1626204204564	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilewMubzj"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626204221970	Marionette	INFO	Listening on port 61335
+1626204222507	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626204237236	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626204240856	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=13F41D52-81CE-E675-B0C2-C175B5708808?576292060, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=13F41D52-81CE-E675-B0C2-C175B5708808?576292060, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=13F41D52-81CE-E675-B0C2-C175B5708808?576292060, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=13F41D52-81CE-E675-B0C2-C175B5708808?576292060, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626204288889	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_4IKWaboJ not found
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_INFWyZ6q not found
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_jX9raMAJ not found
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_jX9raMAJ not found
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1626204419469	geckodriver	INFO	Listening on 127.0.0.1:62526
+1626204419555	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileLRXf2T"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626204447157	Marionette	INFO	Listening on port 62535
+1626204447432	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626204466921	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626204469964	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1626204474678	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=09A5F907-8F5E-2D40-0CCA-27A43D16508C?552830895, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=09A5F907-8F5E-2D40-0CCA-27A43D16508C?552830895, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=09A5F907-8F5E-2D40-0CCA-27A43D16508C?552830895, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=09A5F907-8F5E-2D40-0CCA-27A43D16508C?552830895, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626204478811	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626204484240	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+1626204484243	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+1626204485096	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIB_PaF6AQAAKbOD-Rn5SQumS1gF8_RSjFNDOXV9wzDPEhmYP5IRf5pvl2n7&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_zw7UkIX5 not found
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626204749575	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=E8463FB8-839C-5ECC-B8E8-F7991E2E8C28?190782246, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=E8463FB8-839C-5ECC-B8E8-F7991E2E8C28?190782246, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=E8463FB8-839C-5ECC-B8E8-F7991E2E8C28?190782246, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=E8463FB8-839C-5ECC-B8E8-F7991E2E8C28?190782246, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626204751735	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626204755231	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626204760514	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1626204767854	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1626204784517	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_QkE7B7wI not found
+1626204813666	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1626204850383	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=A327A081-3DC5-8C9D-22F9-D0E39D5C0C32?712608600, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=A327A081-3DC5-8C9D-22F9-D0E39D5C0C32?712608600, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=A327A081-3DC5-8C9D-22F9-D0E39D5C0C32?712608600, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=A327A081-3DC5-8C9D-22F9-D0E39D5C0C32?712608600, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626205224216	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1626205354010	geckodriver	INFO	Listening on 127.0.0.1:50513
+1626205354285	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileBFUlv9"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626205375562	Marionette	INFO	Listening on port 50526
+1626205376182	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626205392596	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626205395485	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626205398391	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=1FC0C485-716A-C2D9-2645-5146E9DD7722?117263370, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=1FC0C485-716A-C2D9-2645-5146E9DD7722?117263370, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=1FC0C485-716A-C2D9-2645-5146E9DD7722?117263370, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=1FC0C485-716A-C2D9-2645-5146E9DD7722?117263370, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMD2WKF6AQAA946A-UFmthqkuey1KVkVhV9WtEdy3LeZ8_Q8bYywD5Ls5qtO&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMD2WKF6AQAA946A-UFmthqkuey1KVkVhV9WtEdy3LeZ8_Q8bYywD5Ls5qtO&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMD2WKF6AQAA946A-UFmthqkuey1KVkVhV9WtEdy3LeZ8_Q8bYywD5Ls5qtO&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMD2WKF6AQAA946A-UFmthqkuey1KVkVhV9WtEdy3LeZ8_Q8bYywD5Ls5qtO&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_vDzL1W9g not found
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_vDzL1W9g not found
+1626205532844	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_ERQesika not found
+1626205643815	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626205645527	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=EF876478-FC29-B711-65D3-8E4DF1A9839C?135839032, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=EF876478-FC29-B711-65D3-8E4DF1A9839C?135839032, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=EF876478-FC29-B711-65D3-8E4DF1A9839C?135839032, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=EF876478-FC29-B711-65D3-8E4DF1A9839C?135839032, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+1626205666151	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://www.flashscore.com.br/x/js/core_401_1940000000.js, line 4105: Error: EventItem g_1_INFWyZ6q not found
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1626209919216	geckodriver	INFO	Listening on 127.0.0.1:53294
+1626209919337	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileq2iXDo"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626209946294	Marionette	INFO	Listening on port 53303
+1626209946860	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626209966810	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1626210072771	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626210077631	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=39F91AB8-19F6-213C-83A8-3B69C654B90A?33285875, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=39F91AB8-19F6-213C-83A8-3B69C654B90A?33285875, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=39F91AB8-19F6-213C-83A8-3B69C654B90A?33285875, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=39F91AB8-19F6-213C-83A8-3B69C654B90A?33285875, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626210094042	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIBcq6F6AQAAnHn5fQBqerhLb_N3DIjerI1pPvouoawxQJGGXHQBlYmsBN5c&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIBcq6F6AQAAnHn5fQBqerhLb_N3DIjerI1pPvouoawxQJGGXHQBlYmsBN5c&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIBcq6F6AQAAnHn5fQBqerhLb_N3DIjerI1pPvouoawxQJGGXHQBlYmsBN5c&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIBcq6F6AQAAnHn5fQBqerhLb_N3DIjerI1pPvouoawxQJGGXHQBlYmsBN5c&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.

@@ -137,7 +137,7 @@ def extrairItensProcessamentoPartidas(itemProcessamentoEdicao):
     itemProcessamentoEdicao["status"] = STATUS_EXTRACAO.PROCESSANDO.name
     item_extracao_core.salvarItemExtracao(itemProcessamentoEdicao)
 
-    listaPartidas = extrator_partida.obterListaPartidasEdicaoCompeticao(itemProcessamentoEdicao["url"])
+    listaPartidas = extrator_partida.extrairHtmlPartidasEdicaoCompeticao(itemProcessamentoEdicao["url"])
 
     if listaPartidas is None:
       itemProcessamentoEdicao["status"] = STATUS_EXTRACAO.ERRO.name

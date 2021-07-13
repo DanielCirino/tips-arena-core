@@ -30,7 +30,7 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrair_lista_partidas_edicao_competicao(self):
         scraper = extrator_partida()
-        lista = scraper.obterListaPartidasEdicaoCompeticao(
+        lista = scraper.extrairHtmlPartidasEdicaoCompeticao(
             "/futebol/africa-do-sul/primeira-liga/")
         print(lista)
         scraper.finalizarNavegadorWeb()
@@ -38,7 +38,7 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrair_lista_partidas_dia(self):
         scraper = extrator_partida()
-        lista = scraper.obterListaPartidasDia()
+        lista = scraper.extrairHtmlPartidasDia()
 
         self.assertTrue(len(lista) > 0)
 

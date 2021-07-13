@@ -6,119 +6,127 @@ from datetime import datetime
 from tipsarena_core.extratores.flash_score import navegador_web
 from tipsarena_core.models.Partida import Partida
 from tipsarena_core.utils import hash_utils, string_utils, datetime_utils, html_utils
+from tipsarena_core.utils.html_utils import DadosBrutos
 from tipsarena_core.enums.enum_partida import TIPO_MERCADO
 from tipsarena_core.services import log_service as log
 
 CASAS_DECIMAIS = 3
 
 
-def obterListaIdsPartida(navegadorWeb):
+def extrairHtmlPartidas(url: str):
   try:
     CSS_LINK_LISTAR_MAIS = "a.event__more"
     CSS_LOADING = ".loadingOverlay"
-    CSS_LINHAS_PARTIDA = "div[id^=g_1_]"
+    CSS_TABELA_PARTIDAS = "#live-table"
 
-    browser = navegadorWeb.obterNavegadorWeb()
+    browser = navegador_web.obterNavegadorWeb()
+    browser.get(url)
+    navegador_web.fecharPopupCookies()
 
     while len(browser.find_elements_by_css_selector(CSS_LINK_LISTAR_MAIS)) > 0:
-      navegador_web.fecharPopupCookies()
       linkListarMais = browser.find_elements_by_css_selector(CSS_LINK_LISTAR_MAIS)[0]
+      navegador_web.fecharPopupCookies()
       linkListarMais.click()
       navegador_web.aguardarCarregamentoPagina(CSS_LOADING)
 
-    linhasHtml = browser.find_elements_by_css_selector(
-      CSS_LINHAS_PARTIDA)
+    htmlPartidas = navegador_web.obterElementoAposCarregamento(CSS_TABELA_PARTIDAS)
 
-    listaIdsPartida = []
-
-    sequencial = 1
-    for item in linhasHtml:
-      idPartida = item.get_attribute("id").split("_")[2]
-      listaIdsPartida.append({"url": "/jogo/" + idPartida + "/", "sequencial": sequencial})
-      sequencial += 1
-
-    return listaIdsPartida
-  except Exception as e:
-    log.ERRO(f"Não foi possível obter lista de IDS de partidas da url {browser.current_url}.", e.args)
-    return []
-
-
-def obterListaPartidasEdicaoCompeticao(urlEdicao):
-  try:
-    CSS_LOADING = ".loadingOverlay"
-    CSS_LINK_PARTIDAS_AGENDADAS = "#li2"
-
-    browser = navegador_web.obterNavegadorWeb()
-    urlPartidasFinalizadas = navegador_web.URL_BASE + urlEdicao + "resultados/"
-    urlPartidasAgendadas = navegador_web.URL_BASE + urlEdicao + "calendario/"
-
-    browser.get(urlPartidasFinalizadas)
-    navegador_web.aguardarCarregamentoPagina(CSS_LOADING)
-
-    listaPartidasFinalizadas = obterListaIdsPartida(navegador_web)
-
-    browser.get(urlPartidasAgendadas)
-    navegador_web.aguardarCarregamentoPagina(CSS_LOADING)
-
-    listaPartidasAgendadas = obterListaIdsPartida(navegador_web)
-
-    return {"finalizadas": listaPartidasFinalizadas,
-            "agendadas": listaPartidasAgendadas}
+    return DadosBrutos(hash_utils.gerarHash(url),
+                       "PARTIDAS",
+                       url,
+                       string_utils.limparString(
+                         htmlPartidas.get_attribute("innerHTML"))
+                       )
 
   except Exception as e:
-    log.ERRO(f"Não foi possível obter lista de IDS de partidas da competicão {urlEdicao}.", e.args)
+    log.ERRO(f"Não foi possível extrair HTML de partidas da url {url}.", e.args)
     return None
 
 
-def obterListaPartidasDia():
+def extrairHtmlPartidasEdicaoCompeticao(urlEdicao: str, finalizadas=True):
+  try:
+    situacaoPartidas = "resultados/" if finalizadas else "calendario/"
+    urlPartidas = f"{navegador_web.URL_BASE}{urlEdicao}{situacaoPartidas}"
+
+    return extrairHtmlPartidas(urlPartidas)
+
+  except Exception as e:
+    log.ERRO(f"Não foi possível extrair HTML lista de IDS de partidas da edição da competicão {urlEdicao}.", e.args)
+    return None
+
+
+def extrairHtmlPartidasDia(indiceDia=0):
   CSS_LOADING = ".loadingOverlay"
   CSS_LINK_YESTERDAY = "div.calendar__direction--yesterday"
   CSS_LINK_TOMORROW = "div.calendar__direction--tomorrow"
 
   CSS_SELETOR_DATA = "div.calendar__datepicker"
   CSS_LISTA_DATAS = "div.calendar__datepicker--dates div.day"
+  CSS_TABELA_PARTIDAS = "#live-table"
 
   try:
     browser = navegador_web.obterNavegadorWeb()
     browser.get(navegador_web.URL_BASE)
+    navegador_web.fecharPopupCookies()
 
     botaoExibirCalendario = browser.find_element_by_css_selector(CSS_SELETOR_DATA)
     botaoExibirCalendario.click()
-
     listaDatas = browser.find_elements_by_css_selector(CSS_LISTA_DATAS)
-    navegador_web.fecharPopupCookies()
     botaoExibirCalendario.click()
 
     posicaoMeioLista = int(len(listaDatas) / 2)
-    posicaoPrimeiraData = posicaoMeioLista - 1
-    posicaoUltimaData = posicaoMeioLista + 1
+
     navegador_web.aguardarCarregamentoPagina(CSS_LOADING)
 
-    listaPartidas = extrairListaPartidasHtml()
-
-    for i in range(posicaoPrimeiraData, posicaoMeioLista):
-      if (i != posicaoMeioLista):
-        botaoIrProximaData = browser.find_element_by_css_selector(CSS_LINK_YESTERDAY)
-        botaoIrProximaData.click()
-        navegador_web.aguardarCarregamentoPagina(CSS_LOADING)
-        listaPartidas.extend(extrairListaPartidasHtml())
-
-    browser.get(navegador_web.URL_BASE)
-
-    for i in range(posicaoMeioLista, posicaoUltimaData + 1):
-      if (i != posicaoMeioLista):
+    # avançar dias
+    if indiceDia > 0:
+      posicaoUltimaData = posicaoMeioLista + indiceDia
+      for i in range(posicaoMeioLista + 1, posicaoUltimaData + 1):
         botaoIrProximaData = browser.find_element_by_css_selector(CSS_LINK_TOMORROW)
         botaoIrProximaData.click()
         navegador_web.aguardarCarregamentoPagina(CSS_LOADING)
-        listaPartidas.extend(extrairListaPartidasHtml())
 
-    return listaPartidas
+    # retroceder dias
+    if indiceDia < 0:
+      posicaoPrimeiraData = posicaoMeioLista + indiceDia
+      for i in range(posicaoPrimeiraData, posicaoMeioLista):
+        botaoIrProximaData = browser.find_element_by_css_selector(CSS_LINK_YESTERDAY)
+        botaoIrProximaData.click()
+        navegador_web.aguardarCarregamentoPagina(CSS_LOADING)
+
+    expandirPartidasCompeticao(browser)
+    htmlTabelaPartidas = browser.find_element_by_css_selector(CSS_TABELA_PARTIDAS)
+
+    return DadosBrutos(hash_utils.gerarHash(navegador_web.URL_BASE),
+                       "PARTIDAS",
+                       navegador_web.URL_BASE,
+                       string_utils.limparString(
+                         htmlTabelaPartidas.get_attribute("innerHTML"))
+                       )
 
   except Exception as e:
-    log.ERRO("Não foi possível obter lista de IDS de partidas do dia.", e.args)
+    log.ERRO("Não foi possível extrair HTML partidas do dia.", e.args)
     browser.save_screenshot(f"error_screenshot_{datetime.strftime('%Y%m%d')}.png")
 
-    return []
+    return None
+
+
+def expandirPartidasCompeticao(browser):
+  try:
+    CSS_LINK_EXPAND_LEAGUE = "div.event__expander.expand"
+    linksExpandirPartidasCompeticao = browser.find_elements_by_css_selector(
+      CSS_LINK_EXPAND_LEAGUE)
+
+    for link in linksExpandirPartidasCompeticao:
+      try:
+        link.click()
+      except:
+        navegador_web.fecharPopupCookies()
+        time.sleep(1)
+        link.click()
+
+  except Exception as e:
+    log.ERRO("Não foi possível exibir todas as partidas ocultas.", e.args)
 
 
 def extrairListaPartidasHtml():
@@ -796,7 +804,7 @@ def getOddsDuplaChance(tabelaOdds):
     return {}
 
 
-def extrairTimelinePartida(urlPartida:str):
+def extrairTimelinePartida(urlPartida: str):
   try:
     CSS_DADOS_TIMELINE = "div[class^=verticalSections]"
     CSS_EVENTOS_MANDANTE = "div[class*=homeParticipant] "
@@ -816,21 +824,16 @@ def extrairTimelinePartida(urlPartida:str):
     for html in htmlEventosMandante:
       htmlTipoEvento = html.find_element_by_css_selector("div[class^=incidentIcon] div svg")
       eventoPartida = {
-                       "tipo": "",
-                       "equipe": "",
-                       "minutos": "",
-                       "participante_01": "",
-                       "participante_02": ""
-                       }
-
-
-
+        "tipo": "",
+        "equipe": "",
+        "minutos": "",
+        "participante_01": "",
+        "participante_02": ""
+      }
 
     dadosHtml = html_utils.converterStringParaHtml(htmlEventos)
 
-
     htmlEventos = dadosHtml.select(".detailMS__incidentRow")
-
 
     for html in htmlEventos:
 
@@ -902,7 +905,6 @@ def extrairEstatisticasPartida(urlPartida: str):
     browser.get(urlEstatisticas)
 
     htmlEstatisticas = navegador_web.obterElementoAposCarregamento(CSS_LINHAS_ESTATISTICAS)
-
 
     for html in htmlEstatisticas:
       estatistica = {"desc": "",
