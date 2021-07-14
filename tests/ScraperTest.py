@@ -22,7 +22,7 @@ class ScraperTest(unittest.TestCase):
 
     def teste_extrair_dados_partida(self):
         scraper = extrator_partida()
-        partida = scraper.obterDadosPartida(
+        partida = scraper.extrairHtmlPartida(
             "/match/UZGaKnC4/")  # 0QqMMPUm ou jNK3xpne
         print(partida)
         scraper.finalizarNavegadorWeb()
@@ -168,7 +168,7 @@ class ScraperTest(unittest.TestCase):
         self.assertTrue(lista != None)
 
     def teste_get_head_to_head(self):
-        headToHead = extrator_partida().obterUltimasPartidasEquipes()
+        headToHead = extrator_partida().extrairHtmlUltimasPartidasEquipes()
         print(headToHead)
         self.assertTrue(headToHead!={})
 

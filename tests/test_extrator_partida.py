@@ -40,13 +40,13 @@ def teste_extrair_html_partidas_dia_depois_de_amanha():
   assert htmlPartidas is not None
 
 def teste_extrair_dados_partida():
-  dadosPartida = extrator_partida.obterDadosPartida("/jogo/2FgiFWv0/")
+  dadosPartida = extrator_partida.extrairHtmlPartida("/jogo/2FgiFWv0/")
 
   assert dadosPartida is not None
 
 
 def teste_extrair_estatisticas_partida():
-  estatistiscas = extrator_partida.extrairEstatisticasPartida("/jogo/2FgiFWv0/")
+  estatistiscas = extrator_partida.extrairHtmlEstatisticasPartida("/jogo/2FgiFWv0/")
   assert len(estatistiscas) == 15
 
 

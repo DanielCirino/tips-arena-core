@@ -50,5 +50,6 @@ def teste_parser_html_lista_partidas_depois_de_amanha():
     assert len(listaPartidas) >= 105
 
 
+
 if __name__ == "__main__":
   teste_parser_html_lista_partidas_do_dia()

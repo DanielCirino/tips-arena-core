@@ -267,7 +267,7 @@ def test_inclusao_aposta_placar_2_0():
 def teste_finalizar_apostas_partida(self):
   extrator = extrator_partida()
   partida = partida_core.obterPartidaPorId("c1afc46e2f07ad08bbcb68fb")
-  dadosPartida = extrator.obterDadosPartida(partida.url)
+  dadosPartida = extrator.extrairHtmlPartida(partida.url)
 
   extrator.finalizarNavegadorWeb()
 

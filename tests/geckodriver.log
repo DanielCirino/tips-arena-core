@@ -3564,3 +3564,5 @@ JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/P
 JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AIBcq6F6AQAAnHn5fQBqerhLb_N3DIjerI1pPvouoawxQJGGXHQBlYmsBN5c&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
 * Can't use WebGL in headless mode (https://bugzil.la/1375585).
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+Exiting due to channel error.
+Exiting due to channel error.
