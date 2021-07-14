@@ -27,3 +27,53 @@ def processarHtmlEstatisticas(html: str):
   except Exception as e:
     log.ERRO("Não foi possível processar HTML estatísticas da partida.", e.args)
     return estatisticasPartida
+
+
+def normalizarDescricaoEstatistica(descricao: str):
+  novaDescricao = descricao
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Goal Attempts":
+    novaDescricao = "Tentativa de Gols"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Shots on Goal":
+    novaDescricao = "Chutes a gol"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  if descricao == "Ball Possession":
+    novaDescricao = "Posse de Bola"
+
+  else:
+    log.ALERTA(f"Descricao estatística '{descricao}' nao mapeada.")
+
+  return novaDescricao

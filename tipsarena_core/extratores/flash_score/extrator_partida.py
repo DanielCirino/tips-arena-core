@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 import time
-
 from datetime import datetime
 
 from tipsarena_core.extratores.flash_score import navegador_web
-from tipsarena_core.models.Partida import Partida
-from tipsarena_core.utils import hash_utils, string_utils, datetime_utils, html_utils
-from tipsarena_core.utils.html_utils import DadosBrutos
 from tipsarena_core.services import log_service as log
+from tipsarena_core.utils import hash_utils, string_utils
+from tipsarena_core.utils.html_utils import DadosBrutos
 
 CASAS_DECIMAIS = 3
 
@@ -128,15 +126,16 @@ def expandirPartidasCompeticao(browser):
     log.ERRO("Não foi possível exibir todas as partidas ocultas.", e.args)
 
 
-def extrairHtmlPartida(urlPartida, extrairTimeline=True, extrairOdds=True, extrairStats=True,
-                       extrairUltimasPartidas=True):
+def extrairHtmlPartida(urlPartida: str):
   try:
-    CSS_CONTAINER_DADOS_PARTIDA = "#datail"
+    CSS_DADOS_PARTIDA = "body"
+    CSS_VERIFICAR_CARREGAMENTO = "#datail"
 
     browser = navegador_web.obterNavegadorWeb()
     browser.get(navegador_web.URL_BASE + urlPartida)
 
-    htmlDadosPartida = navegador_web.obterElementoAposCarregamento(CSS_CONTAINER_DADOS_PARTIDA)
+    navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
+    htmlDadosPartida = navegador_web.obterElementoAposCarregamento(CSS_DADOS_PARTIDA)
 
     return DadosBrutos(hash_utils.gerarHash(urlPartida),
                        "PARTIDA",
@@ -148,10 +147,6 @@ def extrairHtmlPartida(urlPartida, extrairTimeline=True, extrairOdds=True, extra
   except Exception as e:
     log.ERRO(f"Não foi possível extrair HTML dados partida: {urlPartida}", e.args)
     return None
-
-
-def extrairHtmlEventosPartida(urlPartida: str):
-  pass
 
 
 def verificarInformacoesDisponiveis(htmlLinks):
@@ -181,11 +176,14 @@ def verificarInformacoesDisponiveis(htmlLinks):
 
 def extrairHtmlTimelinePartida(urlPartida: str):
   try:
-    CSS_DADOS_TIMELINE = "div[class^=verticalSections]"
+    CSS_DADOS_TIMELINE = "body"
+    CSS_VERIFICAR_CARREGAMENTO = "div[class^=verticalSections]"
+
     browser = navegador_web.obterNavegadorWeb()
     urlTimeline = f"{navegador_web.URL_BASE}{urlPartida}#resumo-de-jogo/estatisticas-de-jogo/"
     browser.get(urlTimeline)
 
+    navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlTimeline = navegador_web.obterElementoAposCarregamento(CSS_DADOS_TIMELINE)
 
     return DadosBrutos(hash_utils.gerarHash(urlTimeline),
@@ -202,13 +200,15 @@ def extrairHtmlTimelinePartida(urlPartida: str):
 
 def extrairHtmlEstatisticasPartida(urlPartida: str):
   try:
-    CSS_LINHAS_ESTATISTICAS = "div[class^=statRow]"
+    CSS_DADOS_ESTATISTICAS = "body"
+    CSS_VERIFICAR_CARREGAMENTO = "div[class^=statRow]"
 
     urlEstatisticas = f"{navegador_web.URL_BASE}{urlPartida}#resumo-de-jogo/estatisticas-de-jogo/"
     browser = navegador_web.obterNavegadorWeb()
     browser.get(urlEstatisticas)
 
-    htmlEstatisticas = navegador_web.obterElementoAposCarregamento(CSS_LINHAS_ESTATISTICAS)
+    navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
+    htmlEstatisticas = navegador_web.obterElementoAposCarregamento(CSS_DADOS_ESTATISTICAS)
 
     return DadosBrutos(hash_utils.gerarHash(urlEstatisticas),
                        "PARTIDA_TIMELINE",
@@ -225,13 +225,15 @@ def extrairHtmlEstatisticasPartida(urlPartida: str):
 
 def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
   try:
-    CSS_DADOS_H2H = "div[class^=h2h]"
+    DADOS_H2H = "body"
+    CSS_VERIFICAR_CARREGAMENTO = "div[class^=h2h]"
 
     urlHeadToHead = f"{navegador_web.URL_BASE}{urlPartida}#h2h/"
     browser = navegador_web.obterNavegadorWeb()
     browser.get(urlHeadToHead)
 
-    htmlHeadToHead = navegador_web.obterElementoAposCarregamento(CSS_DADOS_H2H)
+    navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
+    htmlHeadToHead = navegador_web.obterElementoAposCarregamento(DADOS_H2H)
 
     return DadosBrutos(hash_utils.gerarHash(urlHeadToHead),
                        "PARTIDA_H2H",
@@ -247,7 +249,7 @@ def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
 
 def extrairHtmlOddsPartida(urlPartida: str):
   try:
-    CSS_DADOS_ODDS = "#detail"
+    CSS_DADOS_ODDS = "body"
     CSS_VERIFICAR_CARREGAMENTO = "#detail > div > div.subTabs"
 
     urlOdds = f"{navegador_web.URL_BASE}{urlPartida}#comparacao-de-odds/"
@@ -267,116 +269,3 @@ def extrairHtmlOddsPartida(urlPartida: str):
   except Exception as e:
     log.ERRO("Não foi possível extrair HTML últimas partidas das equipes.", e.args)
     return None
-
-
-
-def normalizarDescricaoStatus(status: str):
-  if status == "":
-    statusPartida = Partida.Status.AGENDADO.name
-
-  elif status.find("1º tempo") != -1 or status.find("1st Half") != -1:
-    statusPartida = Partida.Status.PRIMEIRO_TEMPO.name
-
-  elif status.find("2º tempo") != -1 or status.find("2nd Half") != -1:
-    statusPartida = Partida.Status.SEGUNDO_TEMPO.name
-
-  elif status == "Adiado" or status == "Postponed":
-    statusPartida = Partida.Status.ADIADO.name
-
-  elif status == "Após Pênaltis" or status == "After Penalties":
-    statusPartida = Partida.Status.FINALIZADO.name
-
-  elif status == "Após Prorrogação" or status == "After Extra Time":
-    statusPartida = Partida.Status.FINALIZADO.name
-
-  elif status == "Intervalo" or status == "Half Time" or status == "Break Time":
-    statusPartida = Partida.Status.INTERVALO.name
-
-  elif status == "Atribuído" or status == "Awarded":
-    statusPartida = Partida.Status.RESULTADO_NAO_DISPONIVEL.name
-
-  elif status == "Abandonado" or status == "Abandoned":
-    statusPartida = Partida.Status.ABANDONADO.name
-
-  elif status == "Cancelado" or status == "Cancelled":
-    statusPartida = Partida.Status.CANCELADO.name
-
-  elif status == "SRF - Só resultado final." or status == "FRO - Final result only.":
-    statusPartida = Partida.Status.RESULTADO_NAO_DISPONIVEL.name
-
-  elif status == "SRF " or status == "FRO ":
-    statusPartida = Partida.Status.RESULTADO_NAO_DISPONIVEL.name
-
-  elif status == "Encerrado" or status == "Finished":
-    statusPartida = Partida.Status.FINALIZADO.name
-
-  elif status == "Walkover":
-    statusPartida = Partida.Status.W_O.name
-
-  elif status.find("Walkover") != -1:
-    statusPartida = Partida.Status.W_O.name
-
-  elif status == "Ao Vivo" or status == "Live":
-    statusPartida = Partida.Status.EM_ANDAMENTO.name
-
-  elif status == "Extra Time":
-    statusPartida = Partida.Status.EM_ANDAMENTO.name
-
-  elif status == "Penalties":
-    statusPartida = "PENALTIES"
-
-  else:
-    log.ALERTA(f"Status '{status}' não mapeado.")
-    statusPartida = status
-
-  return statusPartida
-
-
-def normalizarDescricaoEstatistica(descricao: str):
-  novaDescricao = descricao
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Goal Attempts":
-    novaDescricao = "Tentativa de Gols"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Shots on Goal":
-    novaDescricao = "Chutes a gol"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  if descricao == "Ball Possession":
-    novaDescricao = "Posse de Bola"
-
-  else:
-    log.ALERTA(f"Descricao estatística '{descricao}' nao mapeada.")
-
-  return novaDescricao

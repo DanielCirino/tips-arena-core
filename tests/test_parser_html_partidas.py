@@ -49,7 +49,12 @@ def teste_parser_html_lista_partidas_depois_de_amanha():
     listaPartidas = parser_partida.processarHtmlListaPartidas(html)
     assert len(listaPartidas) >= 105
 
-
+def teste_parser_html_partida():
+  caminhoArquivo = f"{pathlib.Path(__file__).parent.resolve()}/exemplos_html/exemplo_partida.html"
+  with open(caminhoArquivo) as arquivo:
+    html = arquivo.read()
+    listaPartidas = parser_partida.processarHtmlPartida(html)
+    assert len(listaPartidas) ==11
 
 if __name__ == "__main__":
-  teste_parser_html_lista_partidas_do_dia()
+  teste_parser_html_partida()
