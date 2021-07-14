@@ -1,87 +1,118 @@
-from tipsarena_core.utils import html_utils,string_utils
+from tipsarena_core.utils import html_utils, string_utils
 from tipsarena_core.services import log_service as log
 
-def processarHtmlTimeline(html:str):
+
+def processarHtmlTimeline(html: str):
   try:
-    CSS_EVENTOS_MANDANTE = "div[class*=homeParticipant] "
-    CSS_EVENTOS_VISITANTE = "div[class*=awayParticipant] "
+    CSS_EVENTOS_MANDANTE = "div[class*=homeParticipant]"
+    CSS_EVENTOS_VISITANTE = "div[class*=awayParticipant]"
 
     htmlTimeline = html_utils.converterStringParaHtml(html)
 
-    htmlEventosMandante = htmlTimeline.find_elements_by_css_selector(CSS_EVENTOS_MANDANTE)
-    htmlEventosVisitante = htmlTimeline.find_elements_by_css_selector(CSS_EVENTOS_VISITANTE)
+    htmlEventosMandante = htmlTimeline.select(CSS_EVENTOS_MANDANTE)
+    htmlEventosVisitante = htmlTimeline.select(CSS_EVENTOS_VISITANTE)
 
-    listaEventos = []
-    contadorEventos = 1
+    eventosMandante = processarEventosTimeline("M", htmlEventosMandante)
+    eventosVisitante = processarEventosTimeline("V", htmlEventosVisitante)
 
-    for html in htmlEventosMandante:
-      htmlTipoEvento = html.find_element_by_css_selector("div[class^=incidentIcon] div svg")
-      eventoPartida = {
-        "tipo": "",
-        "equipe": "",
-        "minutos": "",
-        "participante_01": "",
-        "participante_02": ""
-      }
-
-    dadosHtml = html_utils.converterStringParaHtml(htmlEventos)
-
-    htmlEventos = dadosHtml.select(".detailMS__incidentRow")
-
-    for html in htmlEventos:
-
-      eventoPartida = {"seq": contadorEventos,
-                       "tipo": "",
-                       "equipe": "",
-                       "minutos": "",
-                       "participante_01": "",
-                       "participante_02": ""
-                       }
-
-      classeCss = html.attrs["class"][1]
-
-      if classeCss != "--empty":
-        if classeCss == "incidentRow--away":
-          eventoPartida["equipe"] = "V"
-        elif classeCss == "incidentRow--home":
-          eventoPartida["equipe"] = "M"
-
-        eventoPartida["tipo"] = \
-          html.select(".icon-box span")[0].attrs["class"][1]
-        eventoPartida["minutos"] = html.select(
-          ".time-box,.time-box-wide")[0].getText()
-
-        participanteUm = {"nome": "", "url": ""}
-        participanteDois = {"nome": "", "url": ""}
-
-        htmlParticipantes = html.select(
-          ".participant-name a,.substitution-in-name a,.substitution-out-name a")
-
-        if len(htmlParticipantes) >= 1:
-          participanteUm["nome"] = string_utils.limparString(
-            htmlParticipantes[0].getText())
-
-          participanteUm["url"] = html_utils.obterUrlAtributoOnClick(
-            htmlParticipantes[0].attrs["onclick"])
-
-        if len(htmlParticipantes) == 2:
-          participanteDois["nome"] = string_utils.limparString(
-            htmlParticipantes[1].getText())
-
-          participanteDois["url"] = html_utils.obterUrlAtributoOnClick(
-            htmlParticipantes[1].attrs["onclick"])
-
-        eventoPartida["participante_01"] = participanteUm
-        eventoPartida["participante_02"] = participanteDois
-
-        eventoPartida["tipo"] = normalizarDescricaoEvento(
-          eventoPartida["tipo"])
-
-        listaEventos.append(eventoPartida)
-        contadorEventos += 1
-
-    return listaEventos
+    return eventosMandante + eventosVisitante
 
   except Exception as e:
-    log.ERRO("Não foi possível obter timeline de eventos da partida.", e.args)
+    log.ERRO("Não foi possível processar HTML timeline de eventos da partida.", e.args)
+    return []
+
+
+def processarEventosTimeline(equipe: str, htmlEventos):
+  try:
+    listaEventos = []
+
+    for elemento in htmlEventos:
+      htmlTimebox = elemento.select_one("[class^=incident_] [class^=timeBox]")
+      htmlIconeEvento = elemento.select_one("[class^=incident_] [class^=incidentIcon_]")
+
+      htmlSubstituicaoEntrada = elemento.select_one("[class^=incident_] [class^=incidentIconSub_]")
+      htmlSubstituicaoSaida = elemento.select_one("[class^=incident_] [class^=incidentSubOut_]")
+
+      htmlPrimeiroParticipante = elemento.select_one("[class^=playerName_]")
+      htmlSegundoParticipantes = htmlSubstituicaoSaida.select_one("a") if htmlSubstituicaoSaida else None
+      htmlDetalhesEvento = elemento.select_one("[class^=incident_] [class^=assist_]")
+      htmlDetalhesAssistencia = elemento.select_one("[class^=incident_] [class^=assist_] a")
+
+      minutos = htmlTimebox.text
+      classeIcone = htmlSubstituicaoEntrada.select_one("div svg").attrs["class"][0] if htmlSubstituicaoEntrada else ''
+
+      if htmlIconeEvento:
+        classeIcone = htmlIconeEvento.select_one("div svg").attrs["class"][0]
+
+      tipoEvento = normalizarDescricaoEvento(classeIcone.split("_")[0])
+
+      participante01 = {
+        "nome": string_utils.limparString(htmlPrimeiroParticipante.text),
+        "url": htmlPrimeiroParticipante.attrs["href"]
+      }
+
+      participante02 = None
+
+      if htmlSegundoParticipantes:
+        participante02 = {
+          "nome": string_utils.limparString(htmlSegundoParticipantes.text),
+          "url": htmlSegundoParticipantes.attrs["href"]
+        }
+
+      if htmlDetalhesAssistencia:
+        participante02 = {
+          "nome": string_utils.limparString(htmlDetalhesAssistencia.text),
+          "url": htmlDetalhesAssistencia.attrs["href"]
+        }
+
+      detalhesEvento = ""
+      if htmlDetalhesEvento:
+        detalhesEvento = htmlDetalhesEvento.text
+
+      listaEventos.append({
+        "tipo": tipoEvento,
+        "equipe": equipe,
+        "minutos": minutos,
+        "participante01": participante01,
+        "participante02": participante02,
+        "detalhes": detalhesEvento.strip()
+      }
+      )
+
     return listaEventos
+  except Exception as e:
+    log.ERRO("Não foi possível processar eventos da timeline da partida.", e.args)
+    return []
+
+
+def normalizarDescricaoEvento(descricao: str):
+  if descricao == "yellowCard":
+    descricao = "CARTAO_AMARELO"
+
+  elif descricao == "footballGoal":
+    descricao = "GOL"
+
+  elif descricao == "arrowUp":
+    descricao = "SUBSTITUICAO"
+
+  elif descricao == "redYellowCard":
+    descricao = "CARTAO_AMARELO_VERMELHO"
+
+  elif descricao == "footballOwnGoal":
+    descricao = "GOL_CONTRA"
+
+  elif descricao == "Penalty goal":
+    descricao = "GOL_PENALTY"
+
+  elif descricao == "card":
+    descricao = "CARTAO_VERMELHO"
+
+  elif descricao == "Penalty save":
+    descricao = "PENALTY_MARCADO"
+
+  elif descricao == "penaltyMissed":
+    descricao = "PENALTY_PERDIDO"
+  else:
+    log.ALERTA(f"Descrição do evento '{descricao}' não mapeda.")
+
+  return descricao

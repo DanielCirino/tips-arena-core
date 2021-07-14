@@ -332,39 +332,6 @@ def normalizarDescricaoStatus(status: str):
   return statusPartida
 
 
-def normalizarDescricaoEvento(descricao: str):
-  if descricao == "y-card":
-    descricao = "CARTAO_AMARELO"
-
-  elif descricao == "soccer-ball":
-    descricao = "GOL"
-
-  elif descricao == "substitution-in":
-    descricao = "SUBSTITUICAO"
-
-  elif descricao == "yr-card":
-    descricao = "CARTAO_AMARELO_VERMELHO"
-
-  elif descricao == "soccer-ball-own":
-    descricao = "GOL_CONTRA"
-
-  elif descricao == "Penalty goal":
-    descricao = "GOL_PENALTY"
-
-  elif descricao == "r-card":
-    descricao = "CARTAO_VERMELHO"
-
-  elif descricao == "Penalty save":
-    descricao = "PENALTY_MARCADO"
-
-  elif descricao == "penalty-missed":
-    descricao = "PENALTY_PERDIDO"
-  else:
-    log.ALERTA(f"Descrição do evento '{descricao}' não mapeda.")
-
-  return descricao
-
-
 def normalizarDescricaoEstatistica(descricao: str):
   novaDescricao = descricao
   if descricao == "Ball Possession":

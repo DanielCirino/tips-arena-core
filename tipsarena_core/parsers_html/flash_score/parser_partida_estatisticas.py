@@ -3,32 +3,27 @@ from tipsarena_core.services import log_service as log
 
 
 def processarHtmlEstatisticas(html: str):
+  CSS_LINHAS_ESTATISTICAS = "div[class^=statRow]"
+  CSS_VALORES_ESTATISTICA = "div[class^=statCategory] div"
   estatisticasPartida = []
-  try:
-    CSS_LINHAS_ESTATISTICAS = "div[class^=statRow]"
-    CSS_VALORES_ESTATISTICA = "div[class^=statCategory] div"
-    htmlEstatisticas = html_utils.converterStringParaHtml(html)
 
+  try:
+    htmlEstatisticas = html_utils.converterStringParaHtml(html)
     listaEstatisticas = htmlEstatisticas.select(CSS_LINHAS_ESTATISTICAS)
 
-    for html in listaEstatisticas:
-      estatistica = {"desc": "",
-                     "valor_mandante": "",
-                     "valor_visitante": ""}
+    for elemento in listaEstatisticas:
+      camposEstatistica = elemento.select(CSS_VALORES_ESTATISTICA)
 
-      camposEstatistica = html.find_elements_by_css_selector(CSS_VALORES_ESTATISTICA)
+      descricao = string_utils.limparString(camposEstatistica[1].text)
+      valorMandante = string_utils.limparString(camposEstatistica[0].text)
+      valorVisitante = string_utils.limparString(camposEstatistica[2].text)
 
-      estatistica["desc"] = string_utils.limparString(
-        camposEstatistica[1].text)
-      estatistica["valor_mandante"] = string_utils.limparString(
-        camposEstatistica[0].text)
-      estatistica["valor_visitante"] = string_utils.limparString(
-        camposEstatistica[2].text)
-
-      estatisticasPartida.append(estatistica)
+      estatisticasPartida.append({"descricao": descricao,
+                                  "valorMandante": valorMandante,
+                                  "valorVisitante": valorVisitante})
 
     return estatisticasPartida
 
   except Exception as e:
-    log.ERRO("Não foi possível obter estatísticas da partida.", e.args)
+    log.ERRO("Não foi possível processar HTML estatísticas da partida.", e.args)
     return estatisticasPartida
