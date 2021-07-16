@@ -31,7 +31,7 @@ def extrairHtmlPaises():
 
   except Exception as e:
     log.ERRO("Não foi possível extrair lista de países.", e.args)
-    browser.save_screenshot(f"error_screenshot_{datetime.now().strftime('%Y%m%d')}.png")
+    navegador_web.capturarTela()
     return None
   finally:
     navegador_web.finalizarNavegadorWeb()

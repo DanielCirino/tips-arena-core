@@ -54,13 +54,13 @@ def obterNavegadorWeb():
 
 
 def navegar(url: str):
-  try:
-    browser = obterNavegadorWeb()
-    browser.ge(url)
-    fecharPopupCookies()
+  obterNavegadorWeb().get(url)
+  fecharPopupCookies()
 
-  except Exception as e:
-    log.ERRO(f"Não foi possível acessar a url: {url}", e.args)
+
+def capturarTela():
+  nomeArquivo = f"error_screenshot_{datetime.now().strftime('%Y%m%d%M%s')}.png"
+  obterNavegadorWeb().save_screenshot(nomeArquivo)
 
 
 def obterElementoAposCarregamento(cssElemento, tempoEspera=10):
