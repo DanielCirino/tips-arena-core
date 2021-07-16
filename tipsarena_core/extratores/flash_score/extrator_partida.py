@@ -17,6 +17,7 @@ def extrairHtmlPartidas(url: str):
     CSS_TABELA_PARTIDAS = "#live-table"
 
     navegador_web.navegar(url)
+    browser = navegador_web.obterNavegadorWeb()
 
     while len(browser.find_elements_by_css_selector(CSS_LINK_LISTAR_MAIS)) > 0:
       linkListarMais = browser.find_elements_by_css_selector(CSS_LINK_LISTAR_MAIS)[0]
@@ -61,6 +62,7 @@ def extrairHtmlPartidasDia(indiceDia=0):
 
   try:
     navegador_web.navegar(navegador_web.URL_BASE)
+    browser = navegador_web.obterNavegadorWeb()
 
     botaoExibirCalendario = browser.find_element_by_css_selector(CSS_SELETOR_DATA)
     botaoExibirCalendario.click()
@@ -99,7 +101,7 @@ def extrairHtmlPartidasDia(indiceDia=0):
 
   except Exception as e:
     log.ERRO("Não foi possível extrair HTML partidas do dia.", e.args)
-    browser.save_screenshot(f"error_screenshot_{datetime.now().strftime('%Y%m%d')}.png")
+    navegador_web.capturarTela()
 
     return None
 
@@ -235,3 +237,5 @@ def extrairHtmlOddsPartida(urlPartida: str):
   except Exception as e:
     log.ERRO("Não foi possível extrair HTML últimas partidas das equipes.", e.args)
     return None
+
+

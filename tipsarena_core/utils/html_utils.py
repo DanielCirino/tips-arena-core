@@ -1,12 +1,15 @@
+import json
 from collections import namedtuple
 import requests
 from bs4 import BeautifulSoup
+import re
 
 from tipsarena_core.services import log_service as log
 
 DadosBrutos = namedtuple("DadosBrutos", "id tipo url html")
 
-def obterHtml(url):
+
+def obterHtml(url: str):
   try:
     page = requests.get(url)
     documento_html = BeautifulSoup(page.content, "html.parser")
@@ -17,13 +20,23 @@ def obterHtml(url):
     return None
 
 
-def converterStringParaHtml(string):
+def converterStringParaHtml(string: str):
   try:
     dados_html = BeautifulSoup(string, "html.parser")
     return dados_html
   except Exception as e:
     log.ERRO("Não foi possível converter o texto para HTML.", e.args)
     return None
+
+
+def obterIdPartida(html) -> [str]:
+  CSS_TAGS_SCRIPT = "script:not(src)"
+  tagsScript = html.select(CSS_TAGS_SCRIPT)
+  regex = re.compile('"event_id_c":(.*?),')
+  for tag in tagsScript:
+    resultado = regex.search(str(tag.string))
+    if (resultado):
+      return resultado.groups()[0].replace('"', "")
 
 
 def obterDadosCabecalho(html):

@@ -3904,3 +3904,20 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1626440998162	geckodriver	INFO	Listening on 127.0.0.1:64191
+1626440998191	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileLpdrrl"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626441001961	Marionette	INFO	Listening on port 64200
+1626441002038	Marionette	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1626441059112	geckodriver	INFO	Listening on 127.0.0.1:64352
+1626441059149	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilewPaclG"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626441062672	Marionette	INFO	Listening on port 64361
+1626441062767	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626441237267	Marionette	INFO	Stopped listening on port 64361

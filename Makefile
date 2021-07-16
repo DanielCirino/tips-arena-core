@@ -5,7 +5,7 @@ uninstall:
 	pip uninstall guardian-core
 
 test_cov:
-	 export GD_ENV=DEV && pytest tests/ -v --cov=guardian_core
+	 export GD_ENV=DEV && pytest tests/  --cov=tips-arena-core
 
 test:
 	 export GD_ENV=DEV && pytest tests/ -v

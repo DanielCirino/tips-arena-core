@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import time
+from datetime import datetime
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -59,7 +59,7 @@ def navegar(url: str):
 
 
 def capturarTela():
-  nomeArquivo = f"error_screenshot_{datetime.now().strftime('%Y%m%d%M%s')}.png"
+  nomeArquivo = f"screenshot_{datetime.now().strftime('%Y%m%d%M%s')}.png"
   obterNavegadorWeb().save_screenshot(nomeArquivo)
 
 
@@ -103,6 +103,7 @@ def finalizarNavegadorWeb():
       navegadorWeb.delete_all_cookies()
       navegadorWeb.execute_script("localStorage.clear();")
       navegadorWeb.quit()
+
 
     return True
   except Exception as e:
