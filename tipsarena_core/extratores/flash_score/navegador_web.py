@@ -35,7 +35,7 @@ def obterNavegadorWeb():
       options = webdriver.FirefoxOptions()
       options.set_preference("dom.webnotifications.serviceworker.enabled", False)
       options.set_preference("dom.webnotifications.enabled", False)
-      options.add_argument('--headless')
+      # options.add_argument('--headless')
 
       # opcoes = Options()
       # opcoes.add_argument("--headless")
@@ -51,6 +51,16 @@ def obterNavegadorWeb():
     log.ERRO(f"Não foi possível iniciar o navegador WEB no caminho {PATH_TO_WEBDRIVER}.",
              e.args)
     return None
+
+
+def navegar(url: str):
+  try:
+    browser = obterNavegadorWeb()
+    browser.ge(url)
+    fecharPopupCookies()
+
+  except Exception as e:
+    log.ERRO(f"Não foi possível acessar a url: {url}", e.args)
 
 
 def obterElementoAposCarregamento(cssElemento, tempoEspera=10):
@@ -75,32 +85,16 @@ def clicarElemento(elemento, tempoEspera=10):
 
 def fecharPopupCookies():
   try:
-    botaoAceitarCookies = obterElementoAposCarregamento(CSS_BOTAO_ACEITAR_COOKIES)
-    if botaoAceitarCookies is not None:
-      if botaoAceitarCookies.is_displayed(): botaoAceitarCookies.click()
+    obterElementoAposCarregamento(CSS_BOTAO_ACEITAR_COOKIES)
+
+    script = "$('#onetrust-consent-sdk').css('display', 'none');" \
+             "$('div.otPlaceholder').css('display', 'none');" \
+             "$('div#onetrust-banner-sdk').css('display', 'none');"
+    browser = obterNavegadorWeb()
+    browser.execute_script(script)
+
   except Exception as e:
     log.ERRO(f"Não foi possível fechar pop up de cookies '{CSS_BOTAO_ACEITAR_COOKIES}'", e.args)
-
-
-# def aguardarCarregamentoPaginaOld(cssSelector):
-#   try:
-#     carregando = navegadorWeb.find_element_by_css_selector(
-#       cssSelector)
-#     tempoEspera = 0.0
-#
-#     while carregando.is_displayed():
-#       time.sleep(0.5)
-#       tempoEspera += 0.5
-#
-#       carregando = navegadorWeb.find_element_by_css_selector(
-#         cssSelector)
-#
-#       if tempoEspera >= 10:
-#         log.ALERTA(f"Esperou mais de 10 segundos, time out...]")
-#         navegadorWeb.save_screenshot("prints/erro_loading.png")
-#
-#   except Exception as e:
-#     log.ERRO(f"Não foi possível aguardar o carregamento da página.['{cssSelector}']", e.args)
 
 
 def finalizarNavegadorWeb():
@@ -109,7 +103,8 @@ def finalizarNavegadorWeb():
       navegadorWeb.delete_all_cookies()
       navegadorWeb.execute_script("localStorage.clear();")
       navegadorWeb.quit()
-      return True
+
+    return True
   except Exception as e:
     log.ERRO(f"Não foi possível finalizar navegador web.['{navegadorWeb}']", e.args)
     return False

@@ -135,12 +135,29 @@ def processarHtmlPartida(html: str):
     return None
 
 
-def processarHtmlEventosPartida(html: str):
-  pass
+def verificarInformacoesDisponiveis(htmlLinks):
+  try:
+    informacoes = {
+      "resumo-de-jogo": False,
+      "resumo-de-jogo/estatisticas-de-jogo": False,
+      "resumo-de-jogo/equipes": False,
+      "resumo-de-jogo/comentarios-ao-vivo": False,
+      "comparacao-de-odds": False,
+      "h2h": False,
+      "videos": False,
+      "imagens-da-partida": False,
+      "noticias": False,
+      "classificacao": False
+    }
 
+    for href in htmlLinks:
+      href = href.get_attribute("href")
+      informacoes[href.split("#")[1]] = True
 
-def processarHtmlOddsPartida(html: str):
-  pass
+    return informacoes
+  except Exception as e:
+    log.ERRO("Não foi possível verificar as informações disponíveis para a partida.", e.args)
+    return informacoes
 
 
 def normalizarDescricaoStatus(status: str):

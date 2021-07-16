@@ -45,10 +45,10 @@ def teste_extrair_dados_partida():
   assert dadosPartida is not None
 
 
-def teste_extrair_estatisticas_partida():
+def teste_extrair_html_estatisticas_partida():
   estatistiscas = extrator_partida.extrairHtmlEstatisticasPartida("/jogo/2FgiFWv0/")
-  assert len(estatistiscas) == 15
+  assert len(estatistiscas) == 4
 
 
 if __name__ == '__main__':
-  teste_extrair_html_partidas_dia_ontem()
+  teste_extrair_html_partidas()

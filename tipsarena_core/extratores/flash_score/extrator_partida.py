@@ -16,9 +16,7 @@ def extrairHtmlPartidas(url: str):
     CSS_LOADING = ".loadingOverlay"
     CSS_TABELA_PARTIDAS = "#live-table"
 
-    browser = navegador_web.obterNavegadorWeb()
-    browser.get(url)
-    navegador_web.fecharPopupCookies()
+    navegador_web.navegar(url)
 
     while len(browser.find_elements_by_css_selector(CSS_LINK_LISTAR_MAIS)) > 0:
       linkListarMais = browser.find_elements_by_css_selector(CSS_LINK_LISTAR_MAIS)[0]
@@ -32,7 +30,7 @@ def extrairHtmlPartidas(url: str):
                        "PARTIDAS",
                        url,
                        string_utils.limparString(
-                         htmlPartidas.get_attribute("innerHTML"))
+                         htmlPartidas.get_attribute("outerHTML"))
                        )
 
   except Exception as e:
@@ -62,9 +60,7 @@ def extrairHtmlPartidasDia(indiceDia=0):
   CSS_TABELA_PARTIDAS = "#live-table"
 
   try:
-    browser = navegador_web.obterNavegadorWeb()
-    browser.get(navegador_web.URL_BASE)
-    navegador_web.fecharPopupCookies()
+    navegador_web.navegar(navegador_web.URL_BASE)
 
     botaoExibirCalendario = browser.find_element_by_css_selector(CSS_SELETOR_DATA)
     botaoExibirCalendario.click()
@@ -98,12 +94,12 @@ def extrairHtmlPartidasDia(indiceDia=0):
                        "PARTIDAS",
                        navegador_web.URL_BASE,
                        string_utils.limparString(
-                         htmlTabelaPartidas.get_attribute("innerHTML"))
+                         htmlTabelaPartidas.get_attribute("outerHTML"))
                        )
 
   except Exception as e:
     log.ERRO("Não foi possível extrair HTML partidas do dia.", e.args)
-    browser.save_screenshot(f"error_screenshot_{datetime.strftime('%Y%m%d')}.png")
+    browser.save_screenshot(f"error_screenshot_{datetime.now().strftime('%Y%m%d')}.png")
 
     return None
 
@@ -129,10 +125,9 @@ def expandirPartidasCompeticao(browser):
 def extrairHtmlPartida(urlPartida: str):
   try:
     CSS_DADOS_PARTIDA = "body"
-    CSS_VERIFICAR_CARREGAMENTO = "#datail"
+    CSS_VERIFICAR_CARREGAMENTO = "#detail"
 
-    browser = navegador_web.obterNavegadorWeb()
-    browser.get(navegador_web.URL_BASE + urlPartida)
+    navegador_web.navegar(navegador_web.URL_BASE + urlPartida)
 
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlDadosPartida = navegador_web.obterElementoAposCarregamento(CSS_DADOS_PARTIDA)
@@ -141,7 +136,7 @@ def extrairHtmlPartida(urlPartida: str):
                        "PARTIDA",
                        urlPartida,
                        string_utils.limparString(
-                         htmlDadosPartida.get_attribute("innerHTML"))
+                         htmlDadosPartida.get_attribute("outerHTML"))
                        )
 
   except Exception as e:
@@ -149,39 +144,13 @@ def extrairHtmlPartida(urlPartida: str):
     return None
 
 
-def verificarInformacoesDisponiveis(htmlLinks):
-  try:
-    informacoes = {
-      "resumo-de-jogo": False,
-      "resumo-de-jogo/estatisticas-de-jogo": False,
-      "resumo-de-jogo/equipes": False,
-      "resumo-de-jogo/comentarios-ao-vivo": False,
-      "comparacao-de-odds": False,
-      "h2h": False,
-      "videos": False,
-      "imagens-da-partida": False,
-      "noticias": False,
-      "classificacao": False
-    }
-
-    for href in htmlLinks:
-      href = href.get_attribute("href")
-      informacoes[href.split("#")[1]] = True
-
-    return informacoes
-  except Exception as e:
-    log.ERRO("Não foi possível verificar as informações disponíveis para a partida.", e.args)
-    return informacoes
-
-
 def extrairHtmlTimelinePartida(urlPartida: str):
   try:
     CSS_DADOS_TIMELINE = "body"
     CSS_VERIFICAR_CARREGAMENTO = "div[class^=verticalSections]"
 
-    browser = navegador_web.obterNavegadorWeb()
     urlTimeline = f"{navegador_web.URL_BASE}{urlPartida}#resumo-de-jogo/estatisticas-de-jogo/"
-    browser.get(urlTimeline)
+    navegador_web.navegar(urlTimeline)
 
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlTimeline = navegador_web.obterElementoAposCarregamento(CSS_DADOS_TIMELINE)
@@ -190,7 +159,7 @@ def extrairHtmlTimelinePartida(urlPartida: str):
                        "PARTIDA_TIMELINE",
                        urlTimeline,
                        string_utils.limparString(
-                         htmlTimeline.get_attribute("innerHTML"))
+                         htmlTimeline.get_attribute("outerHTML"))
                        )
 
   except Exception as e:
@@ -204,8 +173,7 @@ def extrairHtmlEstatisticasPartida(urlPartida: str):
     CSS_VERIFICAR_CARREGAMENTO = "div[class^=statRow]"
 
     urlEstatisticas = f"{navegador_web.URL_BASE}{urlPartida}#resumo-de-jogo/estatisticas-de-jogo/"
-    browser = navegador_web.obterNavegadorWeb()
-    browser.get(urlEstatisticas)
+    navegador_web.navegar(urlEstatisticas)
 
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlEstatisticas = navegador_web.obterElementoAposCarregamento(CSS_DADOS_ESTATISTICAS)
@@ -214,7 +182,7 @@ def extrairHtmlEstatisticasPartida(urlPartida: str):
                        "PARTIDA_TIMELINE",
                        urlEstatisticas,
                        string_utils.limparString(
-                         htmlEstatisticas.get_attribute("innerHTML"))
+                         htmlEstatisticas.get_attribute("outerHTML"))
                        )
 
 
@@ -229,8 +197,7 @@ def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
     CSS_VERIFICAR_CARREGAMENTO = "div[class^=h2h]"
 
     urlHeadToHead = f"{navegador_web.URL_BASE}{urlPartida}#h2h/"
-    browser = navegador_web.obterNavegadorWeb()
-    browser.get(urlHeadToHead)
+    navegador_web.navegar(urlHeadToHead)
 
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlHeadToHead = navegador_web.obterElementoAposCarregamento(DADOS_H2H)
@@ -239,7 +206,7 @@ def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
                        "PARTIDA_H2H",
                        urlHeadToHead,
                        string_utils.limparString(
-                         htmlHeadToHead.get_attribute("innerHTML"))
+                         htmlHeadToHead.get_attribute("outerHTML"))
                        )
 
   except Exception as e:
@@ -253,8 +220,7 @@ def extrairHtmlOddsPartida(urlPartida: str):
     CSS_VERIFICAR_CARREGAMENTO = "#detail > div > div.subTabs"
 
     urlOdds = f"{navegador_web.URL_BASE}{urlPartida}#comparacao-de-odds/"
-    browser = navegador_web.obterNavegadorWeb()
-    browser.get(urlOdds)
+    navegador_web.navegar(urlOdds)
 
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlOdds = navegador_web.obterElementoAposCarregamento(CSS_DADOS_ODDS)
@@ -263,7 +229,7 @@ def extrairHtmlOddsPartida(urlPartida: str):
                        "PARTIDA_ODDS",
                        urlOdds,
                        string_utils.limparString(
-                         htmlOdds.get_attribute("innerHTML"))
+                         htmlOdds.get_attribute("outerHTML"))
                        )
 
   except Exception as e:

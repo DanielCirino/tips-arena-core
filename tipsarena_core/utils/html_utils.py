@@ -6,7 +6,6 @@ from tipsarena_core.services import log_service as log
 
 DadosBrutos = namedtuple("DadosBrutos", "id tipo url html")
 
-
 def obterHtml(url):
   try:
     page = requests.get(url)

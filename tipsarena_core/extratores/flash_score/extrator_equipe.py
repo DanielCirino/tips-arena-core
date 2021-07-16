@@ -11,8 +11,7 @@ def extrairHtmlEquipesEdicaoCompeticao(urlEdicao: str):
     CSS_TABELA_CLASSIFICACAO = "#tournament-table-tabs-and-content"
 
     url = f"{navegador_web.URL_BASE}{urlEdicao}classificacao/"
-    browser = navegador_web.obterNavegadorWeb()
-    browser.get(url)
+    navegador_web.navegar(url)
 
     tabelaClassificacao = navegador_web.obterElementoAposCarregamento(CSS_TABELA_CLASSIFICACAO)
 
@@ -20,7 +19,7 @@ def extrairHtmlEquipesEdicaoCompeticao(urlEdicao: str):
                        "EQUIPES_EDICAO_COMPETICAO",
                        url,
                        string_utils.limparString(
-                         tabelaClassificacao.get_attribute("innerHTML"))
+                         tabelaClassificacao.get_attribute("outerHTML"))
                        )
 
   except Exception as e:

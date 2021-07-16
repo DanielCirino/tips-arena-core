@@ -9,3 +9,5 @@ python-dotenv
 progress
 PyJWT
 bcrypt
+confluent-kafka
+pyspark

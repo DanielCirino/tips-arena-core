@@ -3566,3 +3566,341 @@ JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/P
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
 Exiting due to channel error.
 Exiting due to channel error.
+1626303714266	geckodriver	INFO	Listening on 127.0.0.1:58436
+1626303714323	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofile202f7e"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626303719601	Marionette	INFO	Listening on port 58445
+1626303719724	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=E810B668-DF43-21E6-2924-86E4480E1EEC?676564736, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=E810B668-DF43-21E6-2924-86E4480E1EEC?676564736, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=E810B668-DF43-21E6-2924-86E4480E1EEC?676564736, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=E810B668-DF43-21E6-2924-86E4480E1EEC?676564736, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AICVP6d6AQAAtKwYIUe6NhkY1fghV1xyrtnroWwufbnS6nCUrWpQ02YYPOdd&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AICVP6d6AQAAtKwYIUe6NhkY1fghV1xyrtnroWwufbnS6nCUrWpQ02YYPOdd&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AICVP6d6AQAAtKwYIUe6NhkY1fghV1xyrtnroWwufbnS6nCUrWpQ02YYPOdd&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AICVP6d6AQAAtKwYIUe6NhkY1fghV1xyrtnroWwufbnS6nCUrWpQ02YYPOdd&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1626304970153	geckodriver	INFO	Listening on 127.0.0.1:59334
+1626304970182	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilevSFlF5"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626304975755	Marionette	INFO	Listening on port 59343
+1626304975900	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626304983275	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626304986165	Marionette	INFO	Stopped listening on port 59343
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+JavaScript error: https://advert.livesportmedia.eu/rotating-advert/right.php?id=311076&type=JS, line 6: ReferenceError: $ is not defined
+1626305006605	geckodriver	INFO	Listening on 127.0.0.1:59492
+1626305006661	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileayM94D"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626305011713	Marionette	INFO	Listening on port 59501
+1626305011775	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626305022143	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=B43147CB-370F-C3D6-47C8-171235C52833?634243570, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=B43147CB-370F-C3D6-47C8-171235C52833?634243570, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=B43147CB-370F-C3D6-47C8-171235C52833?634243570, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=B43147CB-370F-C3D6-47C8-171235C52833?634243570, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AICVP6d6AQAAtKwYIUe6NhkY1fghV1xyrtnroWwufbnS6nCUrWpQ02YYPOdd&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AICVP6d6AQAAtKwYIUe6NhkY1fghV1xyrtnroWwufbnS6nCUrWpQ02YYPOdd&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AICVP6d6AQAAtKwYIUe6NhkY1fghV1xyrtnroWwufbnS6nCUrWpQ02YYPOdd&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AICVP6d6AQAAtKwYIUe6NhkY1fghV1xyrtnroWwufbnS6nCUrWpQ02YYPOdd&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+Exiting due to channel error.
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+1626306011645	geckodriver	INFO	Listening on 127.0.0.1:63282
+1626306011696	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileBIfk3u"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626306018057	Marionette	INFO	Listening on port 63291
+1626306018148	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 726))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 376))
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+1626306073201	geckodriver	INFO	Listening on 127.0.0.1:63674
+1626306073252	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofile6P1nXk"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626306079282	Marionette	INFO	Listening on port 63683
+1626306079371	Marionette	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1626306143545	geckodriver	INFO	Listening on 127.0.0.1:64082
+1626306143607	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileFLVuZm"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626306149966	Marionette	INFO	Listening on port 64091
+1626306150041	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=32C2B6C7-B4AC-0CFE-CD28-9DD3F5432CAC?15592953, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=32C2B6C7-B4AC-0CFE-CD28-9DD3F5432CAC?15592953, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=32C2B6C7-B4AC-0CFE-CD28-9DD3F5432CAC?15592953, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=32C2B6C7-B4AC-0CFE-CD28-9DD3F5432CAC?15592953, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAMW6d6AQAA4YXXI3FgUbn1cwIxyxfvIezAyTaUvkV9czfUDDaOsXsbNS2n&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAMW6d6AQAA4YXXI3FgUbn1cwIxyxfvIezAyTaUvkV9czfUDDaOsXsbNS2n&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAMW6d6AQAA4YXXI3FgUbn1cwIxyxfvIezAyTaUvkV9czfUDDaOsXsbNS2n&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAMW6d6AQAA4YXXI3FgUbn1cwIxyxfvIezAyTaUvkV9czfUDDaOsXsbNS2n&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+1626306339079	geckodriver	INFO	Listening on 127.0.0.1:65067
+1626306339120	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileJGKwwc"
+*** You are running in headless mode.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626306347243	Marionette	INFO	Listening on port 65076
+1626306347599	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626306358006	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:235:19
+TimedPromise@chrome://marionette/content/sync.js:220:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:418:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.ftd.agency/libs/e.js, line 46: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://cdn.flashtalking.com/frameworks/js/api/2/10/html5API.js, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=3C856E92-D9D2-7769-2CB3-7EC5558B8DF8?644381635, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=3C856E92-D9D2-7769-2CB3-7EC5558B8DF8?644381635, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=3C856E92-D9D2-7769-2CB3-7EC5558B8DF8?644381635, line 265: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://z.moatads.com/betfairieftdisplay731863876687/moatad.js#moatClientLevel1=126903&moatClientLevel2=20394&moatClientLevel3=5253328&moatClientLevel4=3179873_22112767&zMoatIMP=3C856E92-D9D2-7769-2CB3-7EC5558B8DF8?644381635, line 265: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/OpenAccount/Scripts/js/jquery-1.10.2.min.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: https://mobile.bet365.com/members/services/OpenAccount/Scripts/bundle-0cd47174ae.openaccount.js, line 3: NS_ERROR_FAILURE: 
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAMW6d6AQAA4YXXI3FgUbn1cwIxyxfvIezAyTaUvkV9czfUDDaOsXsbNS2n&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAMW6d6AQAA4YXXI3FgUbn1cwIxyxfvIezAyTaUvkV9czfUDDaOsXsbNS2n&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAMW6d6AQAA4YXXI3FgUbn1cwIxyxfvIezAyTaUvkV9czfUDDaOsXsbNS2n&PIRXTcSdwp--z=q, line 1: WebGL warning: <Create>: Can't use WebGL in headless mode (https://bugzil.la/1375585).
+JavaScript warning: https://mobile.bet365.com/members/services/host/Scripts/js/ProductCommon_v1.js?seed=AMAMW6d6AQAA4YXXI3FgUbn1cwIxyxfvIezAyTaUvkV9czfUDDaOsXsbNS2n&PIRXTcSdwp--z=q, line 1: Failed to create WebGL context: WebGL creation failed: 
+* Can't use WebGL in headless mode (https://bugzil.la/1375585).
+Exiting due to channel error.
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+Exiting due to channel error.
+Exiting due to channel error.
+1626306403375	geckodriver	INFO	Listening on 127.0.0.1:49168
+1626306403414	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofile1d9pUo"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626306411603	Marionette	INFO	Listening on port 49177
+1626306411717	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1626306421134	Marionette	INFO	Stopped listening on port 49177
+1626306464392	geckodriver	INFO	Listening on 127.0.0.1:49560
+1626306464435	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofile72fHMI"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626306470701	Marionette	INFO	Listening on port 49569
+1626306470847	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626306553272	Marionette	INFO	Stopped listening on port 49569
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626370640071	geckodriver	INFO	Listening on 127.0.0.1:55770
+1626370640124	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilez58K4u"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626370647506	Marionette	INFO	Listening on port 55779
+1626370647594	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626370671127	Marionette	INFO	Stopped listening on port 55779
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626390247119	geckodriver	INFO	Listening on 127.0.0.1:59218
+1626390247164	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileLEGnRJ"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626390252734	Marionette	INFO	Listening on port 59227
+1626390252831	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626390265374	Marionette	INFO	Stopped listening on port 59227
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626390536653	geckodriver	INFO	Listening on 127.0.0.1:59394
+1626390536699	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileQ6qJM4"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626390543926	Marionette	INFO	Listening on port 59403
+1626390544013	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626390550847	Marionette	INFO	Stopped listening on port 59403
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391081339	geckodriver	INFO	Listening on 127.0.0.1:59612
+1626391081376	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileli3YvJ"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391085774	Marionette	INFO	Listening on port 59621
+1626391085821	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391092412	Marionette	INFO	Stopped listening on port 59621
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391131179	geckodriver	INFO	Listening on 127.0.0.1:59726
+1626391131272	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofile8Pt1Go"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391137894	Marionette	INFO	Listening on port 59735
+1626391137946	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391144746	Marionette	INFO	Stopped listening on port 59735
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391166873	geckodriver	INFO	Listening on 127.0.0.1:59861
+1626391166903	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofile7qQCkb"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391174750	Marionette	INFO	Listening on port 59870
+1626391174828	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391181554	Marionette	INFO	Stopped listening on port 59870
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391221368	geckodriver	INFO	Listening on 127.0.0.1:60015
+1626391221413	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilelFs3wy"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391227097	Marionette	INFO	Listening on port 60024
+1626391227173	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391233564	Marionette	INFO	Stopped listening on port 60024
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391329960	geckodriver	INFO	Listening on 127.0.0.1:60154
+1626391330004	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileLu2HXZ"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391335299	Marionette	INFO	Listening on port 60163
+1626391335434	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391342085	Marionette	INFO	Stopped listening on port 60163
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391418743	geckodriver	INFO	Listening on 127.0.0.1:60299
+1626391418783	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileYrUzAg"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391424266	Marionette	INFO	Listening on port 60308
+1626391424361	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391430209	Marionette	INFO	Stopped listening on port 60308
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391465967	geckodriver	INFO	Listening on 127.0.0.1:60429
+1626391466006	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileW3I5GT"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391471922	Marionette	INFO	Listening on port 60438
+1626391472092	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391479103	Marionette	INFO	Stopped listening on port 60438
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391500237	geckodriver	INFO	Listening on 127.0.0.1:60561
+1626391500267	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilePod3SJ"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391504950	Marionette	INFO	Listening on port 60570
+1626391505043	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391512838	Marionette	INFO	Stopped listening on port 60570
+1626391605101	geckodriver	INFO	Listening on 127.0.0.1:60702
+1626391605141	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileHIzxbA"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391610919	Marionette	INFO	Listening on port 60711
+1626391611004	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391618007	Marionette	INFO	Stopped listening on port 60711
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391689046	geckodriver	INFO	Listening on 127.0.0.1:60835
+1626391689089	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileilVHrV"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391695226	Marionette	INFO	Listening on port 60844
+1626391695394	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391704780	Marionette	INFO	Stopped listening on port 60844
+1626391757447	geckodriver	INFO	Listening on 127.0.0.1:60982
+1626391757517	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileXg6HRB"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391765502	Marionette	INFO	Listening on port 60991
+1626391765563	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391771718	Marionette	INFO	Stopped listening on port 60991
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626391943959	geckodriver	INFO	Listening on 127.0.0.1:61148
+1626391943997	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilerPiTj2"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626391949370	Marionette	INFO	Listening on port 61157
+1626391949458	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626391955989	Marionette	INFO	Stopped listening on port 61157
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626392137831	geckodriver	INFO	Listening on 127.0.0.1:61322
+1626392137879	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileObRbu5"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626392143372	Marionette	INFO	Listening on port 61331
+1626392143437	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626392150123	Marionette	INFO	Stopped listening on port 61331
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

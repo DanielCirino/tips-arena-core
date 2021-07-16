@@ -1,6 +1,4 @@
-
 # -*- coding: utf-8 -*-
-
 
 class Competicao(object):
     def __init__(self, documento: dict = {}):
