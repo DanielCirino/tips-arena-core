@@ -5,7 +5,7 @@ from datetime import datetime
 from tipsarena_core.extratores.flash_score import navegador_web
 from tipsarena_core.services import log_service as log
 from tipsarena_core.utils import hash_utils, string_utils
-from tipsarena_core.utils.html_utils import DadosBrutos
+from tipsarena_core.utils.html_utils import DadosExtracao
 
 CASAS_DECIMAIS = 3
 
@@ -27,12 +27,12 @@ def extrairHtmlPartidas(url: str):
 
     htmlPartidas = navegador_web.obterElementoAposCarregamento(CSS_TABELA_PARTIDAS)
 
-    return DadosBrutos(hash_utils.gerarHash(url),
+    return DadosExtracao(hash_utils.gerarHash(url),
                        "PARTIDAS",
-                       url,
-                       string_utils.limparString(
+                         url,
+                         string_utils.limparString(
                          htmlPartidas.get_attribute("outerHTML"))
-                       )
+                         )
 
   except Exception as e:
     log.ERRO(f"Não foi possível extrair HTML de partidas da url {url}.", e.args)
@@ -92,12 +92,12 @@ def extrairHtmlPartidasDia(indiceDia=0):
     expandirPartidasCompeticao(browser)
     htmlTabelaPartidas = browser.find_element_by_css_selector(CSS_TABELA_PARTIDAS)
 
-    return DadosBrutos(hash_utils.gerarHash(navegador_web.URL_BASE),
+    return DadosExtracao(hash_utils.gerarHash(navegador_web.URL_BASE),
                        "PARTIDAS",
-                       navegador_web.URL_BASE,
-                       string_utils.limparString(
+                         navegador_web.URL_BASE,
+                         string_utils.limparString(
                          htmlTabelaPartidas.get_attribute("outerHTML"))
-                       )
+                         )
 
   except Exception as e:
     log.ERRO("Não foi possível extrair HTML partidas do dia.", e.args)
@@ -134,12 +134,12 @@ def extrairHtmlPartida(urlPartida: str):
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlDadosPartida = navegador_web.obterElementoAposCarregamento(CSS_DADOS_PARTIDA)
 
-    return DadosBrutos(hash_utils.gerarHash(urlPartida),
+    return DadosExtracao(hash_utils.gerarHash(urlPartida),
                        "PARTIDA",
-                       urlPartida,
-                       string_utils.limparString(
+                         urlPartida,
+                         string_utils.limparString(
                          htmlDadosPartida.get_attribute("outerHTML"))
-                       )
+                         )
 
   except Exception as e:
     log.ERRO(f"Não foi possível extrair HTML dados partida: {urlPartida}", e.args)
@@ -157,12 +157,12 @@ def extrairHtmlTimelinePartida(urlPartida: str):
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlTimeline = navegador_web.obterElementoAposCarregamento(CSS_DADOS_TIMELINE)
 
-    return DadosBrutos(hash_utils.gerarHash(urlTimeline),
+    return DadosExtracao(hash_utils.gerarHash(urlTimeline),
                        "PARTIDA_TIMELINE",
-                       urlTimeline,
-                       string_utils.limparString(
+                         urlTimeline,
+                         string_utils.limparString(
                          htmlTimeline.get_attribute("outerHTML"))
-                       )
+                         )
 
   except Exception as e:
     log.ERRO("Não foi possível obter timeline de eventos da partida.", e.args)
@@ -180,12 +180,12 @@ def extrairHtmlEstatisticasPartida(urlPartida: str):
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlEstatisticas = navegador_web.obterElementoAposCarregamento(CSS_DADOS_ESTATISTICAS)
 
-    return DadosBrutos(hash_utils.gerarHash(urlEstatisticas),
+    return DadosExtracao(hash_utils.gerarHash(urlEstatisticas),
                        "PARTIDA_TIMELINE",
-                       urlEstatisticas,
-                       string_utils.limparString(
+                         urlEstatisticas,
+                         string_utils.limparString(
                          htmlEstatisticas.get_attribute("outerHTML"))
-                       )
+                         )
 
 
   except Exception as e:
@@ -204,12 +204,12 @@ def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlHeadToHead = navegador_web.obterElementoAposCarregamento(DADOS_H2H)
 
-    return DadosBrutos(hash_utils.gerarHash(urlHeadToHead),
+    return DadosExtracao(hash_utils.gerarHash(urlHeadToHead),
                        "PARTIDA_H2H",
-                       urlHeadToHead,
-                       string_utils.limparString(
+                         urlHeadToHead,
+                         string_utils.limparString(
                          htmlHeadToHead.get_attribute("outerHTML"))
-                       )
+                         )
 
   except Exception as e:
     log.ERRO("Não foi possível extrair HTML últimas partidas das equipes.", e.args)
@@ -227,12 +227,12 @@ def extrairHtmlOddsPartida(urlPartida: str):
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlOdds = navegador_web.obterElementoAposCarregamento(CSS_DADOS_ODDS)
 
-    return DadosBrutos(hash_utils.gerarHash(urlOdds),
+    return DadosExtracao(hash_utils.gerarHash(urlOdds),
                        "PARTIDA_ODDS",
-                       urlOdds,
-                       string_utils.limparString(
+                         urlOdds,
+                         string_utils.limparString(
                          htmlOdds.get_attribute("outerHTML"))
-                       )
+                         )
 
   except Exception as e:
     log.ERRO("Não foi possível extrair HTML últimas partidas das equipes.", e.args)

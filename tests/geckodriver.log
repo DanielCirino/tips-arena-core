@@ -3921,3 +3921,33 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1626441062672	Marionette	INFO	Listening on port 64361
 1626441062767	Marionette	WARN	TLS certificate errors will be ignored for this session
 1626441237267	Marionette	INFO	Stopped listening on port 64361
+1626464836309	geckodriver	INFO	Listening on 127.0.0.1:51838
+1626464836367	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileolc5os"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626464840172	Marionette	INFO	Listening on port 51847
+1626464840286	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626464846939	Marionette	INFO	Stopped listening on port 51847
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626465056537	geckodriver	INFO	Listening on 127.0.0.1:52222
+1626465057561	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofilefUylzK"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626465061942	Marionette	INFO	Listening on port 52234
+1626465062010	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626465067907	Marionette	INFO	Stopped listening on port 52234
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1626465087174	geckodriver	INFO	Listening on 127.0.0.1:52370
+1626465087198	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/c4/7wg21tps309953_4v53mpswm0000gn/T/rust_mozprofileQWigui"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1626465091126	Marionette	INFO	Listening on port 52379
+1626465091237	Marionette	WARN	TLS certificate errors will be ignored for this session
+1626465097100	Marionette	INFO	Stopped listening on port 52379
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

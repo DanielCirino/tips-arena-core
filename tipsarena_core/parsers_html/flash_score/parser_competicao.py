@@ -1,5 +1,9 @@
-from tipsarena_core.utils import html_utils, string_utils
-from tipsarena_core.services import log_service as log
+# -*- coding: utf-8 -*-
+from datetime import datetime
+from tipsarena_core.utils import html_utils, string_utils, hash_utils
+from tipsarena_core.services import log_service as log, auth_service
+from tipsarena_core.extratores.flash_score import navegador_web
+from tipsarena_core.models.item_extracao import ItemExtracao
 
 
 def processarHtmlCompeticao(html: str):
@@ -40,28 +44,43 @@ def processarHtmlCompeticao(html: str):
 def processarHtmlCompeticoesPais(html: str):
   try:
     CSS_LISTA_COMPETICOES = "ul.selected-country-list>li>a"
-    listaCompeticoes = []
     documentoHtml = html_utils.converterStringParaHtml(html)
 
     competicoes = documentoHtml.select(CSS_LISTA_COMPETICOES)
-    sequencial = 1
-    for competicao in competicoes:
-      urlCompet = competicao["href"]
-      if urlCompet != "#":
-        listaCompeticoes.append({"url": urlCompet, "sequencial": sequencial})
-        sequencial += 1
 
-    return listaCompeticoes
+    for competicao in competicoes:
+      url = competicao["href"]
+
+      if url != "#":
+        urlCompeticao = f"{navegador_web.URL_BASE}{url}"
+        TIPO_EXTRACAO = "HTML_LISTA_EDICOES_COMPETICAO"
+        id = auth_service.gerarIdentificadorUniversal()
+        dataHoraExtracao = datetime.now()
+
+        yield ItemExtracao(
+          {
+            "id": id,
+            "url": f"{urlCompeticao}",
+            "urlHash": hash_utils.gerarHash(urlCompeticao),
+            "tipo": TIPO_EXTRACAO,
+            "dataHora": dataHoraExtracao,
+            "html": None,
+            "nomeArquivo": None
+          })
+
+
   except Exception as e:
-    log.ERRO("Erro ao processar lista de competições do país [{}]", e.args)
+    log.ERRO(f"Erro ao processar lista de competições do país [{urlCompeticao}]", e.args)
     return None
 
 
 def processarHtmlEdicoesCompeticao(html: str):
   try:
     CSS_LISTA_EDICOES = "#tournament-page-archiv div.profileTable__row"
-    listaEdicoes = []
     documentoHtml = html_utils.converterStringParaHtml(html)
+
+    metadados = documentoHtml.select_one("metadados")
+    urlCompeticao = metadados.attrs["url"]
 
     linksCompeticao = documentoHtml.select(CSS_LISTA_EDICOES)
 
@@ -72,7 +91,8 @@ def processarHtmlEdicoesCompeticao(html: str):
 
       anoCompeticao = links[0].text.split(" ")[-1]
       anoCompeticao = anoCompeticao.replace("/", "-")
-      # urlEdicao = urlCompeticao[:-1] + "-" + anoCompeticao + "/"
+
+      urlEdicao = urlCompeticao[:-1] + "-" + anoCompeticao + "/"
 
       equipeVencedora = {"nome": "", "url": ""}
 
@@ -80,14 +100,13 @@ def processarHtmlEdicoesCompeticao(html: str):
         equipeVencedora = {
           "nome": links[1].text, "url": links[1]["href"]}
 
-      listaEdicoes.append(
-        {"url": "",
-         "anoEdicao": anoCompeticao,
-         "equipeVencedora": equipeVencedora,
-         "sequencial": sequencial})
+      yield {"url": urlEdicao,
+             "anoEdicao": anoCompeticao,
+             "equipeVencedora": equipeVencedora,
+             "sequencial": sequencial}
+
       sequencial += 1
 
-    return listaEdicoes
   except Exception as e:
-    log.ERRO("Erro ao obter lista de edições da competição [{}]", e.args)
+    log.ERRO(f"Erro ao obter lista de edições da competição [{urlCompeticao}]", e.args)
     return None

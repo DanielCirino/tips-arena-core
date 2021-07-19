@@ -1,15 +1,25 @@
+# -*- coding: utf-8 -*-
 from enum import Enum
 
 
 class Fila(Enum):
-  FILA_PROCESSAMENTO_HTML_PAISES = "ta-processamento-html-paises"
-  FILA_EXTRACAO_COMPETICOES_PAIS = "ta-extracao-competicoes-pais"
+  FL_EXT_HTML_LISTA_PAISES = "ta-ext-html-lista-paises"
+  FL_PROC_HTML_LISTA_PAISES = "ta-proc-html-lista-paises"
 
-  FILA_EXTRACAO_EDICOES_COMPETICAO = "ta-extracao-edicoes-competicao"
-  FILA_PROCESSAMENTO_EDICAO_COMPETICAO = "ta-processamento-edicao-competicao"
+  FL_EXT_HTML_COMPETICOES_PAIS = "ta-ext-html-competicoes-pais"
+  FL_PROC_HTML_COMPETICOES_PAIS = "ta-proc-lista-competicoes-pais"
 
-  FILA_EXTRACAO_PARTIDAS_EDICAO_COMPETICAO = "ta-extracao-partidas-edicao-competicao"
-  FILA_PROCESSAMENTO_PARTIDA_EDICAO_COMPETICAO = "ta-processamento-partida-edicao-competicao"
+  FL_EXT_HTML_EDICOES_COMPETICAO = "ta-ext-edicoes-competicao"
+  FL_PROC_HTML_EDICOES_COMPETICAO = "ta-proc-edicao-competicao"
+  FL_PROC_HTML_COMPETICAO = "ta-proc-html-competicao"
 
-  FILA_EXTRACAO_EQUIPES_EDICAO_COMPETICAO = "ta-extracao-equipes-edicao-competicao"
-  FILA_PROCESSAMENTO_EQUIPE = "ta-processamento-equipe"
+  FL_EXT_HTML_EDICAO_COMPETEICAO = "ta-ext-html-edicao-competicao"
+  FL_PROC_HTML_EDICAO_COMPETEICAO = "ta-proc-html-edicao-competicao"
+
+
+  FL_EXT_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-ext-partidas-edicao-competicao"
+  FL_PROC_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-proc-partida-edicao-competicao"
+  FL_PROC_HTML_EDICAO_COMPETICAO = "ta-ext-html-competicao"
+
+  FL_EXT_EQUIPES_EDICAO_COMPETICAO = "ta-ext-equipes-edicao-competicao"
+  FL_PROC_EQUIPE = "ta-proc-equipe"

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from tipsarena_core.extratores.flash_score import extrator_competicao
 
 def teste_extrair_html_competicoes_pais():

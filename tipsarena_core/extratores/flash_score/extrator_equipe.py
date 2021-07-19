@@ -2,7 +2,7 @@
 
 from tipsarena_core.extratores.flash_score import navegador_web
 from tipsarena_core.utils import string_utils, html_utils, hash_utils
-from tipsarena_core.utils.html_utils import DadosBrutos
+from tipsarena_core.utils.html_utils import DadosExtracao
 from tipsarena_core.services import log_service as log
 
 
@@ -15,12 +15,12 @@ def extrairHtmlEquipesEdicaoCompeticao(urlEdicao: str):
 
     tabelaClassificacao = navegador_web.obterElementoAposCarregamento(CSS_TABELA_CLASSIFICACAO)
 
-    return DadosBrutos(hash_utils.gerarHash(urlEdicao),
+    return DadosExtracao(hash_utils.gerarHash(urlEdicao),
                        "EQUIPES_EDICAO_COMPETICAO",
-                       url,
-                       string_utils.limparString(
+                         url,
+                         string_utils.limparString(
                          tabelaClassificacao.get_attribute("outerHTML"))
-                       )
+                         )
 
   except Exception as e:
     log.ERRO(f"Não foi possível extrair html de equipes da edição da competição [{urlEdicao}]", e.args)
@@ -32,10 +32,10 @@ def extrairHtmlEquipe(urlEquipe):
     url = f"{navegador_web.URL_BASE}{urlEquipe}"
     documentoHtml = html_utils.obterHtml(url)
 
-    return DadosBrutos(hash_utils.gerarHash(urlEquipe),
+    return DadosExtracao(hash_utils.gerarHash(urlEquipe),
                        "EQUIPE",
-                       url,
-                       string_utils.limparString(str(documentoHtml)))
+                         url,
+                         string_utils.limparString(str(documentoHtml)))
 
 
   except Exception as e:

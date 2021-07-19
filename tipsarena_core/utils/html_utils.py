@@ -6,8 +6,6 @@ import re
 
 from tipsarena_core.services import log_service as log
 
-DadosBrutos = namedtuple("DadosBrutos", "id tipo url html")
-
 
 def obterHtml(url: str):
   try:
@@ -69,3 +67,17 @@ def obterUrlAtributoOnClick(onclick):
   except Exception as e:
     log.ERRO("Não foi possível extrair URL do atributo onclick.", e.args)
     return ""
+
+
+def incluirMetadadosHtml(html: str, url: str, urlHash: str, tipo: str):
+  documentoHtml = converterStringParaHtml(html)
+  tagBody = documentoHtml.select_one("body")
+
+  tagMetadados = documentoHtml.new_tag("metadados")
+  tagMetadados.attrs["url"] = url
+  tagMetadados.attrs["url_hash"] = urlHash
+  tagMetadados.attrs["tipo"] = tipo
+
+  tagBody.insert(0, tagMetadados)
+
+  return documentoHtml

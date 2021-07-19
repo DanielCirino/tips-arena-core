@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from tipsarena_core.core import aposta_core
 from tipsarena_core.core import partida_core
 from tipsarena_core.extratores.flash_score import extrator_partida
