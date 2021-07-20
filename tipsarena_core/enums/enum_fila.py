@@ -21,5 +21,8 @@ class Fila(Enum):
   FL_PROC_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-proc-partida-edicao-competicao"
   FL_PROC_HTML_EDICAO_COMPETICAO = "ta-ext-html-competicao"
 
-  FL_EXT_EQUIPES_EDICAO_COMPETICAO = "ta-ext-equipes-edicao-competicao"
-  FL_PROC_EQUIPE = "ta-proc-equipe"
+  FL_PROC_HTML_EQUIPES_EDICAO_COMPETICAO = "ta-ext-html-equipes-edicao-competicao"
+  FL_PROC_HTML_EQUIPE = "ta-proc-html-equipe"
+
+  FL_EXT_HTML_PARTIDA = "ta-ext-html-partida"
+  FL_PROC_HTML_PARTIDA = "ta-proc-html-partida"

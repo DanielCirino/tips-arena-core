@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from tipsarena_core.utils import html_utils, string_utils
 from tipsarena_core.services import log_service as log
 
@@ -15,7 +16,8 @@ def processarHtmlTimeline(html: str):
     eventosMandante = processarEventosTimeline("M", htmlEventosMandante)
     eventosVisitante = processarEventosTimeline("V", htmlEventosVisitante)
 
-    return eventosMandante + eventosVisitante
+    for evento in eventosMandante + eventosVisitante:
+      yield evento
 
   except Exception as e:
     log.ERRO("Não foi possível processar HTML timeline de eventos da partida.", e.args)

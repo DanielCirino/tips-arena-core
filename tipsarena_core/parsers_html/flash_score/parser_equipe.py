@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
+from tipsarena_core.extratores.flash_score.navegador_web import URL_BASE
 from tipsarena_core.services import log_service as log
-from tipsarena_core.utils import html_utils,string_utils
+from tipsarena_core.utils import html_utils, string_utils
 
 
 def processarHtmlEquipesCompeticao(html: str):
@@ -13,20 +15,19 @@ def processarHtmlEquipesCompeticao(html: str):
 
     for html in htmlListaEquipes:
       htmlEscudo = html.select("img")[0]
-      listaEquipes.append(
-        {"nome": htmlEscudo.attrs["alt"],
-         "url": html.attrs["href"],
-         "urlEscudo": htmlEscudo.attrs["src"],
-         "sequencial": sequencial}
-      )
+      yield {"nome": htmlEscudo.attrs["alt"],
+             "url": f"{URL_BASE}{html.attrs['href']}",
+             "urlEscudo": f"{URL_BASE}{htmlEscudo.attrs['src']}",
+             "sequencial": sequencial}
+
       sequencial += 1
 
-    return listaEquipes
   except Exception as e:
     log.ERRO("Não foi possível processar html lista de equipes da edição competição [{}]", e.args)
     return None
 
-def processarHtmlEquipe(html:str):
+
+def processarHtmlEquipe(html: str):
   try:
     CSS_NOME_EQUIPE = ".teamHeader__name"
     CSS_ESCUDO_EQUIPE = ".teamHeader__logo"

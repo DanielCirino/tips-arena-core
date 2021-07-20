@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from tipsarena_core.utils import html_utils, string_utils
 from tipsarena_core.enums.enum_partida import TIPO_MERCADO
 from tipsarena_core.services import log_service as log
@@ -107,35 +108,36 @@ def processarHtmlOddsPartida(html: str):
 def extrairOddsPorMercado(mercado, html: str):
   try:
     htmlOdds = html_utils.converterStringParaHtml(html)
-    tabelaOdds = htmlOdds.select(CSS_LISTA_ODDS)
+    tabelaOdds = htmlOdds.select_one(CSS_LISTA_ODDS)
 
-    if mercado["tipo"] == TIPO_MERCADO.RESULTADO: return processarHtmlOddsResultado(tabelaOdds)
+    if mercado["tipo"] == TIPO_MERCADO.RESULTADO: return processarHtmlOddsResultado(str(tabelaOdds))
 
     if mercado["tipo"] == TIPO_MERCADO.UNDER_OVER:
       listaOdds = []
       tabelasUnderOver = tabelaOdds.select("[class^=table_]")
       for tabela in tabelasUnderOver:
-        odds = processarHtmlOddsUnderOver(tabela)
+        odds = processarHtmlOddsUnderOver(str(tabela))
         if odds != {}:
           listaOdds.append(odds)
       return listaOdds
 
-    if mercado["tipo"] == TIPO_MERCADO.DNB: return processarHtmlOddsDrawNoBet(tabelaOdds)
+    if mercado["tipo"] == TIPO_MERCADO.DNB: return processarHtmlOddsDrawNoBet(str(tabelaOdds))
 
-    if mercado["tipo"] == TIPO_MERCADO.BTTS: return processarHtmlOddsBtts(tabelaOdds)
+    if mercado["tipo"] == TIPO_MERCADO.BTTS: return processarHtmlOddsBtts(str(tabelaOdds))
 
     if mercado["tipo"] == TIPO_MERCADO.PLACAR:
       listaOdds = []
       tabelasPlacarExato = tabelaOdds.select("[class^=table_]")
       for tabela in tabelasPlacarExato:
-        odds = processarHtmlOddsPlacarExato(tabela)
+        odds = processarHtmlOddsPlacarExato(str(tabela))
         if odds != {}:
           listaOdds.append(odds)
+
       return listaOdds
 
-    if mercado["tipo"] == TIPO_MERCADO.ODD_EVEN: return processarHtmlOddsImparPar(tabelaOdds)
+    if mercado["tipo"] == TIPO_MERCADO.ODD_EVEN: return processarHtmlOddsImparPar(str(tabelaOdds))
 
-    if mercado["tipo"] == TIPO_MERCADO.DUPLA_CHANCE: return processarHtmlOddsDuplaChance(tabelaOdds)
+    if mercado["tipo"] == TIPO_MERCADO.DUPLA_CHANCE: return processarHtmlOddsDuplaChance(str(tabelaOdds))
 
   except Exception as e:
     log.ERRO(f"Não foi possível obter ODDS para o mercado {mercado}.", e.args)
@@ -258,9 +260,10 @@ def processarHtmlOddsUnderOver(html: str):
 
       htmlListaOdds = tabela.select(CSS_LINHAS_ODDS)
       quantidadeOdds = len(htmlListaOdds)
-      quantidadeGols = htmlListaOdds[0].select_one("[class^=noOddsCell_]").text
+
 
       for elemento in htmlListaOdds:
+        quantidadeGols = elemento.select_one("[class^=noOddsCell_]").text
         infoCasaAposta = elemento.select_one(CSS_INFO_CASA_APOSTA).attrs["title"]
         opcoes = elemento.select("a[class^=odd_]")
 
@@ -341,7 +344,7 @@ def processarHtmlOddsPlacarExato(html: str):
     return {}
 
 
-def processarHtmlOddsBtts(htmlOdds):
+def processarHtmlOddsBtts(html:str):
   redutorQuantidadeBtts = 0
   redutorQuantidadeNoBtts = 0
 
@@ -349,6 +352,7 @@ def processarHtmlOddsBtts(htmlOdds):
   valorOddsNoBtts = 0
   listaOdds = []
   try:
+    htmlOdds = html_utils.converterStringParaHtml(html)
     htmlListaOdds = htmlOdds.select(CSS_LINHAS_ODDS)
     quantidadeOdds = len(htmlListaOdds)
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from tipsarena_core.utils import html_utils
 from tipsarena_core.services import log_service as log
 
@@ -8,6 +9,8 @@ def processarHtmlEdicaoCompeticao(html:str):
     CSS_ANO_EDICAO = "div.teamHeader__text"
 
     documentoHtml = html_utils.converterStringParaHtml(html)
+    metadados = documentoHtml.select_one("metadados")
+
     linksCabecalho = documentoHtml.select(CSS_LINKS_CABECALHO)
     divNomeCompeticao = documentoHtml.select(CSS_NOME_COMPETICAO)
     divAnoEdicao = documentoHtml.select(CSS_ANO_EDICAO)
@@ -33,7 +36,7 @@ def processarHtmlEdicaoCompeticao(html:str):
       "total_partidas": 0,
       "total_partidas_finalizadas": 0,
       "status": "NAO_DEFINIDO",
-      "url": ""
+      "url": metadados.attrs["url"]
     }
   except Exception as e:
     log.ERRO("Não foi possível processar html da edição da competição {}.", e.args)

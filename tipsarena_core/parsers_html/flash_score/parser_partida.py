@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 from datetime import datetime
+from tipsarena_core.extratores.flash_score import navegador_web
 from tipsarena_core.enums.enum_partida import STATUS as STATUS_PARTIDA
 from tipsarena_core.utils import html_utils, string_utils, datetime_utils
 from tipsarena_core.services import log_service as log
@@ -6,6 +8,7 @@ from tipsarena_core.services import log_service as log
 
 def processarHtmlListaPartidas(html: str):
   try:
+    CSS_TABELA_PARTIDAS = "#live-table"
     CSS_LINHAS_PARTIDA = "div[id^=g_1_]"
     CSS_DATA_HORA_PARTIDA = ".event__time"
     CSS_NOME_MANDANTE = ".event__participant--home"
@@ -15,16 +18,19 @@ def processarHtmlListaPartidas(html: str):
     CSS_PLACAR_FINAL = ".event__scores"
     CSS_PLACAR_PARCIAL = ".event__part"
 
-    tabelaPartidas = html_utils.converterStringParaHtml(html)
+    html = html_utils.converterStringParaHtml(html)
+    metadados = html.select_one("metadados"
+                                )
+    tabelaPartidas = html.select_one(CSS_TABELA_PARTIDAS)
     linhasHtml = tabelaPartidas.select(CSS_LINHAS_PARTIDA)
 
-    listaPartidas = []
     sequencial = 1
 
     for item in linhasHtml:
       idPartida = item.attrs["id"].split("_")[2]
-      urlPartida = f"/jogo/{idPartida}/"
-      dataHoraPartida = "-" if item.find(CSS_DATA_HORA_PARTIDA) == None else item.select_one(CSS_DATA_HORA_PARTIDA).text
+      urlPartida = f"{navegador_web.URL_BASE}/jogo/{idPartida}/"
+      dataHoraPartida = "-" if item.select_one(CSS_DATA_HORA_PARTIDA) == None else item.select_one(
+        CSS_DATA_HORA_PARTIDA).text
 
       nomeEquipeMandante = item.select_one(CSS_NOME_MANDANTE).text
       escudoEquipeMandante = item.select_one(CSS_ESCUDO_MANDANTE).attrs["src"] if "src" in item.select_one(
@@ -38,21 +44,20 @@ def processarHtmlListaPartidas(html: str):
 
       placarParcial = "-" if item.find(CSS_PLACAR_PARCIAL) == None else item.select_one(CSS_PLACAR_PARCIAL).text
 
-      listaPartidas.append({
+      yield {
         "idPartida": idPartida,
         "url": urlPartida,
         "dataHoraPartida": dataHoraPartida,
         "nomeEquipeMandante": string_utils.limparString(nomeEquipeMandante),
-        "escudoEquipeMandante": escudoEquipeMandante,
+        "escudoEquipeMandante": f"{navegador_web.URL_BASE}{escudoEquipeMandante}",
         "nomeEquipeVisitante": string_utils.limparString(nomeEquipeVisitante),
-        "escudoEquipeVisitante": escudoEquipeVisitante,
+        "escudoEquipeVisitante": f"{navegador_web.URL_BASE}{escudoEquipeVisitante}",
         "placarParcial": placarParcial,
         "placarFinal": placarFinal,
         "sequencial": sequencial}
-      )
+
       sequencial += 1
 
-    return listaPartidas
   except Exception as e:
     log.ERRO("Não foi possível processar lista de partidas da url {}.", e.args)
     return None
@@ -70,6 +75,7 @@ def processarHtmlPartida(html: str):
     CSS_LINKS_PARTIDA = "div.tabs div.tabs__group a.tabs__tab"
 
     htmlPartida = html_utils.converterStringParaHtml(html)
+    metadados = htmlPartida.select_one("metadados")
 
     htmlDadosCompeticao = htmlPartida.select_one(CSS_CABECALHO_PARTIDA)
     htmlDadosMandante = htmlPartida.select_one(CSS_DADOS_MANDANTE)
@@ -87,7 +93,7 @@ def processarHtmlPartida(html: str):
     htmlPlacarPartida = htmlPartida.select_one(CSS_PLACAR_PARTIDA)
     htmlFaseCompeticao = htmlDadosCompeticao.select_one("[class^=country_] a")
 
-    urlPartida = ""
+    urlPartida = metadados.attrs["url"]
     status = htmlStatusPartida.text.split("-")
     minutos = status[1] if len(status) > 1 else ""
     dataHora = htmlDataPartida.text
@@ -117,7 +123,7 @@ def processarHtmlPartida(html: str):
                        "urlEscudo": urlImageVisitante}
 
     return {
-      "url": "",
+      "url": urlPartida,
       "status": normalizarDescricaoStatus(status[0]),
       "dataHora": dataHora,
       "dataHoraUtc": datetime_utils.converterHoraLocalToUtc(datetime.strptime(dataHora, "%d.%m.%Y %H:%M")),

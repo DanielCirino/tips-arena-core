@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pathlib
 from tipsarena_core.parsers_html.flash_score import parser_partida_odds
 
