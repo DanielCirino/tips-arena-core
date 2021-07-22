@@ -3,7 +3,7 @@ from datetime import datetime
 
 from tipsarena_core.models.Processamento import Processamento
 from tipsarena_core.models.ItemExtracao import ItemExtracao
-from tipsarena_core.repository import mongodb
+from tipsarena_core import repositorio
 
 NOME_COLECAO = "controle_processamento"
 OPCOES_FILTRO = {
@@ -18,7 +18,7 @@ OPCOES_ORDENACAO = [
 
 
 def obterProcessamentoPorId(id):
-  doc = mongodb.obterDocumentoPorId(NOME_COLECAO, id)
+  doc = repositorio.obterDocumentoPorId(NOME_COLECAO, id)
   if doc is not None:
     return Processamento(doc)
   else:
@@ -54,7 +54,7 @@ def listScrapWorks(filtros={}, sort=[], limit=0, skip=0):
     else:
       filtros["status"] = {"$in": filtros["status"]}
 
-  docs = mongodb.listar_documentos(NOME_COLECAO, filtros, [("prioridadeExtracao", 1)], limit, skip)
+  docs = repositorio.listar_documentos(NOME_COLECAO, filtros, [("prioridadeExtracao", 1)], limit, skip)
 
   for doc in docs:
     listaScraps.append(ItemExtracao(doc))
@@ -67,9 +67,9 @@ def salvarProcessamento(processamento: Processamento):
     processamento.dataAtualizacao = datetime.utcnow()
     if processamento._id == "":
       delattr(processamento, "_id")
-      return mongodb.inserirDocumento(NOME_COLECAO, processamento)
+      return repositorio.iserirDocumento(NOME_COLECAO, processamento)
     else:
-      return mongodb.atualizarDocumento(NOME_COLECAO, processamento)
+      return repositorio.atualizarDocumento(NOME_COLECAO, processamento)
   except Exception as e:
     print(e.args)
     return None

@@ -1,18 +1,18 @@
 from datetime import datetime
 
-from tipsarena_core.repository import mongodb
+from tipsarena_core import repositorio
 
 NOME_COLECAO = 'usuarios'
 
 
 def criarIndicesUsuario():
   indicesAplicacao = [
-    (("documento", mongodb.ASCENDING), True),
-    (("email", mongodb.ASCENDING), True)
+    (("documento", repositorio.ASCENDING), True),
+    (("email", repositorio.ASCENDING), True)
   ]
 
   for indice in indicesAplicacao:
-    mongodb.criarIndice(NOME_COLECAO, indice[0], indice[1])
+    repositorio.criarIndice(NOME_COLECAO, indice[0], indice[1])
 
 
 def salvarUsuario(usuario):
@@ -20,7 +20,7 @@ def salvarUsuario(usuario):
     usuario["dataAtualizacao"] = datetime.utcnow()
     filtro = {"documento": usuario.get("documento")}
 
-    return mongodb.inserirOuAtualizarDocumento(NOME_COLECAO, usuario, filtro, {"dataCadastro": datetime.utcnow()})
+    return repositorio.iserirOuAtualizarDocumento(NOME_COLECAO, usuario, filtro, {"dataCadastro": datetime.utcnow()})
 
   except Exception as e:
     print("Erro ao salvar usuario.[{}]".format(e.args))
@@ -29,7 +29,7 @@ def salvarUsuario(usuario):
 
 def obterUsuarioPorEmail(email: str):
   try:
-    return mongodb.obterDocumentoPorChave(NOME_COLECAO, {"email": email})
+    return repositorio.obterDocumentoPorChave(NOME_COLECAO, {"email": email})
   except Exception as e:
     print("Erro ao obter usuario pelo E-mail {}. [{}]".format(
       email, e.args))
@@ -38,7 +38,7 @@ def obterUsuarioPorEmail(email: str):
 
 def obterUsuarioPorDocumento(documento: str):
   try:
-    return mongodb.obterDocumentoPorChave(NOME_COLECAO, {"documento": documento})
+    return repositorio.obterDocumentoPorChave(NOME_COLECAO, {"documento": documento})
   except Exception as e:
     print("Erro ao obter usuario por documento {}. [{}]".format(
       documento, e.args))
@@ -46,13 +46,13 @@ def obterUsuarioPorDocumento(documento: str):
 
 
 def listarUsuarios(filtros={}, ordenacao=[], limite=0, offset=0):
-  lista = mongodb.listarDocumentos(NOME_COLECAO, filtros, ordenacao, limite, offset)
+  lista = repositorio.listarDocumentos(NOME_COLECAO, filtros, ordenacao, limite, offset)
   return lista
 
 
 def obterQuantidadeUsuarios():
-  return mongodb.obterTotalDocumentos(NOME_COLECAO)
+  return repositorio.obterTotalDocumentos(NOME_COLECAO)
 
 
 def excluirTodos():
-  mongodb.excluirColecao(NOME_COLECAO)
+  repositorio.excluirColecao(NOME_COLECAO)

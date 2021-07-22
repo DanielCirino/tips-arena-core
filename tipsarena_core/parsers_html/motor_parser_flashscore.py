@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-import logging
 
 from tipsarena_core import gerenciador_filas
 from tipsarena_core.enums.enum_fila import FILA as FILA
 from tipsarena_core.parsers_html.flash_score import parser_pais, parser_competicao, parser_edicao_competicao, \
-  parser_partida, parser_equipe, parser_partida_timeline, parser_partida_estatisticas, parser_partida_odds, \
-  parser_partida_head_to_head
+  parser_partida, parser_equipe, parser_partida_timeline, parser_partida_estatisticas, parser_partida_odds
 
 
 def processarHtmlPaises(caminhoParaArquivo):
@@ -89,11 +87,13 @@ def processarHtmlCotacoesResultado(caminhoParaArquivo: str):
     for cotacao in cotacoes:
       pass
 
+
 def processarHtmlCotacoesDNB(caminhoParaArquivo: str):
   with open(caminhoParaArquivo, "r") as arquivo:
     html = arquivo.read()
     cotacoes = parser_partida_odds.processarHtmlOddsDrawNoBet(html)
     pass
+
 
 def processarHtmlCotacoesDuplaChance(caminhoParaArquivo: str):
   with open(caminhoParaArquivo, "r") as arquivo:
@@ -101,11 +101,13 @@ def processarHtmlCotacoesDuplaChance(caminhoParaArquivo: str):
     cotacoes = parser_partida_odds.processarHtmlOddsDuplaChance(html)
     pass
 
+
 def processarHtmlCotacoesImparPar(caminhoParaArquivo: str):
   with open(caminhoParaArquivo, "r") as arquivo:
     html = arquivo.read()
     cotacoes = parser_partida_odds.processarHtmlOddsImparPar(html)
     pass
+
 
 def processarHtmlCotacoesAmbosMarcam(caminhoParaArquivo: str):
   with open(caminhoParaArquivo, "r") as arquivo:
@@ -113,12 +115,14 @@ def processarHtmlCotacoesAmbosMarcam(caminhoParaArquivo: str):
     cotacoes = parser_partida_odds.processarHtmlOddsBtts(html)
     pass
 
+
 def processarHtmlCotacoesPlacarExato(caminhoParaArquivo: str):
   with open(caminhoParaArquivo, "r") as arquivo:
     html = arquivo.read()
     cotacoes = parser_partida_odds.processarHtmlOddsPlacarExato(html)
     for cotacao in cotacoes:
       pass
+
 
 def processarHtmlCotacoesUnderOver(caminhoParaArquivo: str):
   with open(caminhoParaArquivo, "r") as arquivo:
@@ -128,10 +132,8 @@ def processarHtmlCotacoesUnderOver(caminhoParaArquivo: str):
       pass
 
 
-
-
 if __name__ == "__main__":
-  # processarHtmlPaises('/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/f3a928ab-510a-44f6-8be1-1916a712ef54.html')
+  processarHtmlPaises('/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/paises-b3a8ebf43551bf390ad6733f.html')
   # processarHtmlCompeticoesPais(
   #   "/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/83fece40-18b7-48a3-b390-02ce6679e6ca.html")
   # processarHtmlEdicoesCompeticao(
@@ -156,4 +158,5 @@ if __name__ == "__main__":
   # processarHtmlCotacoesImparPar('/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/partida/odd/b6460593435c695a7302a892.html')
   # processarHtmlCotacoesAmbosMarcam('/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/partida/odd/4edbd6bc5682ecd5ae1725c1.html')
   # processarHtmlCotacoesPlacarExato('/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/partida/odd/78c09da5c2fbe222a8ae6bde.html')
-  processarHtmlCotacoesUnderOver('/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/partida/odd/4aa57f80a1e0a68e08f3f154.html')
+  # processarHtmlCotacoesUnderOver(
+  #   '/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/partida/odd/4aa57f80a1e0a68e08f3f154.html')

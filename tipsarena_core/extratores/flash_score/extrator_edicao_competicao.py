@@ -45,7 +45,7 @@ def extrairHtmlEdicaoCompeticao(urlEdicao: str):
         "tipo": TIPO_EXTRACAO,
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(str(htmlFinal)),
-        "nomeArquivo": f"{id.lower()}.html"
+        "nomeArquivo": f"edc-{urlHash.lower()}.html"
       })
 
   except Exception as e:

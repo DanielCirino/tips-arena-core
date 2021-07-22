@@ -4,7 +4,7 @@ from datetime import datetime
 
 from tipsarena_core.core import aposta_core
 from tipsarena_core.models.Partida import Partida
-from tipsarena_core.repository import mongodb
+from tipsarena_core import repositorio
 from tipsarena_core.utils import hash_utils, logUtils as log
 
 NOME_COLECAO = 'partidas'
@@ -28,7 +28,7 @@ def salvarPartida(partida: dict):
     partida["dataAtualizacao"] = datetime.utcnow()
     partida["_id"] = hash_utils.gerarHash(partida["url"])
 
-    return mongodb.inserirDocumentoCasoNaoExista(NOME_COLECAO, partida, {"_id": partida.get("_id")})
+    return repositorio.iserirDocumentoCasoNaoExista(NOME_COLECAO, partida, {"_id": partida.get("_id")})
   except Exception as e:
     log.imprimirMensagem("ERRO", "Não foi possível salvar partida [{}]".format(partida.get("url")), e.args)
     return None
@@ -36,7 +36,7 @@ def salvarPartida(partida: dict):
 
 def obterPartidaPorId(id):
   try:
-    return mongodb.obterDocumentoPorId(NOME_COLECAO, id)
+    return repositorio.obterDocumentoPorId(NOME_COLECAO, id)
   except Exception as e:
     log.imprimirMensagem("ERRO",
                          "Não foi possível obter partida pelo ID:.".format(id),
@@ -71,7 +71,7 @@ def listPartidas(filtros={}, ordenacao=[], limite=0, offset=0):
       if filtros["dataHora"] != {}:
         filtros["dataHora"] = filtroDataHora
 
-    return mongodb.listarDocumentos(NOME_COLECAO, filtros, [("dataHora", -1)], limite, offset)
+    return repositorio.listarDocumentos(NOME_COLECAO, filtros, [("dataHora", -1)], limite, offset)
 
   except Exception as e:
     log.imprimirMensagem("ERRO",

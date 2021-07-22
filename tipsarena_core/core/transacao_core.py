@@ -5,7 +5,7 @@ from datetime import datetime
 from bson import ObjectId
 
 from tipsarena_core.models.Transacao import Transacao
-from tipsarena_core.repository import mongodb
+from tipsarena_core import repositorio
 from tipsarena_core.utils import logUtils as log
 
 NOME_COLECAO = 'transacoes'
@@ -32,16 +32,16 @@ def salvarTransacao(transacao: Transacao):
       delattr(transacao, "_id")
       transacao.idUsuario = ObjectId(transacao.idUsuario)
       transacao.dataCadastro = datetime.now()
-      return mongodb.inserirDocumento(NOME_COLECAO, transacao)
+      return repositorio.iserirDocumento(NOME_COLECAO, transacao)
     else:
-      return mongodb.atualizarDocumento(NOME_COLECAO, transacao)
+      return repositorio.atualizarDocumento(NOME_COLECAO, transacao)
   except Exception as e:
     log.imprimirMensagem("ERRO", "Não foi possível salvar transação **{}**.".format(transacao), e.args)
     return False
 
 
 def obterTransacaoPorId(id):
-  doc = mongodb.obterDocumentoPorId(NOME_COLECAO,id)
+  doc = repositorio.obterDocumentoPorId(NOME_COLECAO, id)
   if doc is not None:
     return Transacao(doc)
   else:
@@ -81,7 +81,7 @@ def listarTransacoes(filtros={}, ordenacao=[], limite=0, offset=0):
 
       filtros["dataCadastro"] = filtroDataCadastro
 
-    return mongodb.listarDocumentos(NOME_COLECAO, filtros, [("dataCadastro", -1)], limite, offset)
+    return repositorio.listarDocumentos(NOME_COLECAO, filtros, [("dataCadastro", -1)], limite, offset)
   except Exception as e:
     log.imprimirMensagem("ERRO", "Não foi possível listar transações.", e.args)
     return None

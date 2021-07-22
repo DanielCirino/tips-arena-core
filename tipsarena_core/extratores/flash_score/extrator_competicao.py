@@ -25,7 +25,7 @@ def extrairHtmlCompeticoesPais(urlPais: str):
         "tipo": TIPO_EXTRACAO,
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(str(htmlFinal)),
-        "nomeArquivo": f"{id.lower()}.html"
+        "nomeArquivo": f"cmp-ps-{urlHash.lower()}.html"
       })
 
   except Exception as e:
@@ -81,7 +81,7 @@ def extrairHtmlEdicoesCompeticao(urlCompeticao: str):
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(
           str(htmlFinal)),
-        "nomeArquivo": f"{id.lower()}.html"
+        "nomeArquivo": f"edc-cmp-{urlHash.lower()}.html"
       })
 
 

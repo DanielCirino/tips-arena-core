@@ -8,7 +8,7 @@ from tipsarena_core.core import transacao_core
 from tipsarena_core.models.Aposta import Aposta
 from tipsarena_core.models.Partida import Partida
 from tipsarena_core.models.Transacao import Transacao
-from tipsarena_core.repository import mongodb
+from tipsarena_core import repositorio
 
 NOME_COLECAO = 'apostas'
 OPCOES_FILTRO = {
@@ -27,12 +27,12 @@ OPCOES_ORDENACAO = {
 
 def criarIndicesApostas():
   indicesArquivo = [
-    (("idUsuario", mongodb.ASCENDING), False),
-    (("idPartida", mongodb.ASCENDING), False),
+    (("idUsuario", repositorio.ASCENDING), False),
+    (("idPartida", repositorio.ASCENDING), False),
   ]
 
   for indice in indicesArquivo:
-    mongodb.criarIndice(NOME_COLECAO, indice[0], indice[1])
+    repositorio.criarIndice(NOME_COLECAO, indice[0], indice[1])
 
 
 def salvarAposta(aposta: Aposta):
@@ -42,16 +42,16 @@ def salvarAposta(aposta: Aposta):
       delattr(aposta, "_id")
       aposta.idUsuario = ObjectId(aposta.idUsuario)
       aposta.dataCadastro = datetime.utcnow()
-      return mongodb.inserirDocumento(NOME_COLECAO,aposta)
+      return repositorio.inserirDocumento(NOME_COLECAO, aposta)
     else:
-      return mongodb.atualizarDocumento(NOME_COLECAO,aposta)
+      return repositorio.atualizarDocumento(NOME_COLECAO, aposta)
   except Exception as e:
     print(e.args)
     return False
 
 
 def obterApostaPorId(id):
-  doc = mongodb.obterDocumentoPorId(NOME_COLECAO,id)
+  doc = repositorio.obterDocumentoPorId(NOME_COLECAO, id)
   if doc is not None:
     return Aposta(doc)
   else:
@@ -92,7 +92,7 @@ def listarApostas(filtros={}, ordenacao=[], limite=0, offset=0):
       if filtroDataCadastro != {}:
         filtros["dataCadastro"] = filtroDataCadastro
 
-    return mongodb.listarDocumentos(NOME_COLECAO, filtros, [("dataCadastro", -1)], limite, offset)
+    return repositorio.listarDocumentos(NOME_COLECAO, filtros, [("dataCadastro", -1)], limite, offset)
 
   except Exception as e:
     print(e.args)

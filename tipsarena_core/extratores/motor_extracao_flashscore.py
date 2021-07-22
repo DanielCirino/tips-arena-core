@@ -11,7 +11,7 @@ from tipsarena_core.extratores.flash_score import extrator_pais, extrator_compet
 def extrairHtmlPaises():
   dadosExtracao = extrator_pais.extrairHtmlPaises()
 
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}pais/paises-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}pais/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, mode="w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -23,7 +23,7 @@ def extrairHtmlPaises():
 
 def extrairHtmlCompeticoesPais(urlPais: str):
   dadosExtracao = extrator_competicao.extrairHtmlCompeticoesPais(urlPais)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}competicao/cmp-ps-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}competicao/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -35,7 +35,7 @@ def extrairHtmlCompeticoesPais(urlPais: str):
 
 def extrairHtmlEdicoesCompeticao(urlCompeticao: str):
   dadosExtracao = extrator_competicao.extrairHtmlEdicoesCompeticao(urlCompeticao)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicao_competicao/edc-cmp-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicao_competicao/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -47,7 +47,7 @@ def extrairHtmlEdicoesCompeticao(urlCompeticao: str):
 
 def extrairHtmlEdicaoCompeticao(urlEdicao: str):
   dadosExtracao = extrator_edicao_competicao.extrairHtmlEdicaoCompeticao(urlEdicao)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicao_competicao/edc-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicao_competicao/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -59,21 +59,30 @@ def extrairHtmlEdicaoCompeticao(urlEdicao: str):
 
 def extrairHtmlPartidasEdicaoCompeticao(urlEdicao: str):
   htmlPartidasFinalizadas = extrator_edicao_competicao.extrairHtmlPartidasFinalizadasEdicaoCompeticao(urlEdicao)
-  caminhoArquivoPartidasFinalizadas = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/ptd-edc-{htmlPartidasFinalizadas.urlHash.lower()}.html"
+  caminhoArquivoPartidasFinalizadas = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/{htmlPartidasFinalizadas.nomeArquivo}"
 
   with open(caminhoArquivoPartidasFinalizadas, "w") as arquivo:
     arquivo.write(htmlPartidasFinalizadas.html)
 
   htmlPartidasAgendadas = extrator_edicao_competicao.extrairHtmlPartidasAgendadasEdicaoCompeticao(urlEdicao)
-  caminhoArquivoPartidasAgendadas = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/ptd-edc-{htmlPartidasAgendadas.urlHash.lower()}.html"
+  caminhoArquivoPartidasAgendadas = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/{htmlPartidasAgendadas.nomeArquivo}"
 
   with open(caminhoArquivoPartidasAgendadas, "w") as arquivo:
     arquivo.write(htmlPartidasAgendadas.html)
 
+  htmlPartidasFinalizadas.html = None
+  htmlPartidasAgendadas.html = None
+
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_PARTIDA.value,
+                                     htmlPartidasFinalizadas.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_PARTIDA.value,
+                                     htmlPartidasAgendadas.__dict__)
+
 
 def extrairHtmlEquipesEdicaoCompeticao(urlEdicao: str):
   dadosExtracao = extrator_equipe.extrairHtmlEquipesEdicaoCompeticao(urlEdicao)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}equipe/eqp-edc{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}equipe/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -85,120 +94,151 @@ def extrairHtmlEquipesEdicaoCompeticao(urlEdicao: str):
 
 def extrairHtmlPartida(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlPartida(urlPartida)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/ptd-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_PARTIDA.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_TIMELINE__PARTIDA.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_H2H_PARTIDA.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_ESTATISTICAS_PARTIDA.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_ODDS_RESULTADO.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_ODDS_DNB.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_ODDS_DUPLA_CHANCE.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_ODDS_IMPAR_PAR.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_ODDS_AMBOS_MARCAM.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_ODDS_PLACAR_EXATO.value,
+                                     dadosExtracao.__dict__)
+
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_ODDS_UNDER_OVER.value,
                                      dadosExtracao.__dict__)
 
 
 def extrairHtmlEstatisticasPartida(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlEstatisticasPartida(urlPartida)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/estatisticas/ptd-stat-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/estatisticas/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_ESTATISTICAS_PARTIDA.value,
                                      dadosExtracao.__dict__)
+
 
 def extrairHtmlConfrontosEquipes(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlUltimasPartidasEquipes(urlPartida)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/confrontos/ptd-h2h-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/confrontos/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_H2H_PARTIDA.value,
                                      dadosExtracao.__dict__)
 
 
 def extrairHtmlCotacoesResultado(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.RESULTADO)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/ptd-odd-rst-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_ODDS_RESULTADO.value,
                                      dadosExtracao.__dict__)
 
 
 def extrairHtmlCotacoesDNB(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.DNB)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/ptd-odd-dnb-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_ODDS_DNB.value,
                                      dadosExtracao.__dict__)
 
 
 def extrairHtmlCotacoesDuplaChance(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.DUPLA_CHANCE)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/ptd-odd-dc{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_ODDS_DUPLA_CHANCE.value,
                                      dadosExtracao.__dict__)
 
 
 def extrairHtmlCotacoesImparPar(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.IMPAR_PAR)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/ptd-odd-ip-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_ODDS_IMPAR_PAR.value,
                                      dadosExtracao.__dict__)
 
 
 def extrairHtmlCotacoesAmbosMarcam(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.AMBOS_MARCAM)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/ptd-odd-btts{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_ODDS_AMBOS_MARCAM.value,
                                      dadosExtracao.__dict__)
 
 
 def extrairHtmlCotacoesPlacarExato(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.PLACAR_EXATO)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/ptd-odd-plc-{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_ODDS_PLACAR_EXATO.value,
                                      dadosExtracao.__dict__)
 
 
 def extrairHtmlCotacoesUnderOver(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.UNDER_OVER)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/ptd-odd-uo{dadosExtracao.urlHash.lower()}.html"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
   dadosExtracao.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_ODDS_UNDER_OVER.value,
                                      dadosExtracao.__dict__)
 
 

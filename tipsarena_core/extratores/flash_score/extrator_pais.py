@@ -37,7 +37,7 @@ def extrairHtmlPaises() -> ItemExtracao:
         "tipo": TIPO_EXTRACAO,
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(str(htmlFinal)),
-        "nomeArquivo": f"{id.lower()}.html"
+        "nomeArquivo": f"ps-{urlHash.lower()}.html"
       })
 
 

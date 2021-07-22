@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from tipsarena_core.repository import mongodb
+from tipsarena_core import repositorio
 from tipsarena_core.utils import logUtils as log
 
 NOME_COLECAO = "controle_extracao"
@@ -19,19 +19,19 @@ OPCOES_ORDENACAO = [{
 
 def criarIndicesControleExtracao():
   indicesArquivo = [
-    (("prioridadeExtracao", mongodb.ASCENDING), False),
-    (("tipo", mongodb.ASCENDING), False),
-    (("status", mongodb.ASCENDING), False),
+    (("prioridadeExtracao", repositorio.ASCENDING), False),
+    (("tipo", repositorio.ASCENDING), False),
+    (("status", repositorio.ASCENDING), False),
   ]
 
   for indice in indicesArquivo:
-    mongodb.criarIndice(NOME_COLECAO, indice[0], indice[1])
+    repositorio.criarIndice(NOME_COLECAO, indice[0], indice[1])
 
 
 def salvarItemExtracao(itemExtracao:dict):
   try:
     itemExtracao["dataAtualizacao"] = datetime.utcnow()
-    return mongodb.inserirDocumentoCasoNaoExista(NOME_COLECAO, itemExtracao, {"_id": itemExtracao.get("_id")})
+    return repositorio.iserirDocumentoCasoNaoExista(NOME_COLECAO, itemExtracao, {"_id": itemExtracao.get("_id")})
   except Exception as e:
     log.imprimirMensagem("ERRO", "Não foi possível salvar item de extração [{}]".format(itemExtracao["url"]), e.args)
     return None
@@ -42,7 +42,7 @@ def salvarItemsExtracaoEmLote(listaItensExtracao):
     for item in listaItensExtracao:
       item["dataAtualizacao"] = datetime.utcnow()
 
-    return mongodb.inserirVariosDocumentosCasoNaoExistam(NOME_COLECAO, listaItensExtracao, "_id")
+    return repositorio.iserirVariosDocumentosCasoNaoExistam(NOME_COLECAO, listaItensExtracao, "_id")
 
   except Exception as e:
 
@@ -54,7 +54,7 @@ def salvarItemsExtracaoEmLote(listaItensExtracao):
 
 def obterItemExtracaoPorId(id):
   try:
-    return mongodb.obterDocumentoPorId(NOME_COLECAO, id)
+    return repositorio.obterDocumentoPorId(NOME_COLECAO, id)
   except Exception as e:
     log.imprimirMensagem("ERRO",
                          "Não foi possível obter itens de extração pelo ID:.".format(id),
@@ -101,7 +101,7 @@ def listarItensExtracao(filtros={}, ordenacao=[], limite=0, offset=0):
       else:
         filtros["prioridadeExtracao"] = {"$in": filtros["prioridadeExtracao"]}
 
-    return mongodb.listarDocumentos(NOME_COLECAO,
+    return repositorio.listarDocumentos(NOME_COLECAO,
                                     filtros, ordenacao, limite, offset)
   except Exception as e:
     log.imprimirMensagem("ERRO",

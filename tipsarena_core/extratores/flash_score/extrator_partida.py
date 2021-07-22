@@ -46,7 +46,7 @@ def extrairHtmlPartidas(url: str):
         "tipo": TIPO_EXTRACAO,
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(str(htmlFinal)),
-        "nomeArquivo": f"{id.lower()}.html"
+        "nomeArquivo": f"ptd-edc-{urlHash.lower()}.html"
       })
 
   except Exception as e:
@@ -170,7 +170,7 @@ def extrairHtmlPartida(urlPartida: str) -> ItemExtracao:
         "tipo": TIPO_EXTRACAO,
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(str(htmlFinal)),
-        "nomeArquivo": f"{id.lower()}.html"
+        "nomeArquivo": f"ptd-{urlHash.lower()}.html"
       })
 
   except Exception as e:
@@ -241,7 +241,7 @@ def extrairHtmlEstatisticasPartida(urlPartida: str):
         "tipo": TIPO_EXTRACAO,
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(str(htmlFinal)),
-        "nomeArquivo": f"{id.lower()}.html"
+        "nomeArquivo": f"ptd-stat-{urlHash.lower()}.html"
       })
 
 
@@ -277,7 +277,7 @@ def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
         "tipo": TIPO_EXTRACAO,
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(str(htmlFinal)),
-        "nomeArquivo": f"{id.lower()}.html"
+        "nomeArquivo": f"ptd-h2h-{urlHash.lower()}.html"
       })
 
   except Exception as e:
@@ -289,32 +289,39 @@ def extrairHtmlOddsPartida(urlPartida: str, mercado: MERCADO):
   try:
     urlOdds = f"{urlPartida}#comparacao-de-odds/"
     tipoExtracao = f"PARTIDA_ODDS_{mercado.name}"
+    prefixoArquivo = "ptd-odd-rst"
 
     if mercado == MERCADO.DNB:
       urlOdds = f"{urlPartida}#comparacao-de-odds/home-away/"
+      prefixoArquivo = "ptd-odd-dnb"
 
     if mercado == MERCADO.DUPLA_CHANCE:
       urlOdds = f"{urlPartida}#comparacao-de-odds/double-chance/"
+      prefixoArquivo = "ptd-odd-dc"
 
     if mercado == MERCADO.IMPAR_PAR:
       urlOdds = f"{urlPartida}#comparacao-de-odds/odd-even/"
+      prefixoArquivo = "ptd-odd-ip"
 
     if mercado == MERCADO.AMBOS_MARCAM:
       urlOdds = f"{urlPartida}#comparacao-de-odds/ambos-marcam/"
+      prefixoArquivo = "ptd-odd-btts"
 
     if mercado == MERCADO.PLACAR_EXATO:
       urlOdds = f"{urlPartida}#comparacao-de-odds/correct-score/"
+      prefixoArquivo = "ptd-odd-plc"
 
     if mercado == MERCADO.UNDER_OVER:
       urlOdds = f"{urlPartida}#comparacao-de-odds/acima-abaixo/"
+      prefixoArquivo = "ptd-odd-uo"
 
-    return extrairHtmlOdds(urlOdds, tipoExtracao)
+    return extrairHtmlOdds(urlOdds, tipoExtracao,prefixoArquivo)
   except Exception as e:
     log.ERRO(f"Não foi possível extrair HTML odds de {mercado.name} da partida.", e.args)
     return None
 
 
-def extrairHtmlOdds(urlOdds: str, tipoExtracao: str):
+def extrairHtmlOdds(urlOdds: str, tipoExtracao: str,prefixoArquivo:str):
   try:
     CSS_DADOS_ODDS = "body"
     CSS_VERIFICAR_CARREGAMENTO = "#detail > div > div.subTabs"
@@ -338,7 +345,7 @@ def extrairHtmlOdds(urlOdds: str, tipoExtracao: str):
         "tipo": tipoExtracao,
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(str(htmlFinal)),
-        "nomeArquivo": f"{id.lower()}.html"
+        "nomeArquivo": f"{prefixoArquivo}-{urlHash.lower()}.html"
       })
 
   except Exception as e:

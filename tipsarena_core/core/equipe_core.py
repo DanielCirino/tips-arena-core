@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from tipsarena_core.models.Equipe import Equipe
-from tipsarena_core.repository import mongodb
+from tipsarena_core import repositorio
 from tipsarena_core.utils import hash_utils, logUtils as log
 
 NOME_COLECAO = 'equipes'
@@ -23,7 +23,7 @@ def salvarEquipe(equipe: dict):
     equipe["dataAtualizacao"] = datetime.utcnow()
     equipe["_id"] = hash_utils.gerarHash(equipe["url"])
 
-    return mongodb.inserirDocumentoCasoNaoExista(NOME_COLECAO, equipe, {"_id": equipe.get("_id")})
+    return repositorio.iserirDocumentoCasoNaoExista(NOME_COLECAO, equipe, {"_id": equipe.get("_id")})
   except Exception as e:
     log.imprimirMensagem("ERRO", "Não foi possível salvar equipe [{}]".format(equipe.get("url")), e.args)
     return None
@@ -31,7 +31,7 @@ def salvarEquipe(equipe: dict):
 
 def obterEquipePorId(id):
   try:
-    return mongodb.obterDocumentoPorId(NOME_COLECAO, id)
+    return repositorio.obterDocumentoPorId(NOME_COLECAO, id)
   except Exception as e:
     log.imprimirMensagem("ERRO",
                          "Não foi possível obter equipe pelo ID:.".format(id),
