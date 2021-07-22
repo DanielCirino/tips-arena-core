@@ -169,7 +169,7 @@ def finalizarApostaPartida(aposta):
 
     if analiseResultado != None:
       if (partida.status == Partida.Status.FINALIZADO.name):
-        if aposta.mercado == Aposta.Mercados.RESULT.name:
+        if aposta.mercado == Aposta.Mercados.RESULTADO.name:
           finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["resultado"])
 
         if aposta.mercado == Aposta.Mercados.DNB.name:
@@ -178,25 +178,25 @@ def finalizarApostaPartida(aposta):
           else:
             finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["drawNoBet"])
 
-        if aposta.mercado == Aposta.Mercados.DOUBLE_CHANCE.name:
+        if aposta.mercado == Aposta.Mercados.DUPLA_CHANCE.name:
           finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["duplaChance"])
 
-        if aposta.mercado == Aposta.Mercados.BTTS.name:
+        if aposta.mercado == Aposta.Mercados.AMBOS_MARCAM.name:
           finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["btts"])
 
-        if aposta.mercado == Aposta.Mercados.ODD_EVEN.name:
+        if aposta.mercado == Aposta.Mercados.IMPAR_PAR.name:
           finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["imparPar"])
 
-        if aposta.mercado == Aposta.Mercados.CORRECT_SCORE.name:
+        if aposta.mercado == Aposta.Mercados.PLACAR_EXATO.name:
           finalizarAposta(aposta, aposta.opcaoMercado == analiseResultado["placar"])
 
         if aposta.mercado == Aposta.Mercados.UNDER_OVER.name:
           finalizarApostaUnderOver(aposta, analiseResultado["totalGols"])
       else:
-        if aposta.mercado == Aposta.Mercados.CORRECT_SCORE.name:
+        if aposta.mercado == Aposta.Mercados.PLACAR_EXATO.name:
           analisarApostaPlacarExato(aposta, int(placarPartida[0]), int(placarPartida[1]))
 
-        if aposta.mercado == Aposta.Mercados.BTTS.name:
+        if aposta.mercado == Aposta.Mercados.AMBOS_MARCAM.name:
           analisarApostaBtts(aposta, int(placarPartida[0]), int(placarPartida[1]))
 
         if aposta.mercado == Aposta.Mercados.UNDER_OVER.name:

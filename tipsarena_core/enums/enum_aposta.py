@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from enum import Enum
 
 class STATUS(Enum):
@@ -6,13 +7,13 @@ class STATUS(Enum):
   CANCELADA = 3
 
 
-class MERCADOS(Enum):
-  RESULT = 1
+class MERCADO(Enum):
+  RESULTADO = 1
   DNB = 2
-  DOUBLE_CHANCE = 3
-  ODD_EVEN = 4
-  BTTS = 5
-  CORRECT_SCORE = 6
+  DUPLA_CHANCE = 3
+  IMPAR_PAR = 4
+  AMBOS_MARCAM = 5
+  PLACAR_EXATO = 6
   UNDER_OVER = 7
 
 

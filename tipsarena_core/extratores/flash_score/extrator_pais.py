@@ -46,8 +46,7 @@ def extrairHtmlPaises() -> ItemExtracao:
     log.ERRO("Não foi possível extrair lista de países.", e.args)
     navegador_web.capturarTela()
     return None
-  finally:
-    navegador_web.finalizarNavegadorWeb()
+
 
 
 if __name__ == "__main__":

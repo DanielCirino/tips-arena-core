@@ -6,6 +6,7 @@ from tipsarena_core.extratores.flash_score import navegador_web
 from tipsarena_core.services import log_service as log, auth_service
 from tipsarena_core.utils import hash_utils, string_utils, html_utils
 from tipsarena_core.models.item_extracao import ItemExtracao
+from tipsarena_core.enums.enum_aposta import MERCADO
 
 CASAS_DECIMAIS = 3
 
@@ -209,6 +210,8 @@ def extrairHtmlTimelinePartida(urlPartida: str):
   except Exception as e:
     log.ERRO("Não foi possível obter timeline de eventos da partida.", e.args)
     return None
+  finally:
+    navegador_web.finalizarNavegadorWeb()
 
 
 def extrairHtmlEstatisticasPartida(urlPartida: str):
@@ -227,7 +230,8 @@ def extrairHtmlEstatisticasPartida(urlPartida: str):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(htmlEstatisticas.get_attribute("outerHTML"), urlPartida, urlHash, TIPO_EXTRACAO)
+    htmlFinal = html_utils.incluirMetadadosHtml(htmlEstatisticas.get_attribute("outerHTML"), urlPartida, urlHash,
+                                                TIPO_EXTRACAO)
 
     return ItemExtracao(
       {
@@ -251,7 +255,7 @@ def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
     DADOS_H2H = "body"
     CSS_VERIFICAR_CARREGAMENTO = "div[class^=h2h]"
 
-    urlHeadToHead = f"{navegador_web.URL_BASE}{urlPartida}#h2h/"
+    urlHeadToHead = f"{urlPartida}#h2h/"
     navegador_web.navegar(urlHeadToHead)
 
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
@@ -262,7 +266,8 @@ def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(str(htmlHeadToHead), urlPartida, urlHash, TIPO_EXTRACAO)
+    htmlFinal = html_utils.incluirMetadadosHtml(htmlHeadToHead.get_attribute("outerHTML"), urlPartida, urlHash,
+                                                TIPO_EXTRACAO)
 
     return ItemExtracao(
       {
@@ -280,35 +285,62 @@ def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
     return None
 
 
-def extrairHtmlOddsPartida(urlPartida: str):
+def extrairHtmlOddsPartida(urlPartida: str, mercado: MERCADO):
+  try:
+    urlOdds = f"{urlPartida}#comparacao-de-odds/"
+    tipoExtracao = f"PARTIDA_ODDS_{mercado.name}"
+
+    if mercado == MERCADO.DNB:
+      urlOdds = f"{urlPartida}#comparacao-de-odds/home-away/"
+
+    if mercado == MERCADO.DUPLA_CHANCE:
+      urlOdds = f"{urlPartida}#comparacao-de-odds/double-chance/"
+
+    if mercado == MERCADO.IMPAR_PAR:
+      urlOdds = f"{urlPartida}#comparacao-de-odds/odd-even/"
+
+    if mercado == MERCADO.AMBOS_MARCAM:
+      urlOdds = f"{urlPartida}#comparacao-de-odds/ambos-marcam/"
+
+    if mercado == MERCADO.PLACAR_EXATO:
+      urlOdds = f"{urlPartida}#comparacao-de-odds/correct-score/"
+
+    if mercado == MERCADO.UNDER_OVER:
+      urlOdds = f"{urlPartida}#comparacao-de-odds/acima-abaixo/"
+
+    return extrairHtmlOdds(urlOdds, tipoExtracao)
+  except Exception as e:
+    log.ERRO(f"Não foi possível extrair HTML odds de {mercado.name} da partida.", e.args)
+    return None
+
+
+def extrairHtmlOdds(urlOdds: str, tipoExtracao: str):
   try:
     CSS_DADOS_ODDS = "body"
     CSS_VERIFICAR_CARREGAMENTO = "#detail > div > div.subTabs"
 
-    urlOdds = f"{urlPartida}#comparacao-de-odds/"
     navegador_web.navegar(urlOdds)
 
     navegador_web.obterElementoAposCarregamento(CSS_VERIFICAR_CARREGAMENTO)
     htmlOdds = navegador_web.obterElementoAposCarregamento(CSS_DADOS_ODDS)
 
-    TIPO_EXTRACAO = "PARTIDA_ODDS"
-    urlHash = hash_utils.gerarHash(urlPartida)
+    urlHash = hash_utils.gerarHash(urlOdds)
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(htmlOdds.get_attribute("outerHTML"), urlPartida, urlHash, TIPO_EXTRACAO)
+    htmlFinal = html_utils.incluirMetadadosHtml(htmlOdds.get_attribute("outerHTML"), urlOdds, urlHash, tipoExtracao)
 
     return ItemExtracao(
       {
         "id": id,
-        "url": urlPartida,
+        "url": urlOdds,
         "urlHash": urlHash,
-        "tipo": TIPO_EXTRACAO,
+        "tipo": tipoExtracao,
         "dataHora": dataHoraExtracao,
         "html": string_utils.limparString(str(htmlFinal)),
         "nomeArquivo": f"{id.lower()}.html"
       })
 
   except Exception as e:
-    log.ERRO("Não foi possível extrair HTML últimas partidas das equipes.", e.args)
+    log.ERRO(f"Não foi possível extrair HTML odds da partida. [{urlOdds}][{tipoExtracao}]", e.args)
     return None

@@ -2,7 +2,7 @@
 from enum import Enum
 
 
-class Fila(Enum):
+class FILA(Enum):
   FL_EXT_HTML_LISTA_PAISES = "ta-ext-html-lista-paises"
   FL_PROC_HTML_LISTA_PAISES = "ta-proc-html-lista-paises"
 

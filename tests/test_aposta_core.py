@@ -13,7 +13,7 @@ def test_inclusao_aposta_vitoria_mandante():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.RESULT.name
+  aposta.mercado = Aposta.Mercados.RESULTADO.name
   aposta.opcaoMercado = "VITORIA_MANDANTE"
   aposta.valorOdd = partida.odds["resultado"]["mandante"]
   aposta.valor = 75.00
@@ -29,7 +29,7 @@ def test_inclusao_aposta_vitoria_visitante():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.RESULT.name
+  aposta.mercado = Aposta.Mercados.RESULTADO.name
   aposta.opcaoMercado = "VITORIA_VISITANTE"
   aposta.valorOdd = partida.odds["resultado"]["visitante"]
   aposta.valor = 90.00
@@ -45,7 +45,7 @@ def test_inclusao_aposta_empate():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.RESULT.name
+  aposta.mercado = Aposta.Mercados.RESULTADO.name
   aposta.opcaoMercado = "EMPATE"
   aposta.valorOdd = partida.odds["resultado"]["empate"]
   aposta.valor = 100.00
@@ -61,7 +61,7 @@ def test_inclusao_aposta_contra_visitante():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.DOUBLE_CHANCE.name
+  aposta.mercado = Aposta.Mercados.DUPLA_CHANCE.name
   aposta.opcaoMercado = "CONTRA_VISITANTE"
   aposta.valorOdd = partida.odds["duplaChance"]["contraVisitante"]
   aposta.valor = 125.00
@@ -77,7 +77,7 @@ def test_inclusao_aposta_contra_mandante():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.DOUBLE_CHANCE.name
+  aposta.mercado = Aposta.Mercados.DUPLA_CHANCE.name
   aposta.opcaoMercado = "CONTRA_MANDANTE"
   aposta.valorOdd = partida.odds["duplaChance"]["contraMandante"]
   aposta.valor = 205.00
@@ -93,7 +93,7 @@ def test_inclusao_aposta_contra_empate():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.DOUBLE_CHANCE.name
+  aposta.mercado = Aposta.Mercados.DUPLA_CHANCE.name
   aposta.opcaoMercado = "CONTRA_EMPATE"
   aposta.valorOdd = partida.odds["duplaChance"]["contraEmpate"]
   aposta.valor = 120.00
@@ -141,7 +141,7 @@ def test_inclusao_aposta_odd():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.ODD_EVEN.name
+  aposta.mercado = Aposta.Mercados.IMPAR_PAR.name
   aposta.opcaoMercado = "ODD"
   aposta.valorOdd = partida.odds["oddEven"]["odd"]
   aposta.valor = 80.00
@@ -157,7 +157,7 @@ def test_inclusao_aposta_even():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.ODD_EVEN.name
+  aposta.mercado = Aposta.Mercados.IMPAR_PAR.name
   aposta.opcaoMercado = "EVEN"
   aposta.valorOdd = partida.odds["oddEven"]["even"]
   aposta.valor = 45.00
@@ -173,7 +173,7 @@ def test_inclusao_aposta_btts_no():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.BTTS.name
+  aposta.mercado = Aposta.Mercados.AMBOS_MARCAM.name
   aposta.opcaoMercado = "BTTS_NO"
   aposta.valorOdd = partida.odds["btts"]["no"]
   aposta.valor = 87.00
@@ -189,7 +189,7 @@ def test_inclusao_aposta_btts_yes():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.BTTS.name
+  aposta.mercado = Aposta.Mercados.AMBOS_MARCAM.name
   aposta.opcaoMercado = "BTTS_YES"
   aposta.valorOdd = partida.odds["btts"]["yes"]
   aposta.valor = 55.00
@@ -237,7 +237,7 @@ def test_inclusao_aposta_placar_1_0():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.CORRECT_SCORE.name
+  aposta.mercado = Aposta.Mercados.PLACAR_EXATO.name
   aposta.opcaoMercado = "PLACAR_1_0"
   aposta.valorOdd = partida.odds["placarExato"][0]["valor"]
   aposta.valor = 115.00
@@ -253,7 +253,7 @@ def test_inclusao_aposta_placar_2_0():
   aposta = Aposta()
   aposta.idUsuario = "5c81259b6fa2c7107b7644f7"
   aposta.idPartida = partida._id
-  aposta.mercado = Aposta.Mercados.CORRECT_SCORE.name
+  aposta.mercado = Aposta.Mercados.PLACAR_EXATO.name
   aposta.opcaoMercado = "PLACAR_2_0"
   aposta.valorOdd = partida.odds["placarExato"][1]["valor"]
   aposta.valor = 15.00

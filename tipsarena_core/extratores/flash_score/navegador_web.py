@@ -102,6 +102,7 @@ def finalizarNavegadorWeb():
     if navegadorWeb is not None:
       navegadorWeb.delete_all_cookies()
       navegadorWeb.execute_script("localStorage.clear();")
+      navegadorWeb.close()
       navegadorWeb.quit()
 
 
