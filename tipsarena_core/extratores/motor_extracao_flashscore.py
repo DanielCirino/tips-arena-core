@@ -73,10 +73,10 @@ def extrairHtmlPartidasEdicaoCompeticao(urlEdicao: str):
   htmlPartidasFinalizadas.html = None
   htmlPartidasAgendadas.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
                                      htmlPartidasFinalizadas.__dict__)
 
-  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
                                      htmlPartidasAgendadas.__dict__)
 
 
@@ -244,21 +244,21 @@ def extrairHtmlCotacoesUnderOver(urlPartida: str):
 
 if __name__ == "__main__":
   extrairHtmlPaises()
-  extrairHtmlCompeticoesPais("http://www.flashscore.com.br/futebol/inglaterra/")
-  extrairHtmlEdicoesCompeticao("https://www.flashscore.com.br/futebol/inglaterra/campeonato-ingles/")
-
-  extrairHtmlPartidasEdicaoCompeticao("https://www.flashscore.com.br/futebol/inglaterra/campeonato-ingles-2019-2020/")
-  extrairHtmlEquipesEdicaoCompeticao("https://www.flashscore.com.br/futebol/inglaterra/campeonato-ingles-2019-2020/")
-  extrairHtmlPartida("https://www.flashscore.com.br/jogo/AwCj20Vo/")
-
-  extrairHtmlEstatisticasPartida("https://www.flashscore.com.br/jogo/AwCj20Vo/")
-  extrairHtmlConfrontosEquipes("https://www.flashscore.com.br/jogo/AwCj20Vo/")
-
-  extrairHtmlCotacoesResultado("https://www.flashscore.com.br/jogo/AwCj20Vo/")
-  extrairHtmlCotacoesDNB("https://www.flashscore.com.br/jogo/AwCj20Vo/")
-  extrairHtmlCotacoesDuplaChance("https://www.flashscore.com.br/jogo/AwCj20Vo/")
-  extrairHtmlCotacoesImparPar("https://www.flashscore.com.br/jogo/AwCj20Vo/")
-  extrairHtmlCotacoesAmbosMarcam("https://www.flashscore.com.br/jogo/AwCj20Vo/")
-  extrairHtmlCotacoesPlacarExato("https://www.flashscore.com.br/jogo/AwCj20Vo/")
-  extrairHtmlCotacoesUnderOver("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  # extrairHtmlCompeticoesPais("http://www.flashscore.com.br/futebol/inglaterra/")
+  # extrairHtmlEdicoesCompeticao("https://www.flashscore.com.br/futebol/inglaterra/campeonato-ingles/")
+  #
+  # extrairHtmlPartidasEdicaoCompeticao("https://www.flashscore.com.br/futebol/inglaterra/campeonato-ingles-2019-2020/")
+  # extrairHtmlEquipesEdicaoCompeticao("https://www.flashscore.com.br/futebol/inglaterra/campeonato-ingles-2019-2020/")
+  # extrairHtmlPartida("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  #
+  # extrairHtmlEstatisticasPartida("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  # extrairHtmlConfrontosEquipes("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  #
+  # extrairHtmlCotacoesResultado("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  # extrairHtmlCotacoesDNB("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  # extrairHtmlCotacoesDuplaChance("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  # extrairHtmlCotacoesImparPar("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  # extrairHtmlCotacoesAmbosMarcam("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  # extrairHtmlCotacoesPlacarExato("https://www.flashscore.com.br/jogo/AwCj20Vo/")
+  # extrairHtmlCotacoesUnderOver("https://www.flashscore.com.br/jogo/AwCj20Vo/")
   pass

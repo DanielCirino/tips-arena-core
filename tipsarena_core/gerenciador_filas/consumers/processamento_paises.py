@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
+import os
 import json
 from tipsarena_core.enums.enum_fila import FILA
 from tipsarena_core import gerenciador_filas
 from tipsarena_core.models.item_extracao import ItemExtracao
 from tipsarena_core.services import log_service as log
-from tipsarena_core.extratores import motor_extracao_flashscore
+from tipsarena_core.parsers_html import motor_parser_flashscore
 
-topicos = [FILA.FL_EXT_HTML_COMPETICOES_PAIS.value]
+topicos = [FILA.FL_PROC_HTML_LISTA_PAISES.value]
+ID_GRUPO = "grupo-ext-html-competicoes-pais"
 
 
 def consumirMensagens():
-  # Read messages from Kafka, print to stdout
-  consumer = gerenciador_filas.obterConsumer(topicos, "grupo-ext-html-competicoes-pais")
+  """
+  Método para consumir processar as mensagens presentes no tópico de extração do html das competições de um país..
+  """
+  consumer = gerenciador_filas.obterConsumer(topicos, ID_GRUPO)
   try:
     while True:
       msg = consumer.poll(timeout=1.0)
@@ -27,11 +31,15 @@ def consumirMensagens():
 
 
 def processarMensagem(mensagem):
+  """
+  Método para consumir processar as mensagens presentes no tópico de extração do html das competições de um país..
+  """
   try:
     payload = mensagem.value().decode("UTF-8")
     dadosMensagem = json.loads(payload)
     itemProcessamento = ItemExtracao(dadosMensagem)
-    motor_extracao_flashscore.extrairHtmlCompeticoesPais(itemProcessamento.url)
+    caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}pais/{itemProcessamento.nomeArquivo}"
+    motor_parser_flashscore.processarHtmlPaises(caminhoArquivo)
 
   except Exception as e:
     log.ERRO(f"Erro ao processar mensagem", e.args)

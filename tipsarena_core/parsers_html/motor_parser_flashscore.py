@@ -31,7 +31,7 @@ def processarHtmlEdicoesCompeticao(caminhoParaArquivo: str):
     for edicao in listaEdicoes:
       gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_EDICAO_COMPETEICAO.value, edicao)
       gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDAS_EDICAO_COMPETICAO.value, edicao)
-      gerenciador_filas.produzirMensagem(FILA.FL_EXT_EQUIPES_EDICAO_COMPETICAO.value, edicao)
+      gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_EQUIPES_EDICAO_COMPETICAO.value, edicao)
 
 
 def processarHtmlEdicaoCompeticao(caminhoParaArquivo: str):

@@ -3,23 +3,23 @@ from enum import Enum
 
 
 class FILA(Enum):
-  FL_EXT_HTML_LISTA_PAISES = "ta-ext-html-lista-paises"
-  FL_PROC_HTML_LISTA_PAISES = "ta-proc-html-lista-paises"
+  FL_EXT_HTML_LISTA_PAISES = "ta-ext-html-paises"
+  FL_PROC_HTML_LISTA_PAISES = "ta-proc-html-paises"
 
   FL_EXT_HTML_COMPETICOES_PAIS = "ta-ext-html-competicoes-pais"
-  FL_PROC_HTML_COMPETICOES_PAIS = "ta-proc-lista-competicoes-pais"
+  FL_PROC_HTML_COMPETICOES_PAIS = "ta-proc-html-competicoes-pais"
 
   FL_EXT_HTML_COMPETICAO = "ta-ext-html-competicao"
   FL_PROC_HTML_COMPETICAO = "ta-proc-html-competicao"
 
-  FL_EXT_HTML_EDICOES_COMPETICAO = "ta-ext-edicoes-competicao"
-  FL_PROC_HTML_EDICOES_COMPETICAO = "ta-proc-edicao-competicao"
+  FL_EXT_HTML_EDICOES_COMPETICAO = "ta-ext-html-edicoes-competicao"
+  FL_PROC_HTML_EDICOES_COMPETICAO = "ta-proc-html-edicoes-competicao"
 
   FL_EXT_HTML_EDICAO_COMPETEICAO = "ta-ext-html-edicao-competicao"
   FL_PROC_HTML_EDICAO_COMPETEICAO = "ta-proc-html-edicao-competicao"
 
-  FL_EXT_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-ext-partidas-edicao-competicao"
-  FL_PROC_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-proc-partida-edicao-competicao"
+  FL_EXT_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-ext-html-partidas-edicao-competicao"
+  FL_PROC_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-proc-html-partida-edicao-competicao"
 
   FL_EXT_HTML_EDICAO_COMPETICAO = "ta-ext-html-edicao-competicao"
   FL_PROC_HTML_EDICAO_COMPETICAO = "ta-proc-html-edicao-competicao"
