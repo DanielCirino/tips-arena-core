@@ -73,10 +73,10 @@ def extrairHtmlPartidasEdicaoCompeticao(urlEdicao: str):
   htmlPartidasFinalizadas.html = None
   htmlPartidasAgendadas.html = None
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_PARTIDAS_EDICAO_COMPETICAO.value,
                                      htmlPartidasFinalizadas.__dict__)
 
-  gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,
+  gerenciador_filas.produzirMensagem(FILA.FL_PROC_HTML_PARTIDAS_EDICAO_COMPETICAO.value,
                                      htmlPartidasAgendadas.__dict__)
 
 

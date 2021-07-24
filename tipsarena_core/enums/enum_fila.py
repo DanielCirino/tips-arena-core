@@ -19,7 +19,7 @@ class FILA(Enum):
   FL_PROC_HTML_EDICAO_COMPETEICAO = "ta-proc-html-edicao-competicao"
 
   FL_EXT_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-ext-html-partidas-edicao-competicao"
-  FL_PROC_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-proc-html-partida-edicao-competicao"
+  FL_PROC_HTML_PARTIDAS_EDICAO_COMPETICAO = "ta-proc-html-partidas-edicao-competicao"
 
   FL_EXT_HTML_EDICAO_COMPETICAO = "ta-ext-html-edicao-competicao"
   FL_PROC_HTML_EDICAO_COMPETICAO = "ta-proc-html-edicao-competicao"

@@ -46,7 +46,8 @@ def processarHtmlPartidasEdicaoCompeticao(caminhoParaArquivo: str):
     html = arquivo.read()
     partidas = parser_partida.processarHtmlListaPartidas(html)
     for partida in partidas:
-      pass
+      gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,partida)
+
 
 
 def processarHtmlEquipesEdicaoCompeticao(caminhoParaArquivo: str):
