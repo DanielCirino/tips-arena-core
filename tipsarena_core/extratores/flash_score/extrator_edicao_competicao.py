@@ -35,7 +35,13 @@ def extrairHtmlEdicaoCompeticao(urlEdicao: str):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(str(documentoHtml), urlEdicao, urlHash, TIPO_EXTRACAO)
+    metadados = {
+      "url": urlEdicao,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(str(documentoHtml), metadados)
 
     return ItemExtracao(
       {

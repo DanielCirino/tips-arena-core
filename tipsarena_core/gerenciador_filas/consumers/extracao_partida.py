@@ -6,14 +6,11 @@ from tipsarena_core.models.item_extracao import ItemExtracao
 from tipsarena_core.services import log_service as log
 from tipsarena_core.extratores import motor_extracao_flashscore
 
-topicos = [FILA.FL_EXT_HTML_PARTIDAS_EDICAO_COMPETICAO.value]
-ID_GRUPO = "grupo-ext-html-partidas-edicao-competicao"
+topicos = [FILA.FL_EXT_HTML_PARTIDA.value]
+ID_GRUPO = "grupo-ext-html-partida"
 
 
 def consumirMensagens():
-  """
-  Método para consumir processar as mensagens presentes no tópico de extração do html das partidas de uma edição de competição.
-  """
   consumer = gerenciador_filas.obterConsumer(topicos, ID_GRUPO)
   try:
     while True:
@@ -32,13 +29,10 @@ def consumirMensagens():
 
 
 def processarMensagem(mensagem):
-  """
-  Método para consumir processar as mensagens presentes no tópico de extração do html das partidas de uma edição de competição.
-  """
   try:
     payload = mensagem.value().decode("UTF-8")
     dadosMensagem = json.loads(payload)
-    motor_extracao_flashscore.extrairHtmlPartidasEdicaoCompeticao(dadosMensagem)
+    motor_extracao_flashscore.extrairHtmlPartida(dadosMensagem)
 
   except Exception as e:
     log.ERRO(f"Erro ao processar mensagem", e.args)

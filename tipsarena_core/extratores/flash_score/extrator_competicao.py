@@ -15,7 +15,14 @@ def extrairHtmlCompeticoesPais(urlPais: str):
     dataHoraExtracao = datetime.now()
 
     urlHash = hash_utils.gerarHash(urlPais)
-    htmlFinal = html_utils.incluirMetadadosHtml(str(html), urlPais, urlHash, TIPO_EXTRACAO)
+
+    metadados = {
+      "url": urlPais,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(str(html), metadados)
 
     return ItemExtracao(
       {
@@ -42,7 +49,14 @@ def extrairHtmlCompeticao(urlCompeticao: str):
     dataHoraExtracao = datetime.now()
 
     urlHash = hash_utils.gerarHash(urlCompeticao)
-    htmlFinal = html_utils.incluirMetadadosHtml(str(html), urlCompeticao, urlHash, TIPO_EXTRACAO)
+
+    metadados = {
+      "url": urlCompeticao,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(str(html), metadados)
 
     return ItemExtracao(
       {
@@ -70,7 +84,13 @@ def extrairHtmlEdicoesCompeticao(urlCompeticao: str):
     dataHoraExtracao = datetime.now()
 
     urlHash = hash_utils.gerarHash(urlCompeticao)
-    htmlFinal = html_utils.incluirMetadadosHtml(str(html), urlCompeticao, urlHash, TIPO_EXTRACAO)
+
+    metadados = {
+      "url": urlCompeticao,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+    htmlFinal = html_utils.incluirMetadadosHtml(str(html), metadados)
 
     return ItemExtracao(
       {

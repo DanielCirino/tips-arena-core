@@ -92,17 +92,20 @@ def processarHtmlEdicoesCompeticao(html: str):
       anoCompeticao = links[0].text.split(" ")[-1]
       anoCompeticao = anoCompeticao.replace("/", "-")
 
-      urlEdicao = urlCompeticao[:-1] + "-" + anoCompeticao + "/"
+      urlEdicao = f"{urlCompeticao[:-1]}-{anoCompeticao}/"
 
-      equipeVencedora = {"nome": "", "url": ""}
+      equipeVencedora = None
 
       if len(links) > 1:
         equipeVencedora = {
-          "nome": links[1].text, "url": links[1]["href"]}
+          "nome": links[1].text,
+          "url": f"{navegador_web.URL_BASE}{links[1]['href']}"
+        }
 
       yield {"url": urlEdicao,
              "anoEdicao": anoCompeticao,
              "equipeVencedora": equipeVencedora,
+             "emAndamento": equipeVencedora is None,
              "sequencial": sequencial}
 
       sequencial += 1

@@ -113,20 +113,27 @@ def processarHtmlPartida(html: str):
     urlEquipeVisitante = htmlNomeVisitante.attrs["href"]
     idEquipeVisitante = urlEquipeVisitante.split("/")[-1]
     urlImageVisitante = htmlImageVisitante.attrs["src"]
-    competicao = {"url": urlCompeticao,
+
+    competicao = {"url": f"{navegador_web.URL_BASE}{urlCompeticao}",
                   "nome": nomeCompeticao
                   }
 
-    equipeMandante = {"id": idEquipeMandante, "url": urlEquipeMandante, "nome": nomeEquipeMandante,
-                      "urlEscudo": urlImageMandante}
-    equipeVisitante = {"id": idEquipeVisitante, "url": urlEquipeVisitante, "nome": nomeEquipeVisitante,
-                       "urlEscudo": urlImageVisitante}
+    equipeMandante = {"id": idEquipeMandante,
+                      "url": f"{navegador_web.URL_BASE}{urlEquipeMandante}",
+                      "nome": nomeEquipeMandante,
+                      "urlEscudo": f"{navegador_web.URL_BASE}{urlImageMandante}"
+                      }
+    equipeVisitante = {"id": idEquipeVisitante,
+                       "url": f"{navegador_web.URL_BASE}{urlEquipeVisitante}",
+                       "nome": nomeEquipeVisitante,
+                       "urlEscudo": f"{navegador_web.URL_BASE}{urlImageVisitante}"
+                       }
 
     return {
       "url": urlPartida,
       "status": normalizarDescricaoStatus(status[0]),
-      "dataHora": dataHora,
-      "dataHoraUtc": datetime_utils.converterHoraLocalToUtc(datetime.strptime(dataHora, "%d.%m.%Y %H:%M")),
+      "dataHora": datetime_utils.converterHoraLocalToUtc(datetime.strptime(dataHora, "%d.%m.%Y %H:%M")),
+      "dataHoraUtc": datetime.strptime(dataHora, "%d.%m.%Y %H:%M"),
       "minutos": minutos,
       "info": informacoes,
       "faseCompeticao": faseCompeticao,
@@ -134,6 +141,7 @@ def processarHtmlPartida(html: str):
       "competicao": competicao,
       "equipeMandante": equipeMandante,
       "equipeVisitante": equipeVisitante,
+      "dadosDisponiveis": verificarInformacoesDisponiveis(htmlLinksPartida)
     }
 
   except Exception as e:
@@ -156,8 +164,8 @@ def verificarInformacoesDisponiveis(htmlLinks):
       "classificacao": False
     }
 
-    for href in htmlLinks:
-      href = href.get_attribute("href")
+    for link in htmlLinks:
+      href = link.attrs["href"]
       informacoes[href.split("#")[1]] = True
 
     return informacoes

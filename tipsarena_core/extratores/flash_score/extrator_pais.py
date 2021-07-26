@@ -27,7 +27,13 @@ def extrairHtmlPaises() -> ItemExtracao:
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(htmlListaPaises.get_attribute("outerHTML"), url, urlHash, TIPO_EXTRACAO)
+    metadados = {
+      "url": url,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(htmlListaPaises.get_attribute("outerHTML"), metadados)
 
     return ItemExtracao(
       {
@@ -46,7 +52,6 @@ def extrairHtmlPaises() -> ItemExtracao:
     log.ERRO("Não foi possível extrair lista de países.", e.args)
     navegador_web.capturarTela()
     return None
-
 
 
 if __name__ == "__main__":

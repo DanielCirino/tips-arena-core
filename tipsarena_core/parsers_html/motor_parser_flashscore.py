@@ -4,7 +4,7 @@ from tipsarena_core import gerenciador_filas
 from tipsarena_core.enums.enum_fila import FILA as FILA
 from tipsarena_core.parsers_html.flash_score import parser_pais, parser_competicao, parser_edicao_competicao, \
   parser_partida, parser_equipe, parser_partida_timeline, parser_partida_estatisticas, parser_partida_odds
-
+from tipsarena_core.core import partida_core
 
 def processarHtmlPaises(caminhoParaArquivo):
   with open(caminhoParaArquivo, "r") as arquivo:
@@ -62,7 +62,7 @@ def processarHtmlPartida(caminhoParaArquivo: str):
   with open(caminhoParaArquivo, "r") as arquivo:
     html = arquivo.read()
     partida = parser_partida.processarHtmlPartida(html)
-    pass
+    partida_core.salvarPartida(partida)
 
 
 def processarHtmlTimelinePartida(caminhoParaArquivo: str):

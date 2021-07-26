@@ -33,10 +33,15 @@ def extrairHtmlPartidas(url: str):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(f"<body>{htmlPartidas.get_attribute('outerHTML')}>/body>",
-                                                url,
-                                                urlHash,
-                                                TIPO_EXTRACAO)
+    metadados = {
+      "url": url,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(
+      f"<body>{htmlPartidas.get_attribute('outerHTML')}>/body>",
+      metadados)
 
     return ItemExtracao(
       {
@@ -101,10 +106,15 @@ def extrairHtmlPartidasDia(indiceDia=0):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(f"<body>{htmlPartidas.get_attribute('outerHTML')}</body>",
-                                                url,
-                                                urlHash,
-                                                TIPO_EXTRACAO)
+    metadados = {
+      "url": url,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(
+      f"<body>{htmlPartidas.get_attribute('outerHTML')}</body>",
+      metadados)
 
     return ItemExtracao(
       {
@@ -157,10 +167,13 @@ def extrairHtmlPartida(urlPartida: str) -> ItemExtracao:
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(htmlDadosPartida.get_attribute("outerHTML"),
-                                                urlPartida,
-                                                urlHash,
-                                                TIPO_EXTRACAO)
+    metadados = {
+      "url": urlPartida,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(htmlDadosPartida.get_attribute("outerHTML"), metadados)
 
     return ItemExtracao(
       {
@@ -194,7 +207,13 @@ def extrairHtmlTimelinePartida(urlPartida: str):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(str(htmlTimeline), urlPartida, urlHash, TIPO_EXTRACAO)
+    metadados = {
+      "url": urlPartida,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(str(htmlTimeline), metadados)
 
     return ItemExtracao(
       {
@@ -230,8 +249,13 @@ def extrairHtmlEstatisticasPartida(urlPartida: str):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(htmlEstatisticas.get_attribute("outerHTML"), urlPartida, urlHash,
-                                                TIPO_EXTRACAO)
+    metadados = {
+      "url": urlPartida,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(htmlEstatisticas.get_attribute("outerHTML"), metadados)
 
     return ItemExtracao(
       {
@@ -266,8 +290,12 @@ def extrairHtmlUltimasPartidasEquipes(urlPartida: str):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(htmlHeadToHead.get_attribute("outerHTML"), urlPartida, urlHash,
-                                                TIPO_EXTRACAO)
+    metadados = {
+      "url": urlPartida,
+      "url_hash": urlHash,
+      "tipo_extracao": TIPO_EXTRACAO
+    }
+    htmlFinal = html_utils.incluirMetadadosHtml(htmlHeadToHead.get_attribute("outerHTML"), metadados)
 
     return ItemExtracao(
       {
@@ -315,13 +343,13 @@ def extrairHtmlOddsPartida(urlPartida: str, mercado: MERCADO):
       urlOdds = f"{urlPartida}#comparacao-de-odds/acima-abaixo/"
       prefixoArquivo = "ptd-odd-uo"
 
-    return extrairHtmlOdds(urlOdds, tipoExtracao,prefixoArquivo)
+    return extrairHtmlOdds(urlOdds, tipoExtracao, prefixoArquivo)
   except Exception as e:
     log.ERRO(f"Não foi possível extrair HTML odds de {mercado.name} da partida.", e.args)
     return None
 
 
-def extrairHtmlOdds(urlOdds: str, tipoExtracao: str,prefixoArquivo:str):
+def extrairHtmlOdds(urlOdds: str, tipoExtracao: str, prefixoArquivo: str):
   try:
     CSS_DADOS_ODDS = "body"
     CSS_VERIFICAR_CARREGAMENTO = "#detail > div > div.subTabs"
@@ -335,7 +363,13 @@ def extrairHtmlOdds(urlOdds: str, tipoExtracao: str,prefixoArquivo:str):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    htmlFinal = html_utils.incluirMetadadosHtml(htmlOdds.get_attribute("outerHTML"), urlOdds, urlHash, tipoExtracao)
+    metadados = {
+      "url": urlOdds,
+      "url_hash": urlHash,
+      "tipo_extracao": tipoExtracao
+    }
+
+    htmlFinal = html_utils.incluirMetadadosHtml(htmlOdds.get_attribute("outerHTML"), metadados)
 
     return ItemExtracao(
       {

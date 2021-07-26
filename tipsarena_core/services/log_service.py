@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
 """"
   Imprimir mensagem no console
@@ -7,16 +8,16 @@
 
 
 def OK(mensagem: str):
-  print("\033[92m{} \033[00m[{}]".format('OK:     ', mensagem))
+  print(f"\033[92mOK:     \033[00m | {datetime.now()} | {mensagem} |")
 
 
 def ALERTA(mensagem: str):
-  print("\033[93m{} \033[00m[{}]".format('ALERTA: ', mensagem))
+  print(f"\033[93mALERTA: \033[00m | {datetime.now()} | {mensagem} |")
 
 
 def INFO(mensagem: str):
-  print("\033[96m{} \033[00m [{}]".format('INFO:  ', mensagem))
+  print(f"\033[96mINFO:   \033[00m | {datetime.now()} | {mensagem} |")
 
 
 def ERRO(mensagem: str, erros=""):
-  print("\033[91m{} {} \033[00m[{}]".format('ERRO:   ', mensagem, erros))
+  print(f"\033[91mERRO:   \033[00m | {datetime.now()} | \033[91m{mensagem} | {erros} | ")

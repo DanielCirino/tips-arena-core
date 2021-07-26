@@ -69,14 +69,14 @@ def obterUrlAtributoOnClick(onclick):
     return ""
 
 
-def incluirMetadadosHtml(html: str, url: str, urlHash: str, tipo: str):
+def incluirMetadadosHtml(html: str, metadados: dict):
   documentoHtml = converterStringParaHtml(html)
   tagBody = documentoHtml.select_one("body")
 
   tagMetadados = documentoHtml.new_tag("metadados")
-  tagMetadados.attrs["url"] = url
-  tagMetadados.attrs["url_hash"] = urlHash
-  tagMetadados.attrs["tipo"] = tipo
+
+  for chave in metadados:
+    tagMetadados.attrs[chave] = metadados[chave]
 
   tagBody.insert(0, tagMetadados)
 

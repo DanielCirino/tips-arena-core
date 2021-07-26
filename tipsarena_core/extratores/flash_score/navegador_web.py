@@ -14,7 +14,7 @@ URL_BASE = "https://www.flashscore.com.br"
 PATH_TO_WEBDRIVER = os.getenv("TA_PATH_TO_WEBDRIVER")
 navegadorWeb = None
 
-CSS_BOTAO_ACEITAR_COOKIES = "#onetrust-accept-btn-handler"
+CSS_BOTAO_ACEITAR_COOKIES = "button[id=onetrust-accept-btn-handler]"
 
 
 def obterNavegadorWeb():
@@ -87,14 +87,19 @@ def fecharPopupCookies():
   try:
     obterElementoAposCarregamento(CSS_BOTAO_ACEITAR_COOKIES)
 
-    script = "$('#onetrust-consent-sdk').css('display', 'none');" \
-             "$('div.otPlaceholder').css('display', 'none');" \
-             "$('div#onetrust-banner-sdk').css('display', 'none');"
+    script = "document.querySelector('#onetrust-consent-sdk').style.display='none';" \
+             "document.querySelector('div.otPlaceholder').style.display='none';" \
+             "document.querySelector('div#onetrust-banner-sdk').style.display='none';"
+
+    # script = "$('#onetrust-consent-sdk').css('display', 'none');" \
+    #          "$('div.otPlaceholder').css('display', 'none');" \
+    #          "$('div#onetrust-banner-sdk').css('display', 'none');"
+
     browser = obterNavegadorWeb()
     browser.execute_script(script)
 
   except Exception as e:
-    log.ERRO(f"Não foi possível fechar pop up de cookies '{CSS_BOTAO_ACEITAR_COOKIES}'", e.args)
+    log.ALERTA(f"Não foi possível fechar pop up de cookies '{e.args}'")
 
 
 def finalizarNavegadorWeb():
@@ -104,7 +109,6 @@ def finalizarNavegadorWeb():
       navegadorWeb.execute_script("localStorage.clear();")
       navegadorWeb.close()
       navegadorWeb.quit()
-
 
     return True
   except Exception as e:
