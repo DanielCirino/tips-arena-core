@@ -40,7 +40,7 @@ def processarMensagem(mensagem):
     payload = mensagem.value().decode("UTF-8")
     dadosMensagem = json.loads(payload)
     itemProcessamento = ItemExtracao(dadosMensagem)
-    caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicao_competicao/{itemProcessamento.nomeArquivo}"
+    caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicoes_competicao/{itemProcessamento.nomeArquivo}"
     motor_parser_flashscore.processarHtmlEdicoesCompeticao(caminhoArquivo)
 
   except Exception as e:

@@ -3,11 +3,12 @@ from tipsarena_core.parsers_html.flash_score import parser_partida
 
 
 def teste_parser_html_lista_partidas():
-  caminhoArquivo = f"{pathlib.Path(__file__).parent.resolve()}/exemplos_html/exemplo_lista_partidas.html"
+  caminhoArquivo = "/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/partidas/partidas_edicao/ptd-edc-b7b0d43b51e5c8b475c55ee1.html"
   with open(caminhoArquivo) as arquivo:
     html = arquivo.read()
     listaPartidas = parser_partida.processarHtmlListaPartidas(html)
-    assert len(listaPartidas) >= 105
+    for partida in listaPartidas:
+      print(partida)
 
 
 def teste_parser_html_lista_partidas_do_dia():
@@ -59,4 +60,4 @@ def teste_parser_html_partida():
 
 
 if __name__ == "__main__":
-  teste_parser_html_partida()
+  teste_parser_html_lista_partidas()

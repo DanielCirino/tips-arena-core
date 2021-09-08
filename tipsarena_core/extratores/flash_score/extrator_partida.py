@@ -11,7 +11,7 @@ from tipsarena_core.enums.enum_aposta import MERCADO
 CASAS_DECIMAIS = 3
 
 
-def extrairHtmlPartidas(url: str):
+def extrairHtmlPartidas(url: str, metadados={}):
   try:
     CSS_LINK_LISTAR_MAIS = "a.event__more"
     CSS_LOADING = ".loadingOverlay"
@@ -33,11 +33,10 @@ def extrairHtmlPartidas(url: str):
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    metadados = {
-      "url": url,
-      "url_hash": urlHash,
-      "tipo_extracao": TIPO_EXTRACAO
-    }
+    metadados.update({
+      "url_partidas": url,
+      "url_partidas_hash": urlHash
+    })
 
     htmlFinal = html_utils.incluirMetadadosHtml(
       f"<body>{htmlPartidas.get_attribute('outerHTML')}>/body>",
@@ -152,7 +151,7 @@ def expandirPartidasCompeticao(browser):
     log.ERRO("Não foi possível exibir todas as partidas ocultas.", e.args)
 
 
-def extrairHtmlPartida(urlPartida: str) -> ItemExtracao:
+def extrairHtmlPartida(urlPartida: str, metadados={}) -> ItemExtracao:
   try:
     CSS_DADOS_PARTIDA = "body"
     CSS_VERIFICAR_CARREGAMENTO = "#detail"
@@ -167,11 +166,10 @@ def extrairHtmlPartida(urlPartida: str) -> ItemExtracao:
     id = auth_service.gerarIdentificadorUniversal()
     dataHoraExtracao = datetime.now()
 
-    metadados = {
-      "url": urlPartida,
-      "url_hash": urlHash,
-      "tipo_extracao": TIPO_EXTRACAO
-    }
+    metadados.update({
+      "url_partida": urlPartida,
+      "url_partida_hash": urlHash,
+    })
 
     htmlFinal = html_utils.incluirMetadadosHtml(htmlDadosPartida.get_attribute("outerHTML"), metadados)
 

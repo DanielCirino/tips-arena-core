@@ -28,9 +28,8 @@ def extrairHtmlPaises() -> ItemExtracao:
     dataHoraExtracao = datetime.now()
 
     metadados = {
-      "url": url,
-      "url_hash": urlHash,
-      "tipo_extracao": TIPO_EXTRACAO
+      "url_paises": url,
+      "url_paises_hash": urlHash
     }
 
     htmlFinal = html_utils.incluirMetadadosHtml(htmlListaPaises.get_attribute("outerHTML"), metadados)

@@ -5,6 +5,8 @@ from tipsarena_core.enums.enum_fila import FILA as FILA
 from tipsarena_core.parsers_html.flash_score import parser_pais, parser_competicao, parser_edicao_competicao, \
   parser_partida, parser_equipe, parser_partida_timeline, parser_partida_estatisticas, parser_partida_odds
 from tipsarena_core.core import partida_core
+from tipsarena_core.utils import html_utils
+
 
 def processarHtmlPaises(caminhoParaArquivo):
   with open(caminhoParaArquivo, "r") as arquivo:
@@ -45,17 +47,19 @@ def processarHtmlPartidasEdicaoCompeticao(caminhoParaArquivo: str):
   with open(caminhoParaArquivo, "r") as arquivo:
     html = arquivo.read()
     partidas = parser_partida.processarHtmlListaPartidas(html)
-    for partida in partidas:
-      gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value,partida)
 
+    for partida in partidas:
+      gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_PARTIDA.value, partida)
 
 
 def processarHtmlEquipesEdicaoCompeticao(caminhoParaArquivo: str):
   with open(caminhoParaArquivo, "r") as arquivo:
     html = arquivo.read()
+    metadadosEdicao = html_utils.obterMetadosHtml(html)
     equipes = parser_equipe.processarHtmlEquipesCompeticao(html)
     for equipe in equipes:
-      pass
+      equipe["edicaoCompeticao"] = metadadosEdicao
+      gerenciador_filas.produzirMensagem(FILA.FL_EXT_HTML_EQUIPE.value, equipe)
 
 
 def processarHtmlPartida(caminhoParaArquivo: str):
@@ -134,7 +138,8 @@ def processarHtmlCotacoesUnderOver(caminhoParaArquivo: str):
 
 
 if __name__ == "__main__":
-  processarHtmlPaises('/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/paises-b3a8ebf43551bf390ad6733f.html')
+  processarHtmlPaises(
+    '/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/paises-b3a8ebf43551bf390ad6733f.html')
   # processarHtmlCompeticoesPais(
   #   "/Volumes/HD/Documents/tips_arena/tests/arquivos/para_processar/83fece40-18b7-48a3-b390-02ce6679e6ca.html")
   # processarHtmlEdicoesCompeticao(

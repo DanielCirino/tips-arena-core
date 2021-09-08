@@ -81,3 +81,12 @@ def incluirMetadadosHtml(html: str, metadados: dict):
   tagBody.insert(0, tagMetadados)
 
   return documentoHtml
+
+
+def obterMetadosHtml(html: str) -> dict:
+  try:
+    documentoHtml = converterStringParaHtml(html)
+    tagMetadados = documentoHtml.select_one("metadados")
+    return tagMetadados.attrs
+  except Exception as e:
+    return None

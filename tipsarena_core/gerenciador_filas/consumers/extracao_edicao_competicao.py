@@ -37,8 +37,7 @@ def processarMensagem(mensagem):
   try:
     payload = mensagem.value().decode("UTF-8")
     dadosMensagem = json.loads(payload)
-    itemProcessamento = ItemExtracao(dadosMensagem)
-    motor_extracao_flashscore.extrairHtmlEdicaoCompeticao(itemProcessamento.url)
+    motor_extracao_flashscore.extrairHtmlEdicaoCompeticao(dadosMensagem)
 
   except Exception as e:
     log.ERRO(f"Erro ao processar mensagem", e.args)

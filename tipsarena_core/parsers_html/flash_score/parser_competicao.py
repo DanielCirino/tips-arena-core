@@ -79,8 +79,8 @@ def processarHtmlEdicoesCompeticao(html: str):
     CSS_LISTA_EDICOES = "#tournament-page-archiv div.profileTable__row"
     documentoHtml = html_utils.converterStringParaHtml(html)
 
-    metadados = documentoHtml.select_one("metadados")
-    urlCompeticao = metadados.attrs["url"]
+    metadados = documentoHtml.select_one("metadados").attrs
+    urlCompeticao = metadados["url_competicao"]
 
     linksCompeticao = documentoHtml.select(CSS_LISTA_EDICOES)
 
@@ -89,10 +89,10 @@ def processarHtmlEdicoesCompeticao(html: str):
       links = linha.select(".leagueTable__seasonName a")
       if len(links) == 0: continue
 
-      anoCompeticao = links[0].text.split(" ")[-1]
-      anoCompeticao = anoCompeticao.replace("/", "-")
+      anoEdicao = links[0].text.split(" ")[-1]
+      anoEdicao = anoEdicao.replace("/", "-")
 
-      urlEdicao = f"{urlCompeticao[:-1]}-{anoCompeticao}/"
+      urlEdicao = f"{urlCompeticao[:-1]}-{anoEdicao}/"
 
       equipeVencedora = None
 
@@ -103,7 +103,7 @@ def processarHtmlEdicoesCompeticao(html: str):
         }
 
       yield {"url": urlEdicao,
-             "anoEdicao": anoCompeticao,
+             "anoEdicao": anoEdicao,
              "equipeVencedora": equipeVencedora,
              "emAndamento": equipeVencedora is None,
              "sequencial": sequencial}

@@ -11,7 +11,7 @@ from tipsarena_core.extratores.flash_score import extrator_pais, extrator_compet
 def extrairHtmlPaises():
   dadosExtracao = extrator_pais.extrairHtmlPaises()
 
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}pais/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}paises/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, mode="w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -23,7 +23,7 @@ def extrairHtmlPaises():
 
 def extrairHtmlCompeticoesPais(urlPais: str):
   dadosExtracao = extrator_competicao.extrairHtmlCompeticoesPais(urlPais)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}competicao/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}competicoes/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -34,8 +34,11 @@ def extrairHtmlCompeticoesPais(urlPais: str):
 
 
 def extrairHtmlEdicoesCompeticao(urlCompeticao: str):
-  dadosExtracao = extrator_competicao.extrairHtmlEdicoesCompeticao(urlCompeticao)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicao_competicao/{dadosExtracao.nomeArquivo}"
+  dadosExtracao = extrator_competicao.extrairHtmlEdicoesCompeticao(
+    urlCompeticao,
+    {"url_competicao": urlCompeticao})
+
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicoes_competicao/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -45,9 +48,10 @@ def extrairHtmlEdicoesCompeticao(urlCompeticao: str):
                                      dadosExtracao.__dict__)
 
 
-def extrairHtmlEdicaoCompeticao(urlEdicao: str):
-  dadosExtracao = extrator_edicao_competicao.extrairHtmlEdicaoCompeticao(urlEdicao)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicao_competicao/{dadosExtracao.nomeArquivo}"
+def extrairHtmlEdicaoCompeticao(dados: dict):
+  urlEdicao = dados["url"]
+  dadosExtracao = extrator_edicao_competicao.extrairHtmlEdicaoCompeticao(urlEdicao, dados)
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}edicoes_competicao/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -59,8 +63,12 @@ def extrairHtmlEdicaoCompeticao(urlEdicao: str):
 
 def extrairHtmlPartidasEdicaoCompeticao(dadosEdicao: dict):
   urlEdicao = dadosEdicao["url"]
-  htmlPartidasFinalizadas = extrator_edicao_competicao.extrairHtmlPartidasFinalizadasEdicaoCompeticao(urlEdicao)
-  caminhoArquivoPartidasFinalizadas = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/{htmlPartidasFinalizadas.nomeArquivo}"
+  dadosEdicao["urlEdicao"] = dadosEdicao.pop("url")
+
+  htmlPartidasFinalizadas = extrator_edicao_competicao. \
+    extrairHtmlPartidasFinalizadasEdicaoCompeticao(urlEdicao, dadosEdicao)
+
+  caminhoArquivoPartidasFinalizadas = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/partidas_edicao/{htmlPartidasFinalizadas.nomeArquivo}"
 
   with open(caminhoArquivoPartidasFinalizadas, "w") as arquivo:
     arquivo.write(htmlPartidasFinalizadas.html)
@@ -72,7 +80,7 @@ def extrairHtmlPartidasEdicaoCompeticao(dadosEdicao: dict):
 
   if dadosEdicao["emAndamento"]:
     htmlPartidasAgendadas = extrator_edicao_competicao.extrairHtmlPartidasAgendadasEdicaoCompeticao(urlEdicao)
-    caminhoArquivoPartidasAgendadas = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/{htmlPartidasAgendadas.nomeArquivo}"
+    caminhoArquivoPartidasAgendadas = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/partidas_edicao/{htmlPartidasAgendadas.nomeArquivo}"
 
     with open(caminhoArquivoPartidasAgendadas, "w") as arquivo:
       arquivo.write(htmlPartidasAgendadas.html)
@@ -82,9 +90,10 @@ def extrairHtmlPartidasEdicaoCompeticao(dadosEdicao: dict):
                                        htmlPartidasAgendadas.__dict__)
 
 
-def extrairHtmlEquipesEdicaoCompeticao(urlEdicao: str):
-  dadosExtracao = extrator_equipe.extrairHtmlEquipesEdicaoCompeticao(urlEdicao)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}equipe/{dadosExtracao.nomeArquivo}"
+def extrairHtmlEquipesEdicaoCompeticao(dadosEdicao: dict):
+  urlEdicao = dadosEdicao["url"]
+  dadosExtracao = extrator_equipe.extrairHtmlEquipesEdicaoCompeticao(urlEdicao,dadosEdicao)
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}equipes/equipes_edicao/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -96,8 +105,8 @@ def extrairHtmlEquipesEdicaoCompeticao(urlEdicao: str):
 
 def extrairHtmlPartida(dadosPartida: dict):
   urlPartida = dadosPartida["url"]
-  dadosExtracao = extrator_partida.extrairHtmlPartida(urlPartida)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/{dadosExtracao.nomeArquivo}"
+  dadosExtracao = extrator_partida.extrairHtmlPartida(urlPartida,dadosPartida)
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/partida/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -139,7 +148,7 @@ def extrairHtmlPartida(dadosPartida: dict):
 
 def extrairHtmlEstatisticasPartida(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlEstatisticasPartida(urlPartida)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/estatisticas/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/estatisticas/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -151,7 +160,7 @@ def extrairHtmlEstatisticasPartida(urlPartida: str):
 
 def extrairHtmlConfrontosEquipes(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlUltimasPartidasEquipes(urlPartida)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/confrontos/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/confrontos/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -163,7 +172,7 @@ def extrairHtmlConfrontosEquipes(urlPartida: str):
 
 def extrairHtmlCotacoesResultado(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.RESULTADO)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/odds/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -175,7 +184,7 @@ def extrairHtmlCotacoesResultado(urlPartida: str):
 
 def extrairHtmlCotacoesDNB(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.DNB)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/odds/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -187,7 +196,7 @@ def extrairHtmlCotacoesDNB(urlPartida: str):
 
 def extrairHtmlCotacoesDuplaChance(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.DUPLA_CHANCE)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/odds/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -199,7 +208,7 @@ def extrairHtmlCotacoesDuplaChance(urlPartida: str):
 
 def extrairHtmlCotacoesImparPar(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.IMPAR_PAR)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/odds/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -211,7 +220,7 @@ def extrairHtmlCotacoesImparPar(urlPartida: str):
 
 def extrairHtmlCotacoesAmbosMarcam(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.AMBOS_MARCAM)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/odds/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -223,7 +232,7 @@ def extrairHtmlCotacoesAmbosMarcam(urlPartida: str):
 
 def extrairHtmlCotacoesPlacarExato(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.PLACAR_EXATO)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/odds/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 
@@ -235,7 +244,7 @@ def extrairHtmlCotacoesPlacarExato(urlPartida: str):
 
 def extrairHtmlCotacoesUnderOver(urlPartida: str):
   dadosExtracao = extrator_partida.extrairHtmlOddsPartida(urlPartida, MERCADO.UNDER_OVER)
-  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/odd/{dadosExtracao.nomeArquivo}"
+  caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/odds/{dadosExtracao.nomeArquivo}"
   with open(caminhoArquivo, "w") as arquivo:
     arquivo.write(dadosExtracao.html)
 

@@ -18,10 +18,10 @@ def processarHtmlListaPartidas(html: str):
     CSS_PLACAR_FINAL = ".event__scores"
     CSS_PLACAR_PARCIAL = ".event__part"
 
-    html = html_utils.converterStringParaHtml(html)
-    metadados = html.select_one("metadados"
-                                )
-    tabelaPartidas = html.select_one(CSS_TABELA_PARTIDAS)
+    documentoHtml = html_utils.converterStringParaHtml(html)
+    metadados = documentoHtml.select_one("metadados").attrs
+
+    tabelaPartidas = documentoHtml.select_one(CSS_TABELA_PARTIDAS)
     linhasHtml = tabelaPartidas.select(CSS_LINHAS_PARTIDA)
 
     sequencial = 1
@@ -54,12 +54,13 @@ def processarHtmlListaPartidas(html: str):
         "escudoEquipeVisitante": f"{navegador_web.URL_BASE}{escudoEquipeVisitante}",
         "placarParcial": placarParcial,
         "placarFinal": placarFinal,
-        "sequencial": sequencial}
+        "sequencial": sequencial,
+        "metadadosEdicao": metadados}
 
       sequencial += 1
 
   except Exception as e:
-    log.ERRO("Não foi possível processar lista de partidas da url {}.", e.args)
+    log.ERRO(f"Não foi possível processar lista de partidas da url {metadados['url_partidas']}.", e.args)
     return None
 
 

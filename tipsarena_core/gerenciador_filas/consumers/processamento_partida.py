@@ -34,7 +34,7 @@ def processarMensagem(mensagem):
     payload = mensagem.value().decode("UTF-8")
     dadosMensagem = json.loads(payload)
     itemProcessamento = ItemExtracao(dadosMensagem)
-    caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partida/{itemProcessamento.nomeArquivo}"
+    caminhoArquivo = f"{os.getenv('TA_DIR_ARQUIVOS_PARA_PROCESSAR')}partidas/partida/{itemProcessamento.nomeArquivo}"
     motor_parser_flashscore.processarHtmlPartida(caminhoArquivo)
 
   except Exception as e:
